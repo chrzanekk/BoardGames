@@ -2,28 +2,22 @@ package pl.com.konrad.checkers;
 
 public class GameBoard {
     private char[][] gameBoard;
-    private GameBoardDimension Size8X8 = GameBoardDimension.SIZE_8X8;
-    private PlayerPawns black = PlayerPawns.BLACK_MEN;
-    private PlayerPawns white = PlayerPawns.WHITE_MEN;
-    private PlayerPawns blackKing = PlayerPawns.BLACK_KING;
-    private PlayerPawns whiteKing = PlayerPawns.WHITE_KING;
+    private PlayerPawn blackKing = PlayerPawn.BLACK_KING;
+    private PlayerPawn whiteKing = PlayerPawn.WHITE_KING;
 
     public GameBoard() {
-        gameBoard = new char[Size8X8.size()][Size8X8.size()];
-        for (int row = 0; row< gameBoard.length; row++) {
-            for (int col = 0; col<gameBoard.length; col++) {
-                if((row%2==0 && col%2!=0 && row < gameBoard.length/2-1) || (row%2!=0 && col%2==0 && row < gameBoard.length/2-1)) {
+        GameBoardDimension size8X8 = GameBoardDimension.SIZE_8X8;
+        gameBoard = new char[size8X8.size()][size8X8.size()];
+        for (int row = 0; row < gameBoard.length; row++) {
+            for (int col = 0; col < gameBoard.length; col++) {
+                if ((row % 2 == 0 && col % 2 != 0 && row < gameBoard.length / 2 - 1) || (row % 2 != 0 && col % 2 == 0 && row < gameBoard.length / 2 - 1)) {
+                    PlayerPawn white = PlayerPawn.WHITE_MEN;
                     gameBoard[row][col] = white.pawn();
                 }
-                if((row%2==0 && col%2!=0 && row > gameBoard.length/2) || (row%2!=0 && col%2==0 && row > gameBoard.length/2)) {
+                if ((row % 2 == 0 && col % 2 != 0 && row > gameBoard.length / 2) || (row % 2 != 0 && col % 2 == 0 && row > gameBoard.length / 2)) {
+                    PlayerPawn black = PlayerPawn.BLACK_MEN;
                     gameBoard[row][col] = black.pawn();
                 }
-
-
-
-
-
-
 
             }
         }
