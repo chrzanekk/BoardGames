@@ -1,16 +1,16 @@
 package pl.com.konrad.checkers;
 
 public class Player {
-    private char playerMark;
+    private int index;
     private String name;
 
-    public Player(char playerMark, String name) {
-        this.playerMark = playerMark;
+    public Player(int index, String name) {
+        this.index = index;
         this.name = name;
     }
 
-    public char getPlayerMark() {
-        return playerMark;
+    public int getIndex() {
+        return index;
     }
 
     public String getName() {

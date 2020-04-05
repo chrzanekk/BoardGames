@@ -28,9 +28,9 @@ public class Main {
 
             switch (playerMenuChoice) {
                 case 1: {
-                    GameBoard gameBoard = new GameBoard();
+                    GameCheckerBoard gameCheckerBoard = new GameCheckerBoard();
                     GameBoardPrinter printer = new GameBoardPrinter();
-                    printer.print(gameBoard);
+                    printer.print(gameCheckerBoard);
                     System.out.println();
                     break;
                 }
