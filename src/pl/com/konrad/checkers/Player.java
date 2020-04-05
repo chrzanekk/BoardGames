@@ -1,7 +1,7 @@
 package pl.com.konrad.checkers;
 
 public class Player {
-    private int index;
+    final private int index;
     private String name;
 
     public Player(int index, String name) {

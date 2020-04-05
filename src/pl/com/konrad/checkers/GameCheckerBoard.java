@@ -14,7 +14,7 @@ public class GameCheckerBoard implements GameBoard {
             for (int col = 0; col < gameBoard.length; col++) {
                 if ((row % 2 == 0 && col % 2 != 0 && row < gameBoard.length / 2 - 1) || (row % 2 != 0 && col % 2 == 0 && row < gameBoard.length / 2 - 1)) {
                     gameBoard[row][col] = new CheckersPawn(col, row, CheckerPawn.WHITE_MEN.description(),
-                            CheckerPawn.WHITE_MEN.pawn()).getPawnMark();
+                            CheckerPawn.WHITE_KING.pawn()).getPawnMark();
                 }
                 if ((row % 2 == 0 && col % 2 != 0 && row > gameBoard.length / 2) || (row % 2 != 0 && col % 2 == 0 && row > gameBoard.length / 2)) {
                     gameBoard[row][col] = new CheckersPawn(col, row, CheckerPawn.BLACK_MEN.description(),

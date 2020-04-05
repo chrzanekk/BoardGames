@@ -23,10 +23,6 @@ public class Figure {
         return description;
     }
 
-    public char[][] getStartPosition(int startRow, int startCol) {
-        return new char[startRow][startCol];
-    }
-
     public char[][] move(int newRow, int newCol) {
         return new char[newRow][newCol];
     }

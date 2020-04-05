@@ -16,4 +16,6 @@ public class Validator {
     public boolean validateMainMenuOption(int userChoice) {
         return userChoice < START_GAME || userChoice > EXIT_GAME;
     }
+
+
 }
