@@ -2,8 +2,6 @@ package pl.com.konrad.checkers;
 
 public class GameCheckerBoard implements GameBoard {
     private char[][] gameBoard;
-    private CheckerPawn blackKing = CheckerPawn.BLACK_KING;
-    private CheckerPawn whiteKing = CheckerPawn.WHITE_KING;
 
     public GameCheckerBoard() {
         GameBoardDimension boardDimension = GameBoardDimension.SIZE_10X10;
