@@ -1,12 +1,12 @@
 package pl.com.konrad.checkers;
 
 public class Figure {
-    private String name;
+    private String description;
     private int startRow;
     private int startCol;
 
-    public Figure(String name, int startRow, int startCol) {
-        this.name = name;
+    public Figure(int startCol, int startRow, String description) {
+        this.description = description;
         this.startRow = startRow;
         this.startCol = startCol;
     }
@@ -19,16 +19,16 @@ public class Figure {
         return startCol;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public int[][] getStartPosition(int startRow, int startCol) {
-        return new int[startRow][startCol];
+    public char[][] getStartPosition(int startRow, int startCol) {
+        return new char[startRow][startCol];
     }
 
-    public int[][] move(int newRow, int newCol) {
-        return new int[newRow][newCol];
+    public char[][] move(int newRow, int newCol) {
+        return new char[newRow][newCol];
     }
 
 }

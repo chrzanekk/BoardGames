@@ -2,7 +2,7 @@ package pl.com.konrad.checkers;
 /*to do:
 - wybrac odpowiedni znak dla damki.
 */
-public enum checkerPawn {
+public enum CheckerPawn {
     BLACK_MEN('\u25CB',"Black pawn" ),
     WHITE_MEN('\u25CF', "White pawn"),
     BLACK_KING('\u03A6', "Black King"),
@@ -10,7 +10,7 @@ public enum checkerPawn {
     private final char pawn;
     private final String description;
 
-    checkerPawn(char pawn, String description) {
+    CheckerPawn(char pawn, String description) {
         this.pawn = pawn;
         this.description = description;
     }
