@@ -18,7 +18,7 @@ public class GameCheckerBoard implements GameBoard {
                 }
                 if ((row % 2 == 0 && col % 2 != 0 && row > gameBoard.length / 2) || (row % 2 != 0 && col % 2 == 0 && row > gameBoard.length / 2)) {
                     gameBoard[row][col] = new CheckersPawn(col, row, CheckerPawn.BLACK_MEN.description(),
-                            CheckerPawn.BLACK_MEN.pawn()).getPawnMark();
+                            CheckerPawn.BLACK_KING.pawn()).getPawnMark();
                 }
             }
         }
