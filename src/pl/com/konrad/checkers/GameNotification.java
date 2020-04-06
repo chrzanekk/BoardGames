@@ -8,7 +8,7 @@ public class GameNotification {
     }
 
     public void showInputName(String description) {
-        System.out.println("Please input name of player who plays " + description + ":");
+        System.out.println("Please set name of player who plays " + description + ":");
     }
 
     public void showActualBoard() {
@@ -22,5 +22,10 @@ public class GameNotification {
     public void showWrongBeat() {
         System.out.println("You cannot beat this pawn. Try again.");
     }
+
+    public void showInvalidUserInput() {
+        System.out.println("Invalid choice. Try again.");
+    }
+
 
 }
