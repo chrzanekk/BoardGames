@@ -1,14 +1,14 @@
 package pl.com.konrad.checkers;
 
 public class CheckersPlayer extends Player{
-    private char playerPawn;
+    private CheckersPawn playerPawn;
 
-    public CheckersPlayer(int index, String name, char playerPawn) {
+    public CheckersPlayer(int index, String name, CheckersPawn playerPawn) {
         super(index, name);
         this.playerPawn = playerPawn;
     }
 
-    public char getPlayerPawn() {
+    public CheckersPawn getPlayerPawn() {
         return playerPawn;
     }
 }

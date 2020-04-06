@@ -2,8 +2,8 @@ package pl.com.konrad.checkers;
 
 public class GameChessBoard implements GameBoard{
     private char[][] gameBoard;
-    private CheckerPawn blackKing = CheckerPawn.BLACK_KING;
-    private CheckerPawn whiteKing = CheckerPawn.WHITE_KING;
+    private CheckersPawnTypes blackKing = CheckersPawnTypes.BLACK_KING;
+    private CheckersPawnTypes whiteKing = CheckersPawnTypes.WHITE_KING;
 
     public GameChessBoard() {
         GameBoardDimension size8X8 = GameBoardDimension.SIZE_8X8;
@@ -11,11 +11,11 @@ public class GameChessBoard implements GameBoard{
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard.length; col++) {
                 if ((row % 2 == 0 && col % 2 != 0 && row < gameBoard.length / 2 - 1) || (row % 2 != 0 && col % 2 == 0 && row < gameBoard.length / 2 - 1)) {
-                    CheckerPawn white = CheckerPawn.WHITE_MEN;
+                    CheckersPawnTypes white = CheckersPawnTypes.WHITE_MEN;
                     gameBoard[row][col] = white.pawn();
                 }
                 if ((row % 2 == 0 && col % 2 != 0 && row > gameBoard.length / 2) || (row % 2 != 0 && col % 2 == 0 && row > gameBoard.length / 2)) {
-                    CheckerPawn black = CheckerPawn.BLACK_MEN;
+                    CheckersPawnTypes black = CheckersPawnTypes.BLACK_MEN;
                     gameBoard[row][col] = black.pawn();
                 }
 
