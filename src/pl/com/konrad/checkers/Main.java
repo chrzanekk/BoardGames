@@ -7,7 +7,7 @@ to do:
 - menu
 - wprowadzenie nazw graczy
 - log historii ruchow (ale ilość ruchów czy wspolrzedne)
-- pionowe litery + indeksy w enum?
+
  */
 public class Main {
 
@@ -24,13 +24,23 @@ public class Main {
         boolean shouldPlay = true;
         do {
             gameMenuPrinter.print();
-            int playerMenuChoice = getPlayerMenuChoice(scanner,gameNotification,validator,gameMenuPrinter);
+            int playerMenuChoice = getPlayerMenuChoice(scanner, gameNotification, validator, gameMenuPrinter);
             switch (GameMenuOption.menuOption(playerMenuChoice)) {
                 case CHECKERS: {
-                    GameCheckerBoard gameCheckerBoard = new GameCheckerBoard();
+                    CheckersPlayer playerOne = setNewPlayer(new CheckersPawn(CheckersPawnTypes.WHITE_MEN.description(),
+                                    CheckersPawnTypes.WHITE_MEN.pawn()), scanner,
+                            gameNotification);
+                    CheckersPlayer playerTwo = setNewPlayer(new CheckersPawn(CheckersPawnTypes.BLACK_MEN.description(),
+                                    CheckersPawnTypes.BLACK_MEN.pawn()), scanner,
+                            gameNotification);
+
+                    GameCheckerBoard gameCheckerBoard = new GameCheckerBoard(playerOne, playerTwo);
                     GameBoardPrinter printer = new GameBoardPrinter();
+
                     printer.print(gameCheckerBoard);
                     System.out.println();
+                    System.out.println(gameCheckerBoard.getPosition(2, 1));
+
                     break;
                 }
 
@@ -42,6 +52,7 @@ public class Main {
 
 
     }
+
     private static int getPlayerMenuChoice(Scanner scan, GameNotification gameNotification, Validator validator,
                                            GameMenuPrinter gameMenuPrinter) {
         int playerMenuChoice;
@@ -58,5 +69,11 @@ public class Main {
             }
         } while (validator.validateMainMenuOption(playerMenuChoice));
         return playerMenuChoice;
+    }
+
+    private static CheckersPlayer setNewPlayer(CheckersPawn pawn, Scanner scanner,
+                                               GameNotification gameNotification) {
+        gameNotification.showInputName(pawn.getDescription());
+        return new CheckersPlayer(scanner.next(), pawn.getPawnMark());
     }
 }

@@ -3,26 +3,28 @@ package pl.com.konrad.checkers;
 public class GameCheckerBoard implements GameBoard {
     private char[][] gameBoard;
 
-    public GameCheckerBoard() {
-        GameBoardDimension boardDimension = GameBoardDimension.SIZE_10X10;
+    public GameCheckerBoard(CheckersPlayer playerOne, CheckersPlayer playerTwo) {
+        GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;
         gameBoard = new char[boardDimension.size()][boardDimension.size()];
-        generateNewGameBoard();
+        generateNewGameBoard(playerOne,playerTwo);
     }
 
-    private void generateNewGameBoard() {
+    private void generateNewGameBoard(CheckersPlayer playerOne, CheckersPlayer playerTwo) {
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard.length; col++) {
                 if ((row % 2 == 0 && col % 2 != 0 && row < gameBoard.length / 2 - 1) || (row % 2 != 0 && col % 2 == 0 && row < gameBoard.length / 2 - 1)) {
-                    gameBoard[row][col] = new CheckersPawn(col, row, CheckersPawnTypes.WHITE_MEN.description(),
-                            CheckersPawnTypes.WHITE_KING.pawn()).getPawnMark();
+//                    gameBoard[row][col] = new CheckersPawn(CheckersPawnTypes.WHITE_MEN.description(),
+//                            CheckersPawnTypes.WHITE_MEN.pawn()).getPawnMark();
+                    gameBoard[row][col] = playerOne.getPlayerPawn();
                 }
                 if ((row % 2 == 0 && col % 2 != 0 && row > gameBoard.length / 2) || (row % 2 != 0 && col % 2 == 0 && row > gameBoard.length / 2)) {
-                    gameBoard[row][col] = new CheckersPawn(col, row, CheckersPawnTypes.BLACK_MEN.description(),
-                            CheckersPawnTypes.BLACK_KING.pawn()).getPawnMark();
+                    gameBoard[row][col] = new CheckersPawn(CheckersPawnTypes.BLACK_MEN.description(),
+                            CheckersPawnTypes.BLACK_MEN.pawn()).getPawnMark();
                 }
             }
         }
     }
+
 
     @Override
     public char[][] getGameBoard() {
@@ -34,8 +36,11 @@ public class GameCheckerBoard implements GameBoard {
         return gameBoard[row][col];
     }
 
+
     @Override
     public int getLength() {
         return gameBoard.length;
     }
+
+
 }
