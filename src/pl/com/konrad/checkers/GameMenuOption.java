@@ -19,6 +19,6 @@ public enum GameMenuOption {
                 return gameMenuOption;
             }
         }
-        return null;
+        return EXIT;
     }
 }

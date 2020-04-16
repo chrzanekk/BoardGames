@@ -27,20 +27,18 @@ public class Main {
             int playerMenuChoice = getPlayerMenuChoice(scanner, gameNotification, validator, gameMenuPrinter);
             switch (GameMenuOption.menuOption(playerMenuChoice)) {
                 case CHECKERS: {
-                    CheckersPlayer playerOne = setNewPlayer(new CheckersPawn(CheckersPawnTypes.WHITE_MEN.description(),
-                                    CheckersPawnTypes.WHITE_MEN.pawn()), scanner,
-                            gameNotification);
-                    CheckersPlayer playerTwo = setNewPlayer(new CheckersPawn(CheckersPawnTypes.BLACK_MEN.description(),
-                                    CheckersPawnTypes.BLACK_MEN.pawn()), scanner,
-                            gameNotification);
+                    CheckersPlayer playerOne = preparePlayer(new CheckersPawn(
+                                    CheckersMark.WHITE_MEN.pawn()), scanner,
+                            gameNotification, Colors.WHITE.Description());
+                    CheckersPlayer playerTwo = preparePlayer(new CheckersPawn(
+                                    CheckersMark.BLACK_MEN.pawn()), scanner,
+                            gameNotification, Colors.BLACK.Description());
 
                     GameCheckerBoard gameCheckerBoard = new GameCheckerBoard(playerOne, playerTwo);
-                    GameBoardPrinter printer = new GameBoardPrinter();
+                    GameBoardPrinter printer = new GameBoardPrinter(gameCheckerBoard);
 
-                    printer.print(gameCheckerBoard);
+                    printer.print();
                     System.out.println();
-                    System.out.println(gameCheckerBoard.getPosition(2, 1));
-
                     break;
                 }
 
@@ -71,9 +69,9 @@ public class Main {
         return playerMenuChoice;
     }
 
-    private static CheckersPlayer setNewPlayer(CheckersPawn pawn, Scanner scanner,
-                                               GameNotification gameNotification) {
-        gameNotification.showInputName(pawn.getDescription());
+    private static CheckersPlayer preparePlayer(CheckersPawn pawn, Scanner scanner,
+                                                GameNotification gameNotification, String description) {
+        gameNotification.showInputName(description);
         return new CheckersPlayer(scanner.next(), pawn.getPawnMark());
     }
 }

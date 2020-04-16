@@ -1,10 +1,9 @@
 package pl.com.konrad.checkers;
 
-public class CheckersPawn extends Figure{
+public class CheckersPawn extends Figure {
     private char pawnMark;
 
-    public CheckersPawn(String description, char pawnMark) {
-        super(description);
+    public CheckersPawn(char pawnMark) {
         this.pawnMark = pawnMark;
     }
 
@@ -12,8 +11,6 @@ public class CheckersPawn extends Figure{
     public char getPawnMark() {
         return pawnMark;
     }
-
-
 
 
 }

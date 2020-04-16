@@ -1,35 +1,39 @@
 package pl.com.konrad.checkers;
 
 public class GameBoardPrinter {
-    public void print(GameBoard gameBoard) {
-        int verticalIndex = 1;
-        for (int row = 0; row < gameBoard.getLength(); row++) {
-            horizontalLinePrinter(gameBoard);
+    private GameNotification gameNotification = new GameNotification();
+    private GameBoard gameBoard;
 
-            System.out.print("| ");
-            for (int col = 0; col < gameBoard.getLength(); col++) {
-
-                System.out.print(gameBoard.getPosition(row, col) + " | ");
-            }
-            System.out.print(verticalIndex + " ");
-            verticalIndex++;
-            System.out.println();
-
-        }
-        horizontalLinePrinter(gameBoard);
-        underRowPrinter(gameBoard);
-
+    public GameBoardPrinter(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
-    private void horizontalLinePrinter(GameBoard gameBoard) {
-        System.out.print("-");
-        for(int i =0; i<gameBoard.getLength();i++){
-            System.out.print("----");
+    public void print() {
+        gameNotification.showActualBoard();
+        int verticalIndex = 1;
+        for (int row = 0; row < gameBoard.getLength(); row++) {
+            printHorizontalLine();
+            System.out.print("| ");
+            for (int col = 0; col < gameBoard.getLength(); col++) {
+                System.out.print(gameBoard.getPosition(row, col) + " | ");
+            }
+            System.out.println(verticalIndex++ + " ");
+        }
+        printHorizontalLine();
+        printUnderRow();
+    }
+
+    private void printHorizontalLine() {
+        char minus = '-';
+        System.out.print(minus);
+        for (int i = 0; i < gameBoard.getLength(); i++) {
+            for (int j = 0; j <= 3; j++)
+                System.out.print(minus);
         }
         System.out.println();
     }
 
-    private void underRowPrinter(GameBoard gameBoard) {
+    private void printUnderRow() {
         char underRowChar = 'A';
         for (int underRow = 0; underRow < gameBoard.getLength(); underRow++) {
             System.out.print("  " + underRowChar + " ");
