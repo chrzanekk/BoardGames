@@ -3,7 +3,7 @@ package pl.com.konrad.checkers;
 public enum CheckersType {
     MEN("men"),
     KING("KING");
-    private String type;
+    private final String type;
 
     CheckersType(String type) {
         this.type = type;

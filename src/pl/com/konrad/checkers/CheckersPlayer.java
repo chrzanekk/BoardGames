@@ -4,7 +4,7 @@ public class CheckersPlayer extends Player{
     private char playerPawn;
 
     public CheckersPlayer(String name, char playerPawn) {
-        super(name);
+        super(name, figureSet);
         this.playerPawn = playerPawn;
     }
 
