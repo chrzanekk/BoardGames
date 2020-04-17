@@ -1,15 +1,15 @@
 package pl.com.konrad.checkers;
 
 public class GameCheckerBoard implements GameBoard {
-    private char[][] gameBoard;
-    private CheckersPlayer playerOne;
-    private CheckersPlayer playerTwo;
+    private Figure[][] gameBoard;
+    private Player playerOne;
+    private Player playerTwo;
 
-    public GameCheckerBoard(CheckersPlayer playerOne, CheckersPlayer playerTwo) {
+    public GameCheckerBoard(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         GameBoardDimension boardDimension = GameBoardDimension.SIZE_10X10;
-        gameBoard = new char[boardDimension.size()][boardDimension.size()];
+        gameBoard = new Figure[boardDimension.size()][boardDimension.size()];
         setup();
     }
 
@@ -18,10 +18,15 @@ public class GameCheckerBoard implements GameBoard {
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard.length; col++) {
                 if ((row % 2 == 0 && col % 2 != 0 && row < gameBoard.length / 2 - 1) || (row % 2 != 0 && col % 2 == 0 && row < gameBoard.length / 2 - 1)) {
-                    gameBoard[row][col] = playerOne.getPlayerPawn();
+                    playerOne.addFigure(gameBoard[row][col] = new Figure(CheckersType.MEN.type(),
+                            CheckersMark.WHITE_MEN.pawn(),
+                            Colors.WHITE.Description(),row,col));
+
                 }
                 if ((row % 2 == 0 && col % 2 != 0 && row > gameBoard.length / 2) || (row % 2 != 0 && col % 2 == 0 && row > gameBoard.length / 2)) {
-                    gameBoard[row][col] = playerTwo.getPlayerPawn();
+                    playerTwo.addFigure(gameBoard[row][col] = new Figure(CheckersType.MEN.type(),
+                            CheckersMark.BLACK_MEN.pawn(),
+                            Colors.BLACK.Description(),row,col));
                 }
             }
         }
@@ -29,12 +34,12 @@ public class GameCheckerBoard implements GameBoard {
 
 
     @Override
-    public char[][] getGameBoard() {
+    public Figure[][] getGameBoard() {
         return gameBoard;
     }
 
     @Override
-    public char getPosition(int row, int col) {
+    public Figure getPosition(int row, int col) {
         return gameBoard[row][col];
     }
 

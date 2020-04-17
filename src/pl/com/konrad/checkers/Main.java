@@ -1,11 +1,10 @@
 package pl.com.konrad.checkers;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
 to do:
-- menu
-- wprowadzenie nazw graczy
 - log historii ruchow (ale ilość ruchów czy wspolrzedne)
 
  */
@@ -27,11 +26,9 @@ public class Main {
             int playerMenuChoice = getPlayerMenuChoice(scanner, gameNotification, validator, gameMenuPrinter);
             switch (GameMenuOption.menuOption(playerMenuChoice)) {
                 case CHECKERS: {
-                    CheckersPlayer playerOne = preparePlayer(new CheckersPawn(
-                                    CheckersMark.WHITE_MEN.pawn()), scanner,
+                    Player playerOne = preparePlayer(scanner,
                             gameNotification, Colors.WHITE.Description());
-                    CheckersPlayer playerTwo = preparePlayer(new CheckersPawn(
-                                    CheckersMark.BLACK_MEN.pawn()), scanner,
+                    Player playerTwo = preparePlayer(scanner,
                             gameNotification, Colors.BLACK.Description());
 
                     GameCheckerBoard gameCheckerBoard = new GameCheckerBoard(playerOne, playerTwo);
@@ -69,9 +66,11 @@ public class Main {
         return playerMenuChoice;
     }
 
-    private static CheckersPlayer preparePlayer(CheckersPawn pawn, Scanner scanner,
-                                                GameNotification gameNotification, String description) {
+    private static Player preparePlayer(Scanner scanner,
+                                        GameNotification gameNotification, String description) {
+        ArrayList<Figure> playerSet = new ArrayList<>();
         gameNotification.showInputName(description);
-        return new CheckersPlayer(scanner.next(), pawn.getPawnMark());
+
+        return new Player(scanner.next(), playerSet);
     }
 }

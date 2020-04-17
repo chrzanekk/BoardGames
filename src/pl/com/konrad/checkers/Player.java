@@ -20,8 +20,15 @@ public class Player {
         return figureSet;
     }
 
-    //metoda dodaj pionek do tablicy
-    public void addPawn(Figure figure) {
+
+    public void addFigure(Figure figure) {
+        figureSet.add(figure);
 
     }
+
+    public void removeFigure(Figure figure) {
+        figureSet.remove(figure);
+    }
+
+
 }

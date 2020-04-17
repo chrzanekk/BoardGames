@@ -1,22 +1,22 @@
 package pl.com.konrad.checkers;
 
 public class Figure {
-    private String type;
+    private String description;
     private char mark;
     private String color;
     private int currentRow;
     private int currentCol;
 
-    public Figure(String type, char mark, String color, int currentRow, int currentCol) {
-        this.type = type;
+    public Figure(String description, char mark, String color, int currentRow, int currentCol) {
+        this.description = description;
         this.mark = mark;
         this.color = color;
         this.currentRow = currentRow;
         this.currentCol = currentCol;
     }
 
-    public String getType() {
-        return type;
+    public String getDescription() {
+        return description;
     }
 
     public char getMark() {
