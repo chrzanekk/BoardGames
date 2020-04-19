@@ -1,4 +1,4 @@
-package pl.com.konrad.checkers;
+package pl.com.konrad.games.board;
 /*to do:
 - metoda move dla dwoch graczy/dwa kierunki?
 - metoda move dla damki?

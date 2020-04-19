@@ -1,4 +1,4 @@
-package pl.com.konrad.checkers;
+package pl.com.konrad.games.board;
 
 public class Figure {
     private String description;

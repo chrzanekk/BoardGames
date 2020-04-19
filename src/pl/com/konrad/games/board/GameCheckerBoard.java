@@ -1,4 +1,4 @@
-package pl.com.konrad.checkers;
+package pl.com.konrad.games.board;
 
 public class GameCheckerBoard implements GameBoard {
     private Figure[][] gameBoard;
@@ -8,7 +8,7 @@ public class GameCheckerBoard implements GameBoard {
     public GameCheckerBoard(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        GameBoardDimension boardDimension = GameBoardDimension.SIZE_10X10;
+        GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;
         gameBoard = new Figure[boardDimension.size()][boardDimension.size()];
         setup();
     }

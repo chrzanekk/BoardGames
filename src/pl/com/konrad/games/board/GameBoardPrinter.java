@@ -1,4 +1,4 @@
-package pl.com.konrad.checkers;
+package pl.com.konrad.games.board;
 
 public class GameBoardPrinter {
     private GameNotification gameNotification = new GameNotification();
@@ -13,9 +13,14 @@ public class GameBoardPrinter {
         int verticalIndex = 1;
         for (int row = 0; row < gameBoard.getLength(); row++) {
             printHorizontalLine();
-            System.out.print("| ");
+            System.out.print("|");
             for (int col = 0; col < gameBoard.getLength(); col++) {
-                System.out.print(gameBoard.getPosition(row, col) + " | ");
+                if (gameBoard.getPosition(row,col) != null) {
+                    System.out.print(" "+ gameBoard.getPosition(row, col).getMark() + " |");
+                }
+                else {
+                    System.out.print("   |");
+                }
             }
             System.out.println(verticalIndex++ + " ");
         }

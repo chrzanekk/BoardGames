@@ -1,4 +1,4 @@
-package pl.com.konrad.checkers;
+package pl.com.konrad.games.board;
 
 public enum GameBoardDimension {
     SIZE_8X8 (8),
