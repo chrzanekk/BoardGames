@@ -1,6 +1,6 @@
 package pl.com.konrad.games.board;
 
-public class Figure {
+public final class Figure {
     private String description;
     private char mark;
     private String color;
@@ -36,8 +36,8 @@ public class Figure {
     }
 
 
-    public char[][] move(int newRow, int newCol) {
-        return new char[newRow][newCol];
+    public Figure move(int newRow, int newCol) {
+        return new Figure(this.description, this.mark,this.color,newRow,newCol);
     }
 
 }
