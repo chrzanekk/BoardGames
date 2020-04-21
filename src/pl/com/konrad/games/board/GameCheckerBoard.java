@@ -23,7 +23,7 @@ public class GameCheckerBoard implements GameBoard {
                             Colors.WHITE.Description(), row, col));
 
                 }
-                if ((isEvenRowOddCol(row,col) && isBottomGameBoard(row)) || (isOddRowEvenCol(row,col) && isBottomGameBoard(row))) {
+                if ((isEvenRowOddCol(row, col) && isBottomGameBoard(row)) || (isOddRowEvenCol(row, col) && isBottomGameBoard(row))) {
                     playerTwo.addFigure(gameBoard[row][col] = new Figure(CheckersType.MEN.type(),
                             CheckersMark.BLACK_MEN.pawn(),
                             Colors.BLACK.Description(), row, col));
@@ -46,6 +46,13 @@ public class GameCheckerBoard implements GameBoard {
 
     private boolean isEvenRowOddCol(int row, int col) {
         return row % 2 == 0 && col % 2 != 0;
+    }
+
+    public void pawnChangePosition(Player player, Figure figure, int currentRow, int currentCol, int newRow,
+                                   int newCol) {
+        gameBoard[newRow][newCol].move(newRow,newCol);
+        gameBoard[currentRow][currentCol] = null;
+        //brakuje sprawdzenia poprawnosci ruchu (bicie lub ruch przez swoj pionek).
     }
 
 
