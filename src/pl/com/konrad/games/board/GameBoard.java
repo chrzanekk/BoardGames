@@ -5,4 +5,5 @@ public interface GameBoard {
     Figure getPosition(int row, int col);
     int getLength();
     void setup();
+
 }

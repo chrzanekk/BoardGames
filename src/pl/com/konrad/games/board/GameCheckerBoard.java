@@ -48,9 +48,9 @@ public class GameCheckerBoard implements GameBoard {
         return row % 2 == 0 && col % 2 != 0;
     }
 
-    public void pawnChangePosition(Player player, Figure figure, int currentRow, int currentCol, int newRow,
+    public void pawnChangePosition(Player player, int currentRow, int currentCol, int newRow,
                                    int newCol) {
-        gameBoard[newRow][newCol].move(newRow,newCol);
+        gameBoard[newRow][newCol] = gameBoard[currentRow][currentCol].move(newRow,newCol);
         gameBoard[currentRow][currentCol] = null;
         //brakuje sprawdzenia poprawnosci ruchu (bicie lub ruch przez swoj pionek).
     }

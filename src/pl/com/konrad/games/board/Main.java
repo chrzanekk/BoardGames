@@ -36,6 +36,8 @@ public class Main {
 
                     printer.print();
                     System.out.println();
+                    gameCheckerBoard.pawnChangePosition(playerOne,2,1,3,2);
+                    printer.print();
                     break;
                 }
 

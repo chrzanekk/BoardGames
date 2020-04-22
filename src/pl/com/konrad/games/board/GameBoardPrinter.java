@@ -11,6 +11,7 @@ public class GameBoardPrinter {
     public void print() {
         gameNotification.showActualBoard();
         int verticalIndex = 1;
+
         for (int row = 0; row < gameBoard.getLength(); row++) {
             printHorizontalLine();
             System.out.print("|");
@@ -44,5 +45,6 @@ public class GameBoardPrinter {
             System.out.print("  " + underRowChar + " ");
             underRowChar++;
         }
+        System.out.println();
     }
 }
