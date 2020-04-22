@@ -31,12 +31,12 @@ public class Main {
                     Player playerTwo = preparePlayer(scanner,
                             gameNotification, Colors.BLACK.Description());
 
-                    GameCheckerBoard gameCheckerBoard = new GameCheckerBoard(playerOne, playerTwo);
-                    GameBoardPrinter printer = new GameBoardPrinter(gameCheckerBoard);
+                    CheckerGameBoard checkerGameBoard = new CheckerGameBoard(playerOne, playerTwo);
+                    GameBoardPrinter printer = new GameBoardPrinter(checkerGameBoard);
 
                     printer.print();
                     System.out.println();
-                    gameCheckerBoard.pawnChangePosition(playerOne,2,1,3,2);
+                    checkerGameBoard.pawnChangePosition(playerOne,2,1,3,2);
                     printer.print();
                     break;
                 }
@@ -69,10 +69,10 @@ public class Main {
     }
 
     private static Player preparePlayer(Scanner scanner,
-                                        GameNotification gameNotification, String description) {
+                                        GameNotification gameNotification, String playerColor) {
         ArrayList<Figure> playerSet = new ArrayList<>();
-        gameNotification.showInputName(description);
+        gameNotification.showInputName(playerColor);
 
-        return new Player(scanner.next(), playerSet);
+        return new Player(scanner.next(), playerSet);//wymyslic jak sprawdzic dublowanie imion graczy.
     }
 }

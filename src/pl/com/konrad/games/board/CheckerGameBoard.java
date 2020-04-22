@@ -1,11 +1,11 @@
 package pl.com.konrad.games.board;
 
-public class GameCheckerBoard implements GameBoard {
+public class CheckerGameBoard implements GameBoard {
     private Figure[][] gameBoard;
     private Player playerOne;
     private Player playerTwo;
 
-    public GameCheckerBoard(Player playerOne, Player playerTwo) {
+    public CheckerGameBoard(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;
@@ -52,7 +52,12 @@ public class GameCheckerBoard implements GameBoard {
                                    int newCol) {
         gameBoard[newRow][newCol] = gameBoard[currentRow][currentCol].move(newRow,newCol);
         gameBoard[currentRow][currentCol] = null;
-        //brakuje sprawdzenia poprawnosci ruchu (bicie lub ruch przez swoj pionek).
+        //czy dobrze uzyta metod move w linii 53. dodatkowo czy nie nalezy jej przeciazyc i jesli tak to co z
+        // dodatkowymi parametrami?
+        //brakuje sprawdzenia poprawnosci ruchu (bicie, ruch przez swoj pionek, wybor odpowiedniego pionka do ruchu
+        // (pole null) ).
+        //brakuje uzycia parametru player - uzycie moze ograniczyc wybor pionkow (zabezpieczenie przed ruchem nie
+        // swoim pionkiem)
     }
 
 
