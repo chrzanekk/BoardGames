@@ -1,6 +1,7 @@
 package pl.com.konrad.games.board;
 
-public enum CheckersMark {
+/* w przypadku konsolowej aplikacji nazwy indentyfikują znaki gracza*/
+public enum GameBoardMark {
     BLACK_MEN('\u25CB'),
     WHITE_MEN('\u25CF'),
     BLACK_KING('\u2460'),
@@ -8,9 +9,9 @@ public enum CheckersMark {
     private final char mark;
 
 
-    CheckersMark(char mark) {
+    GameBoardMark(char mark) {
         this.mark = mark;
-            }
+    }
 
     char pawn() {
         return mark;

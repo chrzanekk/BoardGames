@@ -1,6 +1,7 @@
 package pl.com.konrad.games.board;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -32,12 +33,11 @@ public class Main {
                             gameNotification, Colors.BLACK.Description());
 
                     CheckerGameBoard checkerGameBoard = new CheckerGameBoard(playerOne, playerTwo);
-                    GameBoardPrinter printer = new GameBoardPrinter(checkerGameBoard);
 
-                    printer.print();
+                    checkerGameBoard.print();
                     System.out.println();
                     checkerGameBoard.pawnChangePosition(playerOne,2,1,3,2);
-                    printer.print();
+                    checkerGameBoard.print();
                     break;
                 }
 
@@ -46,9 +46,7 @@ public class Main {
                     break;
             }
         } while (shouldPlay);
-
-
-    }
+     }
 
     private static int getPlayerMenuChoice(Scanner scan, GameNotification gameNotification, Validator validator,
                                            GameMenuPrinter gameMenuPrinter) {
@@ -70,7 +68,7 @@ public class Main {
 
     private static Player preparePlayer(Scanner scanner,
                                         GameNotification gameNotification, String playerColor) {
-        ArrayList<Figure> playerSet = new ArrayList<>();
+        List<Figure> playerSet = new ArrayList<>();
         gameNotification.showInputName(playerColor);
 
         return new Player(scanner.next(), playerSet);//wymyslic jak sprawdzic dublowanie imion graczy.

@@ -1,13 +1,13 @@
 package pl.com.konrad.games.board;
 
 public class GameChessBoard implements GameBoard{
-    private Figure[][] gameBoard;
-    private CheckersMark blackKing = CheckersMark.BLACK_KING;
-    private CheckersMark whiteKing = CheckersMark.WHITE_KING;
+    private char[][] gameBoard;
+    private GameBoardMark blackKing = GameBoardMark.BLACK_KING;
+    private GameBoardMark whiteKing = GameBoardMark.WHITE_KING;
 
     public GameChessBoard() {
         GameBoardDimension size8X8 = GameBoardDimension.SIZE_8X8;
-        gameBoard = new Figure[size8X8.size()][size8X8.size()];
+        gameBoard = new char[size8X8.size()][size8X8.size()];
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard.length; col++) {
                 if ((row % 2 == 0 && col % 2 != 0 && row < gameBoard.length / 2 - 1) || (row % 2 != 0 && col % 2 == 0 && row < gameBoard.length / 2 - 1)) {
@@ -26,12 +26,17 @@ public class GameChessBoard implements GameBoard{
     public void setup(){}
 
     @Override
-    public Figure[][] getGameBoard() {
+    public void print() {
+
+    }
+
+    @Override
+    public char[][] getGameBoard() {
         return gameBoard;
     }
 
     @Override
-    public Figure getPosition(int row, int col) {
+    public char getPosition(int row, int col) {
         return gameBoard[row][col];
     }
 

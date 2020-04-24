@@ -1,29 +1,29 @@
 package pl.com.konrad.games.board;
 
 public final class Figure {
-    private final String description;
-    private final char mark;
-    private final String color;
+    private final PawnType type;
+    private final GameBoardMark mark;
+    private final Colors color;
     private final int currentRow;
     private final int currentCol;
 
-    public Figure(String description, char mark, String color, int currentRow, int currentCol) {
-        this.description = description;
+    public Figure(PawnType type, GameBoardMark mark, Colors color, int currentRow, int currentCol) {
+        this.type = type;
         this.mark = mark;
         this.color = color;
         this.currentRow = currentRow;
         this.currentCol = currentCol;
     }
 
-    public String getDescription() {
-        return description;
+    public PawnType getType() {
+        return type;
     }
 
-    public char getMark() {
+    public GameBoardMark getMark() {
         return mark;
     }
 
-    public String getColor() {
+    public Colors getColor() {
         return color;
     }
 
@@ -36,10 +36,9 @@ public final class Figure {
     }
 
 
-    public Figure move(int newRow, int newCol) {
-        return new Figure(this.description, this.mark, this.color, newRow, newCol);
-        //brakuje usuniecia starego obiektu?
-
-    }
+// move -> GameLogic
+//    public Figure move(int newRow, int newCol) {
+//        return new Figure(this.type, this.mark, this.color, newRow, newCol);
+//    }
 
 }

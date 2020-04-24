@@ -1,16 +1,19 @@
 package pl.com.konrad.games.board;
 
 public class CheckerGameBoard implements GameBoard {
-    private Figure[][] gameBoard;
+    private char[][] gameBoard;
     private Player playerOne;
     private Player playerTwo;
+    private GameNotification gameNotification = new GameNotification();
+
 
     public CheckerGameBoard(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;
-        gameBoard = new Figure[boardDimension.size()][boardDimension.size()];
+        gameBoard = new char[boardDimension.size()][boardDimension.size()];
         setup();
+        print();
     }
 
     @Override
@@ -18,18 +21,60 @@ public class CheckerGameBoard implements GameBoard {
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard.length; col++) {
                 if ((isEvenRowOddCol(row, col) && isTopGameBoard(row)) || (isOddRowEvenCol(row, col) && isTopGameBoard(row))) {
-                    playerOne.addFigure(gameBoard[row][col] = new Figure(CheckersType.MEN.type(),
-                            CheckersMark.WHITE_MEN.pawn(),
-                            Colors.WHITE.Description(), row, col));
-
+                    playerOne.addFigure(new Figure(PawnType.MEN,
+                            GameBoardMark.WHITE_MEN,
+                            Colors.WHITE, row, col));
+                    //wyekstrachować metody (ify i ciało ifa)
                 }
                 if ((isEvenRowOddCol(row, col) && isBottomGameBoard(row)) || (isOddRowEvenCol(row, col) && isBottomGameBoard(row))) {
-                    playerTwo.addFigure(gameBoard[row][col] = new Figure(CheckersType.MEN.type(),
-                            CheckersMark.BLACK_MEN.pawn(),
-                            Colors.BLACK.Description(), row, col));
+                    playerTwo.addFigure(new Figure(PawnType.MEN,
+                            GameBoardMark.BLACK_MEN,
+                            Colors.BLACK, row, col));
+                    //wyekstrachować metody (ify i ciało ifa)
                 }
             }
         }
+    }
+
+    @Override
+    public void print() {
+        gameNotification.showActualBoard();
+        int verticalIndex = 1;
+
+        for (int row = 0; row < gameBoard.length; row++) {
+            printHorizontalLine();
+            System.out.print("|");
+            for (int col = 0; col < gameBoard.length; col++) {
+                if (PlayerLogic.findFigureByRow(playerOne,row) && PlayerLogic.findFigureByCol(playerOne,col)) {
+                    System.out.print(" " + PlayerLogic.getMarkByRowCol(playerOne,row,col) + " |");
+                } else if (PlayerLogic.findFigureByRow(playerTwo,row) && PlayerLogic.findFigureByCol(playerTwo,col)) {
+                        System.out.print(" " + PlayerLogic.getMarkByRowCol(playerTwo,row,col) + " |");
+                }
+                else System.out.print("   |");
+            }
+            System.out.println(verticalIndex++ + " ");
+        }
+        printHorizontalLine();
+        printUnderRow();
+    }
+
+    private void printHorizontalLine() {
+        char minus = '-';
+        System.out.print(minus);
+        for (int i = 0; i < gameBoard.length; i++) {
+            for (int j = 0; j <= 3; j++)
+                System.out.print(minus);
+        }
+        System.out.println();
+    }
+
+    private void printUnderRow() {
+        char underRowChar = 'A';
+        for (int underRow = 0; underRow < gameBoard.length; underRow++) {
+            System.out.print("  " + underRowChar + " ");
+            underRowChar++;
+        }
+        System.out.println();
     }
 
     private boolean isBottomGameBoard(int row) {
@@ -50,8 +95,7 @@ public class CheckerGameBoard implements GameBoard {
 
     public void pawnChangePosition(Player player, int currentRow, int currentCol, int newRow,
                                    int newCol) {
-        gameBoard[newRow][newCol] = gameBoard[currentRow][currentCol].move(newRow,newCol);
-        gameBoard[currentRow][currentCol] = null;
+
         //czy dobrze uzyta metod move w linii 53. dodatkowo czy nie nalezy jej przeciazyc i jesli tak to co z
         // dodatkowymi parametrami?
         //brakuje sprawdzenia poprawnosci ruchu (bicie, ruch przez swoj pionek, wybor odpowiedniego pionka do ruchu
@@ -62,12 +106,12 @@ public class CheckerGameBoard implements GameBoard {
 
 
     @Override
-    public Figure[][] getGameBoard() {
+    public char[][] getGameBoard() {
         return gameBoard;
     }
 
     @Override
-    public Figure getPosition(int row, int col) {
+    public char getPosition(int row, int col) {
         return gameBoard[row][col];
     }
 

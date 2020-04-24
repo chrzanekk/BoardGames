@@ -1,11 +1,11 @@
 package pl.com.konrad.games.board;
 
-public enum CheckersType {
+public enum PawnType {
     MEN("men"),
     KING("KING");
     private final String type;
 
-    CheckersType(String type) {
+    PawnType(String type) {
         this.type = type;
     }
 
