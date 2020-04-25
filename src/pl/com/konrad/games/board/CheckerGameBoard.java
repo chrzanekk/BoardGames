@@ -45,17 +45,21 @@ public class CheckerGameBoard implements GameBoard {
             printHorizontalLine();
             System.out.print("|");
             for (int col = 0; col < gameBoard.length; col++) {
-                if (PlayerLogic.findFigureByRow(playerOne,row) && PlayerLogic.findFigureByCol(playerOne,col)) {
-                    System.out.print(" " + PlayerLogic.getMarkByRowCol(playerOne,row,col) + " |");
-                } else if (PlayerLogic.findFigureByRow(playerTwo,row) && PlayerLogic.findFigureByCol(playerTwo,col)) {
-                        System.out.print(" " + PlayerLogic.getMarkByRowCol(playerTwo,row,col) + " |");
-                }
-                else System.out.print("   |");
+                if (isFigureByRowCol(row, col, playerOne)) {
+                    System.out.print(" " + PlayerLogic.getMarkByRowCol(playerOne.getFigureSet(), row, col) + " |");
+                } else if (isFigureByRowCol(row, col, playerTwo)) {
+                    System.out.print(" " + PlayerLogic.getMarkByRowCol(playerTwo.getFigureSet(), row, col) + " |");
+                } else System.out.print("   |");
             }
             System.out.println(verticalIndex++ + " ");
         }
         printHorizontalLine();
         printUnderRow();
+    }
+
+
+    private boolean isFigureByRowCol(int row, int col, Player player) {
+        return PlayerLogic.findFigureByRowCol(player.getFigureSet(), row, col);
     }
 
     private void printHorizontalLine() {

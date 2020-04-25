@@ -9,7 +9,8 @@ package pl.com.konrad.games.board;
 */
 public class GameLogic {
 
-    public Figure move(Figure figure, int newRow, int newCol) {
+    public Figure move(Player player, Figure figure, int newRow, int newCol) {
+
         return new Figure(figure.getType(),figure.getMark(), figure.getColor(), newRow, newCol);
     }
 

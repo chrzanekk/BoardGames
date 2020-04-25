@@ -37,7 +37,6 @@ public class Main {
 
                     checkerGameBoard.print();
                     System.out.println();
-//                    checkerGameBoard.print();
                     break;
                 }
 
@@ -69,18 +68,23 @@ public class Main {
     private static Player preparePlayer(Scanner scanner, Validator validator,
                                         GameNotification gameNotification, Colors playerColor, String existingName) {
         List<Figure> playerSet = new ArrayList<>();
+        String name = validateUserName(scanner, validator, gameNotification, playerColor, existingName);
+        return new Player(name, playerSet);
+    }
+
+    private static String validateUserName(Scanner scanner, Validator validator, GameNotification gameNotification, Colors playerColor, String existingName) {
         String name;
         boolean shouldInputNameAgain = true;
         do {
             gameNotification.showInputName(playerColor);
             name = scanner.next();
-            if(!validator.validateDuplicateName(existingName, name)){
+            if(!validator.isNameDuplicated(existingName, name)){
                 shouldInputNameAgain = false;
             }
             else {
                 gameNotification.showWrongNameInput(existingName);
             }
         } while (shouldInputNameAgain);
-        return new Player(name, playerSet);//wymyslic jak sprawdzic dublowanie imion graczy.
+        return name;
     }
 }
