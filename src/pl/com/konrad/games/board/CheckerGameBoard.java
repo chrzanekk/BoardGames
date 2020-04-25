@@ -13,7 +13,7 @@ public class CheckerGameBoard implements GameBoard {
         GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;
         gameBoard = new char[boardDimension.size()][boardDimension.size()];
         setup();
-        print();
+
     }
 
     @Override

@@ -14,6 +14,7 @@ public class Validator {
     public boolean validateMainMenuOption(int userChoice) {
         return userChoice < GameMenuOption.CHECKERS.value() || userChoice > GameMenuOption.EXIT.value();
     }
-
-
+    public boolean validateDuplicateName(String existingName, String newName) {
+        return existingName != null && existingName.equals(newName);
+    }
 }

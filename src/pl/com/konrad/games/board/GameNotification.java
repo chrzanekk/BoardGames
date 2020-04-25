@@ -7,8 +7,12 @@ public class GameNotification {
         System.out.println("Choose option:");
     }
 
-    public void showInputName(String description) {
-        System.out.println("Please set name of player who plays " + description + ":");
+    public void showInputName(Colors colors) {
+        System.out.println("Please set name of player who plays " + colors + ":");
+    }
+
+    public void showWrongNameInput(String existingName) {
+        System.out.println("Name " + existingName + " already exists. Try different name.");
     }
 
     public void showActualBoard() {

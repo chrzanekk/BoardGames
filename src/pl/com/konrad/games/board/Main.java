@@ -27,17 +27,17 @@ public class Main {
             int playerMenuChoice = getPlayerMenuChoice(scanner, gameNotification, validator, gameMenuPrinter);
             switch (GameMenuOption.menuOption(playerMenuChoice)) {
                 case CHECKERS: {
-                    Player playerOne = preparePlayer(scanner,
-                            gameNotification, Colors.WHITE.Description());
-                    Player playerTwo = preparePlayer(scanner,
-                            gameNotification, Colors.BLACK.Description());
+                    Player playerOne = preparePlayer(scanner, validator,
+                            gameNotification, Colors.WHITE,null);
+
+                    Player playerTwo = preparePlayer(scanner, validator,
+                            gameNotification, Colors.BLACK, playerOne.getName());
 
                     CheckerGameBoard checkerGameBoard = new CheckerGameBoard(playerOne, playerTwo);
 
                     checkerGameBoard.print();
                     System.out.println();
-                    checkerGameBoard.pawnChangePosition(playerOne,2,1,3,2);
-                    checkerGameBoard.print();
+//                    checkerGameBoard.print();
                     break;
                 }
 
@@ -46,18 +46,18 @@ public class Main {
                     break;
             }
         } while (shouldPlay);
-     }
+    }
 
-    private static int getPlayerMenuChoice(Scanner scan, GameNotification gameNotification, Validator validator,
+    private static int getPlayerMenuChoice(Scanner scanner, GameNotification gameNotification, Validator validator,
                                            GameMenuPrinter gameMenuPrinter) {
         int playerMenuChoice;
         do {
-            while (!scan.hasNextInt()) {
+            while (!scanner.hasNextInt()) {
                 gameNotification.showInvalidUserInput();
                 gameMenuPrinter.print();
-                scan.next();
+                scanner.next();
             }
-            playerMenuChoice = scan.nextInt();
+            playerMenuChoice = scanner.nextInt();
             if (validator.validateMainMenuOption(playerMenuChoice)) {
                 gameNotification.showInvalidUserInput();
                 gameMenuPrinter.print();
@@ -66,11 +66,21 @@ public class Main {
         return playerMenuChoice;
     }
 
-    private static Player preparePlayer(Scanner scanner,
-                                        GameNotification gameNotification, String playerColor) {
+    private static Player preparePlayer(Scanner scanner, Validator validator,
+                                        GameNotification gameNotification, Colors playerColor, String existingName) {
         List<Figure> playerSet = new ArrayList<>();
-        gameNotification.showInputName(playerColor);
-
-        return new Player(scanner.next(), playerSet);//wymyslic jak sprawdzic dublowanie imion graczy.
+        String name;
+        boolean shouldInputNameAgain = true;
+        do {
+            gameNotification.showInputName(playerColor);
+            name = scanner.next();
+            if(!validator.validateDuplicateName(existingName, name)){
+                shouldInputNameAgain = false;
+            }
+            else {
+                gameNotification.showWrongNameInput(existingName);
+            }
+        } while (shouldInputNameAgain);
+        return new Player(name, playerSet);//wymyslic jak sprawdzic dublowanie imion graczy.
     }
 }
