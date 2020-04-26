@@ -18,6 +18,7 @@ public class Main {
         GameMenu gameMenu = new GameMenu();
         GameMenuPrinter gameMenuPrinter = new GameMenuPrinter(gameMenu);
         Validator validator = new Validator();
+        GameLogic gameLogic = new GameLogic();
 
         gameNotification.showWelcomeMessage();
 
@@ -34,6 +35,8 @@ public class Main {
                             gameNotification, Colors.BLACK, playerOne.getName());
 
                     CheckerGameBoard checkerGameBoard = new CheckerGameBoard(playerOne, playerTwo);
+                    checkerGameBoard.print();
+                    gameLogic.move(playerOne.getFigureSet(),2,1,3,2);
 
                     checkerGameBoard.print();
                     System.out.println();

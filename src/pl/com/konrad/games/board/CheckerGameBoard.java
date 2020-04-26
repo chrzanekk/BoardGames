@@ -59,7 +59,7 @@ public class CheckerGameBoard implements GameBoard {
 
 
     private boolean isFigureByRowCol(int row, int col, Player player) {
-        return PlayerLogic.findFigureByRowCol(player.getFigureSet(), row, col);
+        return PlayerLogic.isFigureExistByRowCol(player.getFigureSet(), row, col);
     }
 
     private void printHorizontalLine() {
@@ -95,17 +95,6 @@ public class CheckerGameBoard implements GameBoard {
 
     private boolean isEvenRowOddCol(int row, int col) {
         return row % 2 == 0 && col % 2 != 0;
-    }
-
-    public void pawnChangePosition(Player player, int currentRow, int currentCol, int newRow,
-                                   int newCol) {
-
-        //czy dobrze uzyta metod move w linii 53. dodatkowo czy nie nalezy jej przeciazyc i jesli tak to co z
-        // dodatkowymi parametrami?
-        //brakuje sprawdzenia poprawnosci ruchu (bicie, ruch przez swoj pionek, wybor odpowiedniego pionka do ruchu
-        // (pole null) ).
-        //brakuje uzycia parametru player - uzycie moze ograniczyc wybor pionkow (zabezpieczenie przed ruchem nie
-        // swoim pionkiem)
     }
 
 
