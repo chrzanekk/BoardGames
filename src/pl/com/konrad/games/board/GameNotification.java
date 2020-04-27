@@ -1,5 +1,7 @@
 package pl.com.konrad.games.board;
 
+import java.util.Arrays;
+
 public class GameNotification {
     public void showWelcomeMessage() {
         System.out.println("Welcome in Checkers. Have fun.");
@@ -29,6 +31,33 @@ public class GameNotification {
 
     public void showInvalidUserInput() {
         System.out.println("Invalid choice. Try again.");
+    }
+
+    public void showWhichPlayerMove(String playerName) {
+        System.out.println("Player \"" + playerName + "\" move.");
+    }
+
+    public void showCurrentPawnToMove() {
+        System.out.println("Choose current pawn to move:");
+    }
+
+    public void showInputRow(int gameBoardSize) {
+        System.out.println("Choose row (form 1 to " + gameBoardSize + "): ");
+    }
+
+    public void showInputCol(int gameBoardSize) {
+        char firstChar = 'A';
+
+        System.out.println("Choose col (form " + firstChar + " to " + lastLetterOfCol(firstChar,gameBoardSize) +"): ");
+    }
+
+    public void showNewPosition() {
+        System.out.println("Choose new pawn position: ");
+    }
+
+    private char lastLetterOfCol(char firstChar, int gameBoardLength) {
+        int lastCharByInt = (int) firstChar +gameBoardLength-1;
+        return (char)lastCharByInt;
     }
 
 
