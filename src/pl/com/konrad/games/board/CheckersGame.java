@@ -24,7 +24,7 @@ public class CheckersGame implements Game{
     public void play() {
         playerOne = preparePlayer(scanner, validator,
                 gameNotification, Colors.WHITE,null);
-
+        currentPlayer = playerOne;
         playerTwo = preparePlayer(scanner, validator,
                 gameNotification, Colors.BLACK, playerOne.getName());
 
