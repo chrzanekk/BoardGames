@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CheckersGame implements Game{
-    Scanner scanner = new Scanner(System.in);
-
+    private Scanner scanner = new Scanner(System.in);
 
     private Player playerOne;
     private Player playerTwo;
@@ -30,11 +29,17 @@ public class CheckersGame implements Game{
 
         CheckerGameBoard checkerGameBoard = new CheckerGameBoard(playerOne, playerTwo);
         checkerGameBoard.print();
-        gameLogic.move(playerOne.getFigureSet(),2,1,3,2);
-
-        checkerGameBoard.print();
-        System.out.println();
-
+        boolean isInputIncorrect = false;
+        do {
+            gameNotification.showWhichPlayerMove(currentPlayer.getName());
+            gameNotification.showCurrentPawnToMove();
+            gameNotification.showInputRow(checkerGameBoard.getLength());
+            gameNotification.showInputCol(checkerGameBoard.getLength());
+            gameNotification.showNewPawnPosition();
+            gameNotification.showInputRow(checkerGameBoard.getLength());
+            gameNotification.showInputCol(checkerGameBoard.getLength());
+            System.out.println();
+        }while (isInputIncorrect);
     }
     private static Player preparePlayer(Scanner scanner, Validator validator,
                                         GameNotification gameNotification, Colors playerColor, String existingName) {

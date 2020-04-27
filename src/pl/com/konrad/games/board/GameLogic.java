@@ -20,6 +20,9 @@ public class GameLogic {
         return figure;
     }
 
+
+
+
     //do klasy PlayerLogic?
     private Figure getFigure(List<Figure> figureSet, int newRow, int newCol, int index) {
         return new Figure(getType(figureSet, index), getMark(figureSet, index),

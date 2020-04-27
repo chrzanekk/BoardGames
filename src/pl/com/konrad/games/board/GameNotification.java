@@ -42,16 +42,17 @@ public class GameNotification {
     }
 
     public void showInputRow(int gameBoardSize) {
-        System.out.println("Choose row (form 1 to " + gameBoardSize + "): ");
+        System.out.println("Input number of row (form 1 to " + gameBoardSize + "): ");
     }
 
     public void showInputCol(int gameBoardSize) {
         char firstChar = 'A';
 
-        System.out.println("Choose col (form " + firstChar + " to " + lastLetterOfCol(firstChar,gameBoardSize) +"): ");
+        System.out.println("Input letter of col (form " + firstChar + " to " + lastLetterOfCol(firstChar,
+                gameBoardSize) +"): ");
     }
 
-    public void showNewPosition() {
+    public void showNewPawnPosition() {
         System.out.println("Choose new pawn position: ");
     }
 
