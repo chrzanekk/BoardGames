@@ -11,7 +11,6 @@ public class Main {
         GameMenu gameMenu = new GameMenu();
         GameMenuPrinter gameMenuPrinter = new GameMenuPrinter(gameMenu);
         Validator validator = new Validator();
-        GameLogic gameLogic = new GameLogic();
 
         gameNotification.showWelcomeMessage();
 

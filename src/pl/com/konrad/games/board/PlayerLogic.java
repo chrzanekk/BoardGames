@@ -29,4 +29,11 @@ public class PlayerLogic {
         }
         return index;
     }
+
+    public static Player swapPlayer(Player currentPlayer, Player playerOne, Player playerTwo) {
+        if (currentPlayer.equals(playerOne)) {
+            return playerTwo;
+        }
+        return playerOne;
+    }
 }

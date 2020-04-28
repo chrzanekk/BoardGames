@@ -13,6 +13,8 @@ to do:
  */
 public class Validator {
 
+    public static final int ZERO = 0;
+
     public boolean validateMainMenuOption(int userChoice) {
         return userChoice < GameMenuOption.CHECKERS.value() || userChoice > GameMenuOption.EXIT.value();
     }
@@ -21,39 +23,42 @@ public class Validator {
         return existingName != null && existingName.equals(newName);
     }
 
-    public void validateCorrectRowColInput(int userInput, int boardSize) throws InvalidParameterValueException,
+    public void validateCorrectRowColInput(int userInput, CheckerGameBoard checkerGameBoard) throws InvalidParameterValueException,
             InputMismatchException {
-        if (userInput < 0 || userInput> boardSize) {
+        if (userInput < 0 || userInput > checkerGameBoard.getLength()) {
             throw new InvalidParameterValueException();
         }
     }
+
     // ten walidator rozbuduję o poniższe metody sprawdzania poprawnosci ruchu i bicia gracza.
-    public void validateMoveBeat(int userRow, int userCol, int boardSize) {
+    public void validateMoveBeat(int userRow, int userCol, CheckerGameBoard checkerGameBoard) {
 
     }
 
-    private boolean isInputRowCorrect(int row) {
-        return true;
+    private boolean isInputRowCorrect(int currentRow, int userRow, CheckerGameBoard checkerGameBoard) {
+        return currentRow != userRow && userRow > ZERO && userRow < checkerGameBoard.getLength();
     }
 
-    private boolean isInputColCorrect(int col) {
-        return true;
+    private boolean isInputColCorrect(int currentCol, int userCol, CheckerGameBoard checkerGameBoard) {
+        return currentCol != userCol && userCol > ZERO && userCol < checkerGameBoard.getLength();
     }
 
-    private boolean isTopPlayerMoveDown() {
-        return true;
+    private boolean isTopPlayerMoveDown(int currentRow, int userRow, CheckerGameBoard checkerGameBoard) {
+        return currentRow < userRow && userRow<checkerGameBoard.getLength();
     }
 
-    private boolean isBottomPlayerMoveUp() {
-        return true;
+    private boolean isBottomPlayerMoveUp(int currentRow, int userRow) {
+        return currentRow > userRow && userRow >ZERO;
     }
 
-    private boolean isTopPlayerMoveDiagonal() {
-        return true;
+    private boolean isTopPlayerMoveDiagonal(int currentRow, int userRow, int currentCol, int userCol,
+                                            CheckerGameBoard checkerGameBoard) {
+        return currentCol != userCol && userCol > ZERO && userCol < checkerGameBoard.getLength() && isTopPlayerMoveDown(currentRow,userRow,checkerGameBoard);
     }
 
-    private boolean isBottomPlayerMoveDiagonal() {
-        return true;
+    private boolean isBottomPlayerMoveDiagonal(int currentRow, int userRow, int currentCol, int userCol,
+                                               CheckerGameBoard checkerGameBoard) {
+        return currentCol != userCol && userCol > ZERO && userCol <checkerGameBoard.getLength() && isBottomPlayerMoveUp(currentRow,userRow);
     }
 
 }

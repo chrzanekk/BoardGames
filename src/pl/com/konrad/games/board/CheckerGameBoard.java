@@ -20,13 +20,13 @@ public class CheckerGameBoard implements GameBoard {
     public void setup() {
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard.length; col++) {
-                if ((isEvenRowOddCol(row, col) && isTopGameBoard(row)) || (isOddRowEvenCol(row, col) && isTopGameBoard(row))) {
+                if (isaTopGameBoard(row, col)) {
                     playerOne.addFigure(new Figure(PawnType.MEN,
                             GameBoardMark.WHITE_MEN,
                             Colors.WHITE, row, col));
                     //wyekstrachować metody (ify i ciało ifa)
                 }
-                if ((isEvenRowOddCol(row, col) && isBottomGameBoard(row)) || (isOddRowEvenCol(row, col) && isBottomGameBoard(row))) {
+                if (isaBottomGameBoard(row, col)) {
                     playerTwo.addFigure(new Figure(PawnType.MEN,
                             GameBoardMark.BLACK_MEN,
                             Colors.BLACK, row, col));
@@ -34,6 +34,14 @@ public class CheckerGameBoard implements GameBoard {
                 }
             }
         }
+    }
+
+    private boolean isaBottomGameBoard(int row, int col) {
+        return (isEvenRowOddCol(row, col) && isBottomGameBoard(row)) || (isOddRowEvenCol(row, col) && isBottomGameBoard(row));
+    }
+
+    private boolean isaTopGameBoard(int row, int col) {
+        return (isEvenRowOddCol(row, col) && isTopGameBoard(row)) || (isOddRowEvenCol(row, col) && isTopGameBoard(row));
     }
 
     @Override
