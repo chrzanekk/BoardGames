@@ -15,50 +15,50 @@ public class CheckersGame implements Game{
     private Player playerTwo;
     private Player currentPlayer;
 
-    private Validator validator = new Validator();
-    private GameNotification gameNotification = new GameNotification();
-    private GameLogic gameLogic = new GameLogic();
+    private CheckersValidator checkersValidator = new CheckersValidator();
+    private CheckersGameNotification checkersGameNotification = new CheckersGameNotification();
+    private CheckersGameLogic checkersGameLogic = new CheckersGameLogic();
 
     @Override
     public void play() {
-        playerOne = preparePlayer(scanner, validator,
-                gameNotification, Colors.WHITE,null);
+        playerOne = preparePlayer(scanner, checkersValidator,
+                checkersGameNotification, Color.WHITE,null);
         currentPlayer = playerOne;
-        playerTwo = preparePlayer(scanner, validator,
-                gameNotification, Colors.BLACK, playerOne.getName());
+        playerTwo = preparePlayer(scanner, checkersValidator,
+                checkersGameNotification, Color.BLACK, playerOne.getName());
 
-        CheckerGameBoard checkerGameBoard = new CheckerGameBoard(playerOne, playerTwo);
-        checkerGameBoard.print();
+        CheckersGameBoard checkersGameBoard = new CheckersGameBoard(playerOne, playerTwo);
+        checkersGameBoard.print();
         boolean isInputIncorrect = false;
         do {
-            gameNotification.showWhichPlayerMove(currentPlayer.getName());
-            gameNotification.showCurrentPawnToMove();
-            gameNotification.showInputRow(checkerGameBoard.getLength());
-            gameNotification.showInputCol(checkerGameBoard.getLength());
-            gameNotification.showNewPawnPosition();
-            gameNotification.showInputRow(checkerGameBoard.getLength());
-            gameNotification.showInputCol(checkerGameBoard.getLength());
+            checkersGameNotification.showWhichPlayerMove(currentPlayer.getName());
+            checkersGameNotification.showCurrentPawnToMove();
+            checkersGameNotification.showInputRow(checkersGameBoard.getLength());
+            checkersGameNotification.showInputCol(checkersGameBoard.getLength());
+            checkersGameNotification.showNewPawnPosition();
+            checkersGameNotification.showInputRow(checkersGameBoard.getLength());
+            checkersGameNotification.showInputCol(checkersGameBoard.getLength());
             System.out.println();
         }while (isInputIncorrect);
     }
-    private static Player preparePlayer(Scanner scanner, Validator validator,
-                                        GameNotification gameNotification, Colors playerColor, String existingName) {
+    private static Player preparePlayer(Scanner scanner, CheckersValidator checkersValidator,
+                                        CheckersGameNotification checkersGameNotification, Color playerColor, String existingName) {
         List<Figure> playerSet = new ArrayList<>();
-        String name = validateUserName(scanner, validator, gameNotification, playerColor, existingName);
+        String name = validateUserName(scanner, checkersValidator, checkersGameNotification, playerColor, existingName);
         return new Player(name, playerSet);
     }
 
-    private static String validateUserName(Scanner scanner, Validator validator, GameNotification gameNotification, Colors playerColor, String existingName) {
+    private static String validateUserName(Scanner scanner, CheckersValidator checkersValidator, CheckersGameNotification checkersGameNotification, Color playerColor, String existingName) {
         String name;
         boolean shouldInputNameAgain = true;
         do {
-            gameNotification.showInputName(playerColor);
+            checkersGameNotification.showInputName(playerColor);
             name = scanner.next();
-            if(!validator.isNameDuplicated(existingName, name)){
+            if(!checkersValidator.isNameDuplicated(existingName, name)){
                 shouldInputNameAgain = false;
             }
             else {
-                gameNotification.showWrongNameInput(existingName);
+                checkersGameNotification.showWrongNameInput(existingName);
             }
         } while (shouldInputNameAgain);
         return name;

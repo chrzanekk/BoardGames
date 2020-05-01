@@ -1,11 +1,11 @@
 package pl.com.konrad.games.board;
 
-public class GameChessBoard implements GameBoard{
+public class ChessGameBoard implements GameBoard{
     private char[][] gameBoard;
     private GameBoardMark blackKing = GameBoardMark.BLACK_KING;
     private GameBoardMark whiteKing = GameBoardMark.WHITE_KING;
 
-    public GameChessBoard() {
+    public ChessGameBoard() {
         GameBoardDimension size8X8 = GameBoardDimension.SIZE_8X8;
         gameBoard = new char[size8X8.size()][size8X8.size()];
         for (int row = 0; row < gameBoard.length; row++) {

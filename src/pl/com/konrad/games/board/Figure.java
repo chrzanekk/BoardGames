@@ -1,13 +1,13 @@
 package pl.com.konrad.games.board;
 
 public final class Figure {
-    private final PawnType type;
+    private final CheckersPawnType type;
     private final GameBoardMark mark;
-    private final Colors color;
+    private final Color color;
     private final int currentRow;
     private final int currentCol;
 
-    public Figure(PawnType type, GameBoardMark mark, Colors color, int currentRow, int currentCol) {
+    public Figure(CheckersPawnType type, GameBoardMark mark, Color color, int currentRow, int currentCol) {
         this.type = type;
         this.mark = mark;
         this.color = color;
@@ -15,7 +15,7 @@ public final class Figure {
         this.currentCol = currentCol;
     }
 
-    public PawnType getType() {
+    public CheckersPawnType getType() {
         return type;
     }
 
@@ -23,7 +23,7 @@ public final class Figure {
         return mark;
     }
 
-    public Colors getColor() {
+    public Color getColor() {
         return color;
     }
 
@@ -36,9 +36,6 @@ public final class Figure {
     }
 
 
-// move -> GameLogic
-//    public Figure move(int newRow, int newCol) {
-//        return new Figure(this.type, this.mark, this.color, newRow, newCol);
-//    }
+
 
 }

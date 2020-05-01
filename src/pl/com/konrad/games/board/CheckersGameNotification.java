@@ -1,16 +1,14 @@
 package pl.com.konrad.games.board;
 
-import java.util.Arrays;
-
-public class GameNotification {
+public class CheckersGameNotification {
     public void showWelcomeMessage() {
         System.out.println("Welcome in Checkers. Have fun.");
         System.out.println("MAIN MENU");
         System.out.println("Choose option:");
     }
 
-    public void showInputName(Colors colors) {
-        System.out.println("Please set name of player who plays " + colors + ":");
+    public void showInputName(Color color) {
+        System.out.println("Please set name of player who plays " + color + ":");
     }
 
     public void showWrongNameInput(String existingName) {

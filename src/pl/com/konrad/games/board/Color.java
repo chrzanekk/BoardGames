@@ -1,11 +1,11 @@
 package pl.com.konrad.games.board;
 
-public enum Colors {
+public enum Color {
     WHITE("white"),
     BLACK("black");
     private final String description;
 
-    Colors(String description) {
+    Color(String description) {
         this.description = description;
     }
 

@@ -7,21 +7,31 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        GameNotification gameNotification = new GameNotification();
+        CheckersGameNotification checkersGameNotification = new CheckersGameNotification();
+
         GameMenu gameMenu = new GameMenu();
         GameMenuPrinter gameMenuPrinter = new GameMenuPrinter(gameMenu);
-        Validator validator = new Validator();
+        CheckersValidator checkersValidator = new CheckersValidator();
+        Game game = null;
 
-        gameNotification.showWelcomeMessage();
+        checkersGameNotification.showWelcomeMessage();
 
         boolean shouldPlay = true;
         do {
             gameMenuPrinter.print();
-            int playerMenuChoice = getPlayerMenuChoice(scanner, gameNotification, validator, gameMenuPrinter);
+            int playerMenuChoice = getPlayerMenuChoice(scanner, checkersGameNotification, checkersValidator, gameMenuPrinter);
             switch (GameMenuOption.menuOption(playerMenuChoice)) {
                 case CHECKERS: {
-                    CheckersGame checkersGame = new CheckersGame();
-                    checkersGame.play();
+                    game = new CheckersGame();
+                    break;
+                }
+                case CHESS: {
+                    game = new ChessGame();
+                    break;
+                }
+
+                case TIC_TAC_TOE: {
+                    game = new TicTacToeGame();
                     break;
                 }
 
@@ -29,24 +39,25 @@ public class Main {
                     shouldPlay = false;
                     break;
             }
+            game.play();
         } while (shouldPlay);
     }
 
-    private static int getPlayerMenuChoice(Scanner scanner, GameNotification gameNotification, Validator validator,
+    private static int getPlayerMenuChoice(Scanner scanner, CheckersGameNotification checkersGameNotification, CheckersValidator checkersValidator,
                                            GameMenuPrinter gameMenuPrinter) {
         int playerMenuChoice;
         do {
             while (!scanner.hasNextInt()) {
-                gameNotification.showInvalidUserInput();
+                checkersGameNotification.showInvalidUserInput();
                 gameMenuPrinter.print();
                 scanner.next();
             }
             playerMenuChoice = scanner.nextInt();
-            if (validator.validateMainMenuOption(playerMenuChoice)) {
-                gameNotification.showInvalidUserInput();
+            if (checkersValidator.validateMainMenuOption(playerMenuChoice)) {
+                checkersGameNotification.showInvalidUserInput();
                 gameMenuPrinter.print();
             }
-        } while (validator.validateMainMenuOption(playerMenuChoice));
+        } while (checkersValidator.validateMainMenuOption(playerMenuChoice));
         return playerMenuChoice;
     }
 }

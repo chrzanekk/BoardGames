@@ -5,28 +5,27 @@ import java.util.List;
 
 public class Player {
     private String name;
-    private List<Figure> figureSet;
+    private List<Figure> figures;
 
-    public Player(String name, List<Figure> figureSet) {
+    public Player(String name, List<Figure> figures) {
         this.name = name;
-        this.figureSet = figureSet;
+        this.figures = figures;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Figure> getFigureSet() {
-        return figureSet;
+    public List<Figure> getFigures() {
+        return figures;
     }
 
     public void addFigure(Figure figure) {
-        figureSet.add(figure);
+        figures.add(figure);
     }
 
     public void removeFigure(Figure figure) {
-        figureSet.remove(figure);
+        figures.remove(figure);
     }
-
 
 }

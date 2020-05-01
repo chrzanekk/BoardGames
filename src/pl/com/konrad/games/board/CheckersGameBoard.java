@@ -1,13 +1,13 @@
 package pl.com.konrad.games.board;
 
-public class CheckerGameBoard implements GameBoard {
+public class CheckersGameBoard implements GameBoard {
     private char[][] gameBoard;
     private Player playerOne;
     private Player playerTwo;
-    private GameNotification gameNotification = new GameNotification();
+    private CheckersGameNotification checkersGameNotification = new CheckersGameNotification();
 
 
-    public CheckerGameBoard(Player playerOne, Player playerTwo) {
+    public CheckersGameBoard(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;
@@ -21,19 +21,22 @@ public class CheckerGameBoard implements GameBoard {
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard.length; col++) {
                 if (isaTopGameBoard(row, col)) {
-                    playerOne.addFigure(new Figure(PawnType.MEN,
+                    addFigure(playerOne, CheckersPawnType.MEN,
                             GameBoardMark.WHITE_MEN,
-                            Colors.WHITE, row, col));
-                    //wyekstrachować metody (ify i ciało ifa)
+                            Color.WHITE, row, col);
                 }
                 if (isaBottomGameBoard(row, col)) {
-                    playerTwo.addFigure(new Figure(PawnType.MEN,
+                    addFigure(playerTwo, CheckersPawnType.MEN,
                             GameBoardMark.BLACK_MEN,
-                            Colors.BLACK, row, col));
-                    //wyekstrachować metody (ify i ciało ifa)
+                            Color.BLACK, row, col);
                 }
             }
         }
+    }
+
+    private void addFigure(Player player, CheckersPawnType checkersPawnType, GameBoardMark gameBoardMark, Color color, int row,
+                           int col) {
+        player.addFigure(new Figure(checkersPawnType, gameBoardMark, color, row, col));
     }
 
     private boolean isaBottomGameBoard(int row, int col) {
@@ -46,7 +49,7 @@ public class CheckerGameBoard implements GameBoard {
 
     @Override
     public void print() {
-        gameNotification.showActualBoard();
+        checkersGameNotification.showActualBoard();
         int verticalIndex = 1;
 
         for (int row = 0; row < gameBoard.length; row++) {
@@ -54,9 +57,9 @@ public class CheckerGameBoard implements GameBoard {
             System.out.print("|");
             for (int col = 0; col < gameBoard.length; col++) {
                 if (isFigureByRowCol(row, col, playerOne)) {
-                    System.out.print(" " + PlayerLogic.getMarkByRowCol(playerOne.getFigureSet(), row, col) + " |");
+                    System.out.print(" " + CheckersPlayerLogic.getMarkByRowCol(playerOne.getFigures(), row, col) + " |");
                 } else if (isFigureByRowCol(row, col, playerTwo)) {
-                    System.out.print(" " + PlayerLogic.getMarkByRowCol(playerTwo.getFigureSet(), row, col) + " |");
+                    System.out.print(" " + CheckersPlayerLogic.getMarkByRowCol(playerTwo.getFigures(), row, col) + " |");
                 } else System.out.print("   |");
             }
             System.out.println(verticalIndex++ + " ");
@@ -67,7 +70,7 @@ public class CheckerGameBoard implements GameBoard {
 
 
     private boolean isFigureByRowCol(int row, int col, Player player) {
-        return PlayerLogic.isFigureExistByRowCol(player.getFigureSet(), row, col);
+        return CheckersPlayerLogic.isFigureExistByRowCol(player.getFigures(), row, col);
     }
 
     private void printHorizontalLine() {
@@ -115,7 +118,6 @@ public class CheckerGameBoard implements GameBoard {
     public char getPosition(int row, int col) {
         return gameBoard[row][col];
     }
-
 
     @Override
     public int getLength() {
