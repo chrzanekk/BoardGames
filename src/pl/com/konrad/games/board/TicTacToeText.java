@@ -1,6 +1,6 @@
 package pl.com.konrad.games.board;
 
-public class TicTacToeNotifications {
+public class TicTacToeText {
     public void showActualGameBoard() {
         System.out.println("ACTUAL GAME BOARD");
     }
@@ -18,12 +18,8 @@ public class TicTacToeNotifications {
         System.out.println("No one wins. We have a draw");
     }
 
-    public void showNotEmptyRowCol() {
-        System.out.println("There is already a mark here. Try again.");
-    }
-
-    public void showInvalidUserInput() {
-        System.out.println("Invalid choice. Try again.");
+    public void showInputName(TicTacToePawnType pawnType) {
+        System.out.println("Please set name of player who plays " + pawnType + ":");
     }
 
     public void showWelcomeMessage() {

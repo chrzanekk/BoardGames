@@ -11,7 +11,7 @@ to do:
 - walidacja bicia(zabezpieczyc przed "przeskakiwaniem" swoich pionkow)
 
  */
-public class CheckersValidator {
+public class Validator {
 
     public static final int ZERO = 0;
 
@@ -29,6 +29,8 @@ public class CheckersValidator {
             throw new InvalidParameterValueException();
         }
     }
+
+
 
     // ten walidator rozbuduję o poniższe metody sprawdzania poprawnosci ruchu i bicia gracza.
     public void validateMoveBeat(int userRow, int userCol, CheckersGameBoard checkersGameBoard) {
@@ -59,6 +61,16 @@ public class CheckersValidator {
     private boolean isBottomPlayerMoveDiagonal(int currentRow, int userRow, int currentCol, int userCol,
                                                CheckersGameBoard checkersGameBoard) {
         return currentCol != userCol && userCol > ZERO && userCol < checkersGameBoard.getLength() && isBottomPlayerMoveUp(currentRow,userRow);
+    }
+
+    public boolean validateGameMenuInput(int userMenuChoice)  {
+        return userMenuChoice<GameBoardDimension.SIZE_3X3.size() || userMenuChoice > GameBoardDimension.SIZE_5X5.size();
+    }
+
+    public void validateCorrectRowColInput(short userInput, int boardSize) throws InvalidParameterValueException, InputMismatchException {
+        if (userInput < ZERO || userInput > boardSize) {
+            throw new InvalidParameterValueException();
+        }
     }
 
 }

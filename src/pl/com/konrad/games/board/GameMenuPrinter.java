@@ -13,4 +13,6 @@ public class GameMenuPrinter {
             System.out.println(gameMenuItem.getIndex() + " " + gameMenuItem.getDescription());
         }
     }
+
+
 }

@@ -1,10 +1,10 @@
 package pl.com.konrad.games.board;
 
 public enum GameMenuOption {
-    CHECKERS(1,"Warcaby."),
-    CHESS(2, "Szachy."),
-    TIC_TAC_TOE(3, "Kółko i krzyżyk."),
-    EXIT(4,"Wyjście.");
+    CHECKERS(1,"Checkers."),
+    CHESS(2, "Chess."),
+    TIC_TAC_TOE(3, "Tic Tac Toe."),
+    EXIT(4,"Exit.");
     private final int value;
     private final String description;
 

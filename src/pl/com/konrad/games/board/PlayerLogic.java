@@ -9,6 +9,7 @@ public class PlayerLogic {
         return playerOne;
     }
 
+
     public Figure getFigure(int userRow, int userCol, Player player) {
         int index = 0;
         for (int i = 0; i < player.getFigures().size(); i++) {

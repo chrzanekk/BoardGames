@@ -9,7 +9,7 @@ public class TicTacToeGameBoard implements GameBoard{
     private Player playerOne;
     private Player playerTwo;
     private GameBoardDimension gameBoardDimension;
-    TicTacToeNotifications ticTacToeNotifications = new TicTacToeNotifications();
+    TicTacToeText ticTacToeText = new TicTacToeText();
 
     public TicTacToeGameBoard(Player playerOne, Player playerTwo, GameBoardDimension gameBoardDimension) {
         this.playerOne = playerOne;
@@ -17,6 +17,7 @@ public class TicTacToeGameBoard implements GameBoard{
         this.gameBoardDimension = gameBoardDimension;
         gameBoard = new char[gameBoardDimension.size()][gameBoardDimension.size()];
         setup();
+        print();
     }
 
     public char[][] getGameBoard() {
@@ -44,7 +45,7 @@ public class TicTacToeGameBoard implements GameBoard{
     @Override
     public void print() {
 
-        ticTacToeNotifications.showActualGameBoard();
+        ticTacToeText.showActualGameBoard();
         int verticalIndex = 1;
 
         for (int row = 0; row < gameBoard.length; row++) {

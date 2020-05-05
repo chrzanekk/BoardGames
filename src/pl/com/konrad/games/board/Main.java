@@ -7,19 +7,19 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        CheckersGameNotification checkersGameNotification = new CheckersGameNotification();
+        CheckersGameText checkersGameText = new CheckersGameText();
 
         GameMenu gameMenu = new GameMenu();
         GameMenuPrinter gameMenuPrinter = new GameMenuPrinter(gameMenu);
-        CheckersValidator checkersValidator = new CheckersValidator();
+        Validator validator = new Validator();
+        ValidatorWarning validatorWarning = new ValidatorWarning();
         Game game = null;
-
-        checkersGameNotification.showWelcomeMessage();
 
         boolean shouldPlay = true;
         do {
+            checkersGameText.showWelcomeMessage();
             gameMenuPrinter.print();
-            int playerMenuChoice = getPlayerMenuChoice(scanner, checkersGameNotification, checkersValidator, gameMenuPrinter);
+            int playerMenuChoice = getPlayerChoice(scanner, validatorWarning, validator, gameMenuPrinter);
             switch (GameMenuOption.menuOption(playerMenuChoice)) {
                 case CHECKERS: {
                     game = new CheckersGame();
@@ -43,21 +43,22 @@ public class Main {
         } while (shouldPlay);
     }
 
-    private static int getPlayerMenuChoice(Scanner scanner, CheckersGameNotification checkersGameNotification, CheckersValidator checkersValidator,
-                                           GameMenuPrinter gameMenuPrinter) {
+    private static int getPlayerChoice(Scanner scanner,
+                                       ValidatorWarning validatorWarning, Validator validator,
+                                       GameMenuPrinter gameMenuPrinter) {
         int playerMenuChoice;
         do {
             while (!scanner.hasNextInt()) {
-                checkersGameNotification.showInvalidUserInput();
+                validatorWarning.showInvalidUserInput();
                 gameMenuPrinter.print();
                 scanner.next();
             }
             playerMenuChoice = scanner.nextInt();
-            if (checkersValidator.validateMainMenuOption(playerMenuChoice)) {
-                checkersGameNotification.showInvalidUserInput();
+            if (validator.validateMainMenuOption(playerMenuChoice)) {
+                validatorWarning.showInvalidUserInput();
                 gameMenuPrinter.print();
             }
-        } while (checkersValidator.validateMainMenuOption(playerMenuChoice));
+        } while (validator.validateMainMenuOption(playerMenuChoice));
         return playerMenuChoice;
     }
 }

@@ -4,7 +4,7 @@ public class CheckersGameBoard implements GameBoard {
     private char[][] gameBoard;
     private Player playerOne;
     private Player playerTwo;
-    private CheckersGameNotification checkersGameNotification = new CheckersGameNotification();
+    private CheckersGameText checkersGameText = new CheckersGameText();
 
 
     public CheckersGameBoard(Player playerOne, Player playerTwo) {
@@ -49,7 +49,7 @@ public class CheckersGameBoard implements GameBoard {
 
     @Override
     public void print() {
-        checkersGameNotification.showActualBoard();
+        checkersGameText.showActualBoard();
         int verticalIndex = 1;
 
         for (int row = 0; row < gameBoard.length; row++) {
