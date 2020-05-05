@@ -1,9 +1,7 @@
 package pl.com.konrad.games.board;
 
-import java.util.List;
-
 public class CheckersPlayerLogic {
-    //Liste na Player.
+
     public static char getMarkByRowCol(Player player, int row, int col) {
         char mark = 0;
         for (Figure figure : player.getFigures()) {

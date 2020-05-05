@@ -1,6 +1,6 @@
 package pl.com.konrad.games.board;
 
-import java.util.List;
+
 
 public class GameMenu {
     private GameMenuItem items[];
