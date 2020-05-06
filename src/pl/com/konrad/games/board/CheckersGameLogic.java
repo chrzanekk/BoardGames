@@ -12,47 +12,14 @@ import java.util.List;
 */
 public class CheckersGameLogic {
 
-    public Figure move(List<Figure> figureSet, int currentRow, int currentCol, int newRow, int newCol) {
-        int index = CheckersPlayerLogic.getIndexByRowCol(figureSet, currentRow, currentCol);
-        Figure figure = getFigure(figureSet, newRow, newCol, index);
-        figureSet.add(figure);
-        CheckersGameLogic.clearField(figureSet, index);
-        return figure;
+    public Figure move(Player player, int currentRow, int currentCol, int newRow, int newCol) {
+//        Figure figure = PlayerLogic.getFigure(player, currentRow, currentCol);
+//        player.getFigures().add(figure);
+//        CheckersGameLogic.clearField(player.getFigures(), index);
+//        return figure;
     }
-
-
-
-
-    //do klasy PlayerLogic!!
-    //currentRow
-    //curremtCol;
-    //linia 16->do 31;
-    //
-    private Figure getFigure(List<Figure> figureSet, int newRow, int newCol, int index) {
-        return new Figure(getType(figureSet, index), getMark(figureSet, index),
-                getColor(figureSet, index), newRow,
-                newCol);
-    }
-
-    private static void clearField(List<Figure> figureSet, int index) {
-        figureSet.remove(index);
-    }
-    //poniższe do ewentualnego usunięcia.
-    //do klasy PlayerLogic?
-    //enum pojedyncza liczba
-    private Color getColor(List<Figure> figureSet, int index) {
-        return figureSet.get(index).getColor();
-    }
-
-    //do klasy PlayerLogic?
-    private GameBoardMark getMark(List<Figure> figureSet, int index) {
-        return figureSet.get(index).getMark();
-    }
-
-    //do klasy PlayerLogic?
-    private CheckersPawnType getType(List<Figure> figureSet, int index) {
-        return figureSet.get(index).getType();
-    }
-
-
 }
+
+
+
+

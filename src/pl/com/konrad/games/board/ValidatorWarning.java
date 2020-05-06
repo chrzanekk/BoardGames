@@ -1,6 +1,8 @@
 package pl.com.konrad.games.board;
 
 public class ValidatorWarning {
+    //getMessage -> return string (show.not.empty.row.col).
+    //showMessage(String text) -> sout(text). (Map)
     public void showNotEmptyRowCol() {
         System.out.println("There is already a mark here. Try again.");
     }
