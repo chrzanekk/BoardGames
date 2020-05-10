@@ -13,10 +13,11 @@ public class Main {
         GameMenuPrinter gameMenuPrinter = new GameMenuPrinter(gameMenu);
         Validator validator = new Validator();
         ValidatorWarning validatorWarning = new ValidatorWarning();
-        Game game = null;
+//        Game game = null;
 
         boolean shouldPlay = true;
         do {
+            Game game = null;
             checkersGameText.showWelcomeMessage();
             gameMenuPrinter.print();
             int playerMenuChoice = getPlayerChoice(scanner, validatorWarning, validator, gameMenuPrinter);
@@ -39,7 +40,12 @@ public class Main {
                     shouldPlay = false;
                     break;
             }
-            game.play();
+            game.play(); // tu jest problem z nullpointerem. gdy inicjuje gre w linii 16 to po zakończeniu
+            // jakiejkolwiek gry, wracajac do menu wyzej ponownie ta gra sie uruchamia (tictactoe - przygotowanie
+            // gracza) i dopiero wtedy glowne menu sie pojawia i mozna wyjsc z gry. gdy przerzuce inicjacje gry do
+            // linii 20 tak jak jest teraz to nie inicjuje sie nowa gra i menu dziala dobrze ale po wyjsciu z gry
+            // wali mi nullpointerem. jak to rozwiazac poprawnie?
+
         } while (shouldPlay);
     }
 

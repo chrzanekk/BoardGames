@@ -12,12 +12,12 @@ import java.util.List;
 */
 public class CheckersGameLogic {
 
-    public Figure move(Player player, int currentRow, int currentCol, int newRow, int newCol) {
+//    public Figure move(Player player, int currentRow, int currentCol, int newRow, int newCol) {
 //        Figure figure = PlayerLogic.getFigure(player, currentRow, currentCol);
 //        player.getFigures().add(figure);
 //        CheckersGameLogic.clearField(player.getFigures(), index);
 //        return figure;
-    }
+//    }
 }
 
 

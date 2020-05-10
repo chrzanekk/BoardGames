@@ -3,7 +3,7 @@ package pl.com.konrad.games.board;
 public class TicTacToeGameLogic {
     public static TicTacToePlayer swapPlayer(TicTacToePlayer currentPlayer, TicTacToePlayer playerOne,
                                              TicTacToePlayer playerTwo) {
-        if (currentPlayer.equals(playerOne)) {
+        if (currentPlayer.getPlayerMark() == playerOne.getPlayerMark()) {
             return playerTwo;
         }
         return playerOne;
@@ -21,10 +21,20 @@ public class TicTacToeGameLogic {
         return false;
     }
 
+    public static boolean isFigureExistByRowCol(TicTacToePlayer player, int row, int col, char[][] gameBoard) {
+        for (int i = 0; i < gameBoard.length; i++)
+            for (int j = 0; j < gameBoard.length; j++) {
+                if (gameBoard[row][col] == player.getPlayerMark().mark())
+                    return true;
+            }
+        return false;
+    }
+
+
     public static boolean checkIsFull(GameBoard gameBoard) {
         for (int i = 0; i < gameBoard.getLength(); i++) {
             for (int j = 0; j < gameBoard.getLength(); j++) {
-                if (gameBoard.getPosition(i,j) == '-') {
+                if (gameBoard.getPosition(i, j) == '-') {
                     return false;
                 }
             }

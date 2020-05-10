@@ -20,7 +20,6 @@ public class TicTacToeGame implements Game {
     private TicTacToeMenuPrinter ticTacToeMenuPrinter = new TicTacToeMenuPrinter(ticTacToeMenu);
 
 
-
     @Override
     public void play() {
         playerX = preparePlayer(scanner, validator, validatorWarning, ticTacToeText, TicTacToePawnType.CROSS, null);
@@ -30,6 +29,7 @@ public class TicTacToeGame implements Game {
         ticTacToeMenuPrinter.print();
         boolean shouldPlayGame = true;
         do {
+
             int playerChoice = getPlayerChoice(scanner, validatorWarning, validator, ticTacToeMenuPrinter);
 
             switch (TicTacToeSizeOption.sizeOption(playerChoice)) {
@@ -56,59 +56,60 @@ public class TicTacToeGame implements Game {
                     break;
                 }
             }
-
         } while (shouldPlayGame);
     }
 
 
+    private void runGame(TicTacToeGameBoard ticTacToeGameBoard) {
 
-        private void runGame(TicTacToeGameBoard ticTacToeGameBoard){
+        do {
+            ticTacToeText.showActualGameBoard();
+            ticTacToeGameBoard.print();
+
+            ticTacToeText.showWhichPlayerMove(currentPlayer.getPlayerMark().mark());
+            boolean isInputIncorrect = false;
             do {
-                ticTacToeText.showActualGameBoard();
-                ticTacToeGameBoard.print();
-
-                ticTacToeText.showWhichPlayerMove(currentPlayer.getPlayerMark().mark());
-                boolean isInputIncorrect = false;
-                do {
-                    ticTacToeText.showRowInput(ticTacToeGameBoard.getLength());
-                    short userRowChoice = (short) (scanner.nextShort() - 1);
-                    try {
-                        validator.validateCorrectRowColInput(userRowChoice, ticTacToeGameBoard.getLength());
-                    } catch (InvalidParameterValueException e) {
-                        validatorWarning.showInvalidUserInput();
-                        isInputIncorrect = true;
-                    }
-                    ticTacToeText.showColInput(ticTacToeGameBoard.getLength());
-                    short userColumnChoice = (short) (scanner.nextShort() - 1);
-                    try {
-                        validator.validateCorrectRowColInput(userColumnChoice,
-                                ticTacToeGameBoard.getLength());
-                    } catch (InvalidParameterValueException e) {
-                        validatorWarning.showInvalidUserInput();
-                        isInputIncorrect = true;
-                    }
-
-                    if (!TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer.getPlayerMark().mark(),
-                            ticTacToeGameBoard)) {
-                        validatorWarning.showNotEmptyRowCol();
-                        continue;
-                    } else
-                        TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer.getPlayerMark().mark(),
-                                ticTacToeGameBoard);
-                    if (TicTacToeGameLogic.checkWinner(ticTacToeGameBoard, playerX, playerO)) {
-                        ticTacToeText.showWinner(currentPlayer.getPlayerMark().mark());
-                        ticTacToeGameBoard.print();
-                    }
-                    if (TicTacToeGameLogic.checkIsFull(ticTacToeGameBoard)) {
-                        ticTacToeText.showDraw();
-                        ticTacToeGameBoard.print();
-                    }
+                ticTacToeText.showRowInput(ticTacToeGameBoard.getLength());
+                short userRowChoice = (short) (scanner.nextShort() - 1);
+                try {
+                    validator.validateCorrectRowColInput(userRowChoice, ticTacToeGameBoard.getLength());
+                } catch (InvalidParameterValueException e) {
+                    validatorWarning.showInvalidUserInput();
+                    isInputIncorrect = true;
                 }
-                while (isInputIncorrect);
-                currentPlayer =  TicTacToeGameLogic.swapPlayer(playerX, playerO, currentPlayer);
-            } while (!TicTacToeGameLogic.isGameBoardFullOrIsaWinner(ticTacToeGameBoard, playerX, playerO));
-        }
+                ticTacToeText.showColInput(ticTacToeGameBoard.getLength());
+                short userColumnChoice = (short) (scanner.nextShort() - 1);
+                try {
+                    validator.validateCorrectRowColInput(userColumnChoice,
+                            ticTacToeGameBoard.getLength());
+                } catch (InvalidParameterValueException e) {
+                    validatorWarning.showInvalidUserInput();
+                    isInputIncorrect = true;
+                }
 
+                if (!TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
+                        ticTacToeGameBoard)) {
+                    validatorWarning.showNotEmptyRowCol();
+                    continue;
+                } else
+                    TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
+                            ticTacToeGameBoard);
+                if (TicTacToeGameLogic.checkWinner(ticTacToeGameBoard, playerX, playerO)) {
+                    ticTacToeText.showWinner(currentPlayer.getPlayerMark().mark());
+                    ticTacToeGameBoard.print();
+
+                }
+                if (TicTacToeGameLogic.checkIsFull(ticTacToeGameBoard)) {
+                    ticTacToeText.showDraw();
+                    ticTacToeGameBoard.print();
+
+                }
+            }
+            while (isInputIncorrect);
+            currentPlayer = TicTacToeGameLogic.swapPlayer(currentPlayer, playerX, playerO);
+        } while (!TicTacToeGameLogic.isGameBoardFullOrIsaWinner(ticTacToeGameBoard, playerX, playerO));
+        ticTacToeMenuPrinter.print();
+    }
 
 
     private static int getPlayerChoice(Scanner scanner,
@@ -131,8 +132,8 @@ public class TicTacToeGame implements Game {
     }
 
     private static TicTacToePlayer preparePlayer(Scanner scanner, Validator validator,
-                                        ValidatorWarning validatorWarning,
-                                        TicTacToeText ticTacToeText, TicTacToePawnType ticTacToePawnType, String existingName) {
+                                                 ValidatorWarning validatorWarning,
+                                                 TicTacToeText ticTacToeText, TicTacToePawnType ticTacToePawnType, String existingName) {
         List<Figure> playerFigures = new ArrayList<>();
         String name = validateUserName(scanner, validator, validatorWarning, ticTacToeText, ticTacToePawnType,
                 existingName);

@@ -1,17 +1,17 @@
 package pl.com.konrad.games.board;
 
-public class TicTacToeGameBoard implements GameBoard{
+public class TicTacToeGameBoard implements GameBoard {
     public static final int GAME_BOARD_SIZE_3X3 = 3;
     public static final int GAME_BOARD_SIZE_4X4 = 4;
     public static final int GAME_BOARD_SIZE_5X5 = 5;
 
     private char gameBoard[][];
-    private Player playerOne;
-    private Player playerTwo;
+    private TicTacToePlayer playerOne;
+    private TicTacToePlayer playerTwo;
     private GameBoardDimension gameBoardDimension;
     TicTacToeText ticTacToeText = new TicTacToeText();
 
-    public TicTacToeGameBoard(Player playerOne, Player playerTwo, GameBoardDimension gameBoardDimension) {
+    public TicTacToeGameBoard(TicTacToePlayer playerOne, TicTacToePlayer playerTwo, GameBoardDimension gameBoardDimension) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         this.gameBoardDimension = gameBoardDimension;
@@ -45,7 +45,6 @@ public class TicTacToeGameBoard implements GameBoard{
     @Override
     public void print() {
 
-        ticTacToeText.showActualGameBoard();
         int verticalIndex = 1;
 
         for (int row = 0; row < gameBoard.length; row++) {
@@ -53,9 +52,9 @@ public class TicTacToeGameBoard implements GameBoard{
             System.out.print("|");
             for (int col = 0; col < gameBoard.length; col++) {
                 if (isFigureByRowCol(row, col, playerOne)) {
-                    System.out.print(" " + CheckersPlayerLogic.getMarkByRowCol(playerOne.getFigures(), row, col) + " |");
+                    System.out.print(" " + playerOne.getPlayerMark().mark() + " |");
                 } else if (isFigureByRowCol(row, col, playerTwo)) {
-                    System.out.print(" " + CheckersPlayerLogic.getMarkByRowCol(playerTwo.getFigures(), row, col) + " |");
+                    System.out.print(" " + playerTwo.getPlayerMark().mark() + " |");
                 } else System.out.print("   |");
             }
             System.out.println(verticalIndex++ + " ");
@@ -75,7 +74,7 @@ public class TicTacToeGameBoard implements GameBoard{
     }
 
     private void printUnderRow() {
-        int  horizontalIndex = 1;
+        int horizontalIndex = 1;
         for (int underRow = 0; underRow < gameBoard.length; underRow++) {
             System.out.print("  " + horizontalIndex + " ");
             horizontalIndex++;
@@ -83,8 +82,8 @@ public class TicTacToeGameBoard implements GameBoard{
         System.out.println();
     }
 
-    private boolean isFigureByRowCol(int row, int col, Player player) {
-        return CheckersPlayerLogic.isFigureExistByRowCol(player.getFigures(), row, col);
+    private boolean isFigureByRowCol(int row, int col, TicTacToePlayer player) {
+        return TicTacToeGameLogic.isFigureExistByRowCol(player, row, col, gameBoard);
     }
 //        if (gameBoard.length == GAME_BOARD_SIZE_3X3) {
 //            System.out.println("-------------");
@@ -117,5 +116,5 @@ public class TicTacToeGameBoard implements GameBoard{
 //                System.out.println("---------------------");
 //            }
 //        }
-    }
+}
 
