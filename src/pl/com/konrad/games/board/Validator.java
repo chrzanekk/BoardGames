@@ -23,6 +23,10 @@ public class Validator {
         return existingName != null && existingName.equals(newName);
     }
 
+    public boolean validateRowColInput(int userChoice, GameBoard gameBoard) {
+        return userChoice < ZERO || userChoice > gameBoard.getLength();
+    }
+
     public void validateCorrectRowColInput(int userInput, CheckersGameBoard checkersGameBoard) throws InvalidParameterValueException,
             InputMismatchException {
         if (userInput < ZERO || userInput > checkersGameBoard.getLength()) {

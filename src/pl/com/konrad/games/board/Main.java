@@ -37,6 +37,7 @@ public class Main {
                 }
 
                 case EXIT:
+                    game = new ExitGame();
                     shouldPlay = false;
                     break;
             }
