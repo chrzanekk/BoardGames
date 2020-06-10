@@ -7,6 +7,10 @@ public class ValidatorWarning {
     private String showWrongBeat = "You cannot beat this pawn. Try again.";
     private String showWrongNameInput = "Name is already exists. Try different name.";
 
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
+
     public String getShowNotEmptyRowCol() {
         return showNotEmptyRowCol;
     }
@@ -27,9 +31,6 @@ public class ValidatorWarning {
         return showWrongNameInput;
     }
 
-    public void showMessage(String message) {
-        System.out.println(message);
-    }
 
     //getMessage -> return string (show.not.empty.row.col).
     //showMessage(String text) -> sout(text). (Map)

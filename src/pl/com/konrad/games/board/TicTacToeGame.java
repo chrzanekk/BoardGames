@@ -89,7 +89,7 @@ public class TicTacToeGame implements Game {
 
                 if (!TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
                         ticTacToeGameBoard)) {
-                    validatorWarning.showNotEmptyRowCol();
+                    validatorWarning.showMessage(validatorWarning.getShowNotEmptyRowCol());
                     continue;
                 } else
                     TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
@@ -118,13 +118,13 @@ public class TicTacToeGame implements Game {
         int playerMenuChoice;
         do {
             while (!scanner.hasNextInt()) {
-                validatorWarning.showInvalidUserInput();
+                validatorWarning.showMessage(validatorWarning.getShowInvalidUserInput());
                 ticTacToeMenuPrinter.print();
                 scanner.next();
             }
             playerMenuChoice = scanner.nextInt();
             if (validator.validateMainMenuOption(playerMenuChoice)) {
-                validatorWarning.showInvalidUserInput();
+                validatorWarning.showMessage(validatorWarning.getShowInvalidUserInput());
                 ticTacToeMenuPrinter.print();
             }
         } while (validator.validateMainMenuOption(playerMenuChoice));
@@ -170,7 +170,7 @@ public class TicTacToeGame implements Game {
             if (!validator.isNameDuplicated(existingName, name)) {
                 shouldInputNameAgain = false;
             } else {
-                validatorWarning.showWrongNameInput(existingName);
+                validatorWarning.showMessage(validatorWarning.getShowWrongNameInput());
             }
         } while (shouldInputNameAgain);
         return name;

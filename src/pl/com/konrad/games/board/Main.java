@@ -56,13 +56,13 @@ public class Main {
         int playerMenuChoice;
         do {
             while (!scanner.hasNextInt()) {
-                validatorWarning.showInvalidUserInput();
+                validatorWarning.showMessage(validatorWarning.getShowInvalidUserInput());
                 gameMenuPrinter.print();
                 scanner.next();
             }
             playerMenuChoice = scanner.nextInt();
             if (validator.validateMainMenuOption(playerMenuChoice)) {
-                validatorWarning.showInvalidUserInput();
+                validatorWarning.showMessage(validatorWarning.getShowInvalidUserInput());
                 gameMenuPrinter.print();
             }
         } while (validator.validateMainMenuOption(playerMenuChoice));

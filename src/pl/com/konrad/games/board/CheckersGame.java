@@ -62,7 +62,7 @@ public class CheckersGame implements Game{
                 shouldInputNameAgain = false;
             }
             else {
-                validatorWarning.showWrongNameInput(existingName);
+                validatorWarning.showMessage(validatorWarning.getShowWrongNameInput());
             }
         } while (shouldInputNameAgain);
         return name;
