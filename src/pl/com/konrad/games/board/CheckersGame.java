@@ -18,15 +18,13 @@ public class CheckersGame implements Game{
     private Validator validator = new Validator();
     private CheckersGameText checkersGameText = new CheckersGameText();
     private CheckersGameLogic checkersGameLogic = new CheckersGameLogic();
-    private ValidatorWarning validatorWarning = new ValidatorWarning();
+
 
     @Override
     public void play() {
-        playerOne = preparePlayer(scanner, validator, validatorWarning,
-                checkersGameText, Color.WHITE,null);
+        playerOne = preparePlayer(scanner, validator, checkersGameText, Color.WHITE,null);
         currentPlayer = playerOne;
-        playerTwo = preparePlayer(scanner, validator, validatorWarning,
-                checkersGameText, Color.BLACK, playerOne.getName());
+        playerTwo = preparePlayer(scanner, validator, checkersGameText, Color.BLACK, playerOne.getName());
 
         CheckersGameBoard checkersGameBoard = new CheckersGameBoard(playerOne, playerTwo);
         checkersGameBoard.print();
@@ -42,16 +40,16 @@ public class CheckersGame implements Game{
             System.out.println();
         }while (isInputIncorrect);
     }
-    private static Player preparePlayer(Scanner scanner, Validator validator, ValidatorWarning validatorWarning,
+    private static Player preparePlayer(Scanner scanner, Validator validator,
                                         CheckersGameText checkersGameText, Color playerColor, String existingName) {
         List<Figure> playerSet = new ArrayList<>();
-        String name = validateUserName(scanner, validator, validatorWarning ,checkersGameText, playerColor,
+        String name = validateUserName(scanner, validator, checkersGameText, playerColor,
                 existingName);
         return new Player(name, playerSet);
     }
 
     private static String validateUserName(Scanner scanner, Validator validator,
-                                           ValidatorWarning validatorWarning, CheckersGameText checkersGameText,
+                                            CheckersGameText checkersGameText,
                                            Color playerColor, String existingName) {
         String name;
         boolean shouldInputNameAgain = true;
@@ -62,7 +60,7 @@ public class CheckersGame implements Game{
                 shouldInputNameAgain = false;
             }
             else {
-                validatorWarning.showMessage(validatorWarning.getShowWrongNameInput());
+                ValidatorWarning.getMessage("show.wrong.name.input");
             }
         } while (shouldInputNameAgain);
         return name;

@@ -1,15 +1,11 @@
 package pl.com.konrad.games.board;
 
 public class TicTacToeGameBoard implements GameBoard {
-    public static final int GAME_BOARD_SIZE_3X3 = 3;
-    public static final int GAME_BOARD_SIZE_4X4 = 4;
-    public static final int GAME_BOARD_SIZE_5X5 = 5;
 
     private char gameBoard[][];
     private TicTacToePlayer playerOne;
     private TicTacToePlayer playerTwo;
     private GameBoardDimension gameBoardDimension;
-    TicTacToeText ticTacToeText = new TicTacToeText();
 
     public TicTacToeGameBoard(TicTacToePlayer playerOne, TicTacToePlayer playerTwo, GameBoardDimension gameBoardDimension) {
         this.playerOne = playerOne;
@@ -85,36 +81,6 @@ public class TicTacToeGameBoard implements GameBoard {
     private boolean isFigureByRowCol(int row, int col, TicTacToePlayer player) {
         return TicTacToeGameLogic.isFigureExistByRowCol(player, row, col, gameBoard);
     }
-//        if (gameBoard.length == GAME_BOARD_SIZE_3X3) {
-//            System.out.println("-------------");
-//            for (int i = 0; i < gameBoard.length; i++) {
-//                System.out.print("| ");
-//                for (int j = 0; j < gameBoard.length; j++) {
-//                    System.out.print(getPosition(i,j) + " | ");
-//                }
-//                System.out.println();
-//                System.out.println("-------------");
-//            }
-//        } else if (gameBoard.length == GAME_BOARD_SIZE_4X4) {
-//            System.out.println("-----------------");
-//            for (int i = 0; i < gameBoard.length; i++) {
-//                System.out.print("| ");
-//                for (int j = 0; j < gameBoard.length; j++) {
-//                    System.out.print(getPosition(i,j)  + " | ");
-//                }
-//                System.out.println();
-//                System.out.println("-----------------");
-//            }
-//        } else if (gameBoard.length == GAME_BOARD_SIZE_5X5){
-//            System.out.println("---------------------");
-//            for (int i = 0; i < gameBoard.length; i++) {
-//                System.out.print("| ");
-//                for (int j = 0; j < gameBoard.length; j++) {
-//                    System.out.print(getPosition(i,j) + " | ");
-//                }
-//                System.out.println();
-//                System.out.println("---------------------");
-//            }
-//        }
+
 }
 

@@ -13,8 +13,6 @@ public class TicTacToeGame implements Game {
 
     private Validator validator = new Validator();
     private TicTacToeText ticTacToeText = new TicTacToeText();
-    private ValidatorWarning validatorWarning = new ValidatorWarning();
-    private TicTacToeGameLogic ticTacToeGameLogic = new TicTacToeGameLogic();
 
     private TicTacToeMenu ticTacToeMenu = new TicTacToeMenu();
     private TicTacToeMenuPrinter ticTacToeMenuPrinter = new TicTacToeMenuPrinter(ticTacToeMenu);
@@ -22,15 +20,15 @@ public class TicTacToeGame implements Game {
 
     @Override
     public void play() {
-        playerX = preparePlayer(scanner, validator, validatorWarning, ticTacToeText, TicTacToePawnType.CROSS, null);
+        playerX = preparePlayer(scanner, validator, ticTacToeText, TicTacToePawnType.CROSS, null);
         currentPlayer = playerX;
-        playerO = preparePlayer(scanner, validator, validatorWarning, ticTacToeText, TicTacToePawnType.CIRCLE, playerX.getName());
+        playerO = preparePlayer(scanner, validator, ticTacToeText, TicTacToePawnType.CIRCLE, playerX.getName());
         ticTacToeText.showWelcomeMessage();
         ticTacToeMenuPrinter.print();
         boolean shouldPlayGame = true;
         do {
 
-            int playerChoice = getPlayerMenuChoice(scanner, validatorWarning, validator, ticTacToeMenuPrinter);
+            int playerChoice = getPlayerMenuChoice(scanner, validator, ticTacToeMenuPrinter);
 
             switch (TicTacToeSizeOption.sizeOption(playerChoice)) {
                 case SIZE_3X3: {
@@ -70,7 +68,7 @@ public class TicTacToeGame implements Game {
             boolean isInputIncorrect = false;
             do {
                 ticTacToeText.showRowInput(ticTacToeGameBoard.getLength());
-                int userRowChoice = getPlayerRowColChoice(scanner, validatorWarning, validator, ticTacToeGameBoard);
+                int userRowChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
 //                try {
 //                    validator.validateCorrectRowColInput(userRowChoice, ticTacToeGameBoard.getLength());
 //                } catch (InvalidParameterValueException e) {
@@ -78,7 +76,7 @@ public class TicTacToeGame implements Game {
 //                    isInputIncorrect = true;
 //                }
                 ticTacToeText.showColInput(ticTacToeGameBoard.getLength());
-                int userColumnChoice = getPlayerRowColChoice(scanner, validatorWarning, validator, ticTacToeGameBoard);
+                int userColumnChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
 //                try {
 //                    validator.validateCorrectRowColInput(userColumnChoice,
 //                            ticTacToeGameBoard.getLength());
@@ -89,7 +87,7 @@ public class TicTacToeGame implements Game {
 
                 if (!TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
                         ticTacToeGameBoard)) {
-                    validatorWarning.showMessage(validatorWarning.getShowNotEmptyRowCol());
+                    ValidatorWarning.getMessage("show.not.empty.row.col");
                     continue;
                 } else
                     TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
@@ -113,18 +111,18 @@ public class TicTacToeGame implements Game {
 
 
     private static int getPlayerMenuChoice(Scanner scanner,
-                                           ValidatorWarning validatorWarning, Validator validator,
+                                           Validator validator,
                                            TicTacToeMenuPrinter ticTacToeMenuPrinter) {
         int playerMenuChoice;
         do {
             while (!scanner.hasNextInt()) {
-                validatorWarning.showMessage(validatorWarning.getShowInvalidUserInput());
+                ValidatorWarning.getMessage("show.invalid.user.input");
                 ticTacToeMenuPrinter.print();
                 scanner.next();
             }
             playerMenuChoice = scanner.nextInt();
             if (validator.validateMainMenuOption(playerMenuChoice)) {
-                validatorWarning.showMessage(validatorWarning.getShowInvalidUserInput());
+                ValidatorWarning.getMessage("show.invalid.user.input");
                 ticTacToeMenuPrinter.print();
             }
         } while (validator.validateMainMenuOption(playerMenuChoice));
@@ -132,17 +130,17 @@ public class TicTacToeGame implements Game {
     }
 
     private static int getPlayerRowColChoice(Scanner scanner,
-                                             ValidatorWarning validatorWarning, Validator validator,
+                                             Validator validator,
                                              GameBoard gameBoard) {
         int playerRowColChoice;
         do {
             while (!scanner.hasNextInt()) {
-                validatorWarning.showMessage(validatorWarning.getShowInvalidUserInput());
+                ValidatorWarning.getMessage("show.invalid.user.input");
                 scanner.next();
             }
             playerRowColChoice = scanner.nextInt();
             if (validator.validateRowColInput(playerRowColChoice, gameBoard)) {
-                validatorWarning.showMessage(validatorWarning.getShowInvalidUserInput());
+                ValidatorWarning.getMessage("show.invalid.user.input");
 
             }
         } while (validator.validateRowColInput(playerRowColChoice, gameBoard));
@@ -150,16 +148,16 @@ public class TicTacToeGame implements Game {
     }
 
     private static TicTacToePlayer preparePlayer(Scanner scanner, Validator validator,
-                                                 ValidatorWarning validatorWarning,
+
                                                  TicTacToeText ticTacToeText, TicTacToePawnType ticTacToePawnType, String existingName) {
         List<Figure> playerFigures = new ArrayList<>();
-        String name = validateUserName(scanner, validator, validatorWarning, ticTacToeText, ticTacToePawnType,
+        String name = validateUserName(scanner, validator,ticTacToeText, ticTacToePawnType,
                 existingName);
         return new TicTacToePlayer(name, playerFigures, ticTacToePawnType);
     }
 
     private static String validateUserName(Scanner scanner, Validator validator,
-                                           ValidatorWarning validatorWarning, TicTacToeText ticTacToeText,
+                                            TicTacToeText ticTacToeText,
                                            TicTacToePawnType ticTacToePawnType,
                                            String existingName) {
         String name;
@@ -170,7 +168,7 @@ public class TicTacToeGame implements Game {
             if (!validator.isNameDuplicated(existingName, name)) {
                 shouldInputNameAgain = false;
             } else {
-                validatorWarning.showMessage(validatorWarning.getShowWrongNameInput());
+                ValidatorWarning.getMessage("show.wrong.name.input");
             }
         } while (shouldInputNameAgain);
         return name;
