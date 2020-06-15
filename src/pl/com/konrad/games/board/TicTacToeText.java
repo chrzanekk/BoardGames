@@ -1,6 +1,40 @@
 package pl.com.konrad.games.board;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TicTacToeText {
+//     do sprawdzenia i obgadania z Pawłem jak rozwiązań poprawnie formatowanie stringa w kolekcji.
+    private Player currentPlayer = null;
+    private char pawnType;
+    private Map<String, String> messages = new HashMap<>();
+    private String whoShouldMoveNotification = String.format("Player %s move.", currentPlayer.getName());
+    private String winnerNotification = String.format("We have a winner! Player %s wins.",
+            currentPlayer.getName());
+    private String setNameByPawnType = String.format("Please set name of player who plays  %char:",
+            pawnType);
+
+
+    public TicTacToeText(Player currentPlayer, char pawnType) {
+        this.currentPlayer = currentPlayer;
+        this.pawnType = pawnType;
+    }
+
+    {
+        messages.put("show.actual.game.board", "ACTUAL GAME BOARD");
+        messages.put("show.witch.player.move", whoShouldMoveNotification);
+        messages.put("show.winner", winnerNotification);
+        messages.put("show.draw", "No one wins. We have a draw");
+        messages.put("show.input.name", setNameByPawnType);
+        messages.put("show.welcome.message", "Welcome in Tic-Tac-Toe game. Have fun. \n MAIN MENU: \n Choose option: ");
+    }
+
+
+    public String getMessage(String key) {
+        return messages.get(key);
+    }
+
+
     public void showActualGameBoard() {
         System.out.println("ACTUAL GAME BOARD");
     }
