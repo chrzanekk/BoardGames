@@ -144,26 +144,27 @@ public class TicTacToeGame implements Game {
 
             }
         } while (validator.validateRowColInput(playerRowColChoice, gameBoard));
-        return playerRowColChoice-1;
+        return playerRowColChoice - 1;
     }
 
     private static TicTacToePlayer preparePlayer(Scanner scanner, Validator validator,
 
                                                  TicTacToeText ticTacToeText, TicTacToePawnType ticTacToePawnType, String existingName) {
         List<Figure> playerFigures = new ArrayList<>();
-        String name = validateUserName(scanner, validator,ticTacToeText, ticTacToePawnType,
+        String name = validateUserName(scanner, validator, ticTacToeText, ticTacToePawnType,
                 existingName);
         return new TicTacToePlayer(name, playerFigures, ticTacToePawnType);
     }
 
     private static String validateUserName(Scanner scanner, Validator validator,
-                                            TicTacToeText ticTacToeText,
+                                           TicTacToeText ticTacToeText,
                                            TicTacToePawnType ticTacToePawnType,
                                            String existingName) {
         String name;
         boolean shouldInputNameAgain = true;
         do {
-            ticTacToeText.showInputName(ticTacToePawnType);
+//            ticTacToeText.showInputName(ticTacToePawnType);
+            ticTacToeText.getMessage("show.input.name");
             name = scanner.next();
             if (!validator.isNameDuplicated(existingName, name)) {
                 shouldInputNameAgain = false;

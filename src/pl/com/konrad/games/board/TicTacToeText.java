@@ -5,22 +5,17 @@ import java.util.Map;
 
 public class TicTacToeText {
 //     do sprawdzenia i obgadania z Pawłem jak rozwiązań poprawnie formatowanie stringa w kolekcji.
-    private Player currentPlayer = null;
-    private char pawnType;
-    private Map<String, String> messages = new HashMap<>();
-    private String whoShouldMoveNotification = String.format("Player %s move.", currentPlayer.getName());
-    private String winnerNotification = String.format("We have a winner! Player %s wins.",
-            currentPlayer.getName());
-    private String setNameByPawnType = String.format("Please set name of player who plays  %char:",
+    private static String currentPlayer;
+    private static String pawnType;
+    private static Map<String, String> messages = new HashMap<>();
+    private static String whoShouldMoveNotification = String.format("Player %s move.", currentPlayer);
+    private static String winnerNotification = String.format("We have a winner! Player %s wins.",
+            currentPlayer);
+    private static String setNameByPawnType = String.format("Please set name of player who plays  %s:",
             pawnType);
 
 
-    public TicTacToeText(Player currentPlayer, char pawnType) {
-        this.currentPlayer = currentPlayer;
-        this.pawnType = pawnType;
-    }
-
-    {
+    static {
         messages.put("show.actual.game.board", "ACTUAL GAME BOARD");
         messages.put("show.witch.player.move", whoShouldMoveNotification);
         messages.put("show.winner", winnerNotification);
