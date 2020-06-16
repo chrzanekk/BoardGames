@@ -5,17 +5,25 @@ import java.util.Map;
 
 public class TicTacToeText {
 //     do sprawdzenia i obgadania z Pawłem jak rozwiązań poprawnie formatowanie stringa w kolekcji.
-    private static String currentPlayer;
-    private static String pawnType;
-    private static Map<String, String> messages = new HashMap<>();
-    private static String whoShouldMoveNotification = String.format("Player %s move.", currentPlayer);
-    private static String winnerNotification = String.format("We have a winner! Player %s wins.",
-            currentPlayer);
-    private static String setNameByPawnType = String.format("Please set name of player who plays  %s:",
-            pawnType);
+    private char currentPlayer;
+    private char pawnType;
+    private Map<String, String> messages = new HashMap<>();
 
+    public TicTacToeText() {
+    }
 
-    static {
+    public TicTacToeText(char currentPlayer, char pawnType) {
+        this.currentPlayer = currentPlayer;
+        this.pawnType = pawnType;
+    }
+
+    {
+
+        String whoShouldMoveNotification = String.format("Player %char move.", currentPlayer);
+        String winnerNotification = String.format("We have a winner! Player %char wins.",
+                currentPlayer);
+        String setNameByPawnType = String.format("Please set name of player who plays  %char:",
+                pawnType);
         messages.put("show.actual.game.board", "ACTUAL GAME BOARD");
         messages.put("show.witch.player.move", whoShouldMoveNotification);
         messages.put("show.winner", winnerNotification);
@@ -24,12 +32,14 @@ public class TicTacToeText {
         messages.put("show.welcome.message", "Welcome in Tic-Tac-Toe game. Have fun. \n MAIN MENU: \n Choose option: ");
     }
 
-
     public String getMessage(String key) {
         return messages.get(key);
     }
 
 
+
+
+//    poprzednia wersja ponizej.
     public void showActualGameBoard() {
         System.out.println("ACTUAL GAME BOARD");
     }

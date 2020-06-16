@@ -61,7 +61,8 @@ public class TicTacToeGame implements Game {
     private void runGame(TicTacToeGameBoard ticTacToeGameBoard) {
 
         do {
-            ticTacToeText.showActualGameBoard();
+            ticTacToeText.getMessage("show.actual.game.board");
+//            ticTacToeText.showActualGameBoard();
             ticTacToeGameBoard.print();
 
             ticTacToeText.showWhichPlayerMove(currentPlayer.getPlayerMark().mark());
@@ -93,8 +94,9 @@ public class TicTacToeGame implements Game {
                     TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
                             ticTacToeGameBoard);
                 if (TicTacToeGameLogic.checkWinner(ticTacToeGameBoard, playerX, playerO)) {
-                    ticTacToeText.showWinner(currentPlayer.getPlayerMark().mark());
-                    ticTacToeGameBoard.print();
+                    ticTacToeText.getMessage("show.winner");
+//                    ticTacToeText.showWinner(currentPlayer.getPlayerMark().mark());
+//                    ticTacToeGameBoard.print();
 
                 }
                 if (TicTacToeGameLogic.checkIsFull(ticTacToeGameBoard)) {
@@ -148,7 +150,6 @@ public class TicTacToeGame implements Game {
     }
 
     private static TicTacToePlayer preparePlayer(Scanner scanner, Validator validator,
-
                                                  TicTacToeText ticTacToeText, TicTacToePawnType ticTacToePawnType, String existingName) {
         List<Figure> playerFigures = new ArrayList<>();
         String name = validateUserName(scanner, validator, ticTacToeText, ticTacToePawnType,
