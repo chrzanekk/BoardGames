@@ -94,7 +94,7 @@ public class TicTacToeGame implements Game {
                     TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
                             ticTacToeGameBoard);
                 if (TicTacToeGameLogic.checkWinner(ticTacToeGameBoard, playerX, playerO)) {
-                    ticTacToeText.getMessage("show.winner");
+                    ticTacToeText.getMessage("show.winner",currentPlayer.getName());
 //                    ticTacToeText.showWinner(currentPlayer.getPlayerMark().mark());
 //                    ticTacToeGameBoard.print();
 

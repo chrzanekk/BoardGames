@@ -4,31 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TicTacToeText {
-//     do sprawdzenia i obgadania z Pawłem jak rozwiązań poprawnie formatowanie stringa w kolekcji.
-    private char currentPlayer;
-    private char pawnType;
+    //     do sprawdzenia i obgadania z Pawłem jak rozwiązań poprawnie formatowanie stringa w kolekcji.
     private Map<String, String> messages = new HashMap<>();
 
-    public TicTacToeText() {
-    }
-
-    public TicTacToeText(char currentPlayer, char pawnType) {
-        this.currentPlayer = currentPlayer;
-        this.pawnType = pawnType;
-    }
 
     {
-
-        String whoShouldMoveNotification = String.format("Player %char move.", currentPlayer);
-        String winnerNotification = String.format("We have a winner! Player %char wins.",
-                currentPlayer);
-        String setNameByPawnType = String.format("Please set name of player who plays  %char:",
-                pawnType);
         messages.put("show.actual.game.board", "ACTUAL GAME BOARD");
-        messages.put("show.witch.player.move", whoShouldMoveNotification);
-        messages.put("show.winner", winnerNotification);
+        messages.put("show.witch.player.move", "Player {0} move.");
+        messages.put("show.winner", "We have a winner! \n Player {0} wins.");
         messages.put("show.draw", "No one wins. We have a draw");
-        messages.put("show.input.name", setNameByPawnType);
+        messages.put("show.input.name", "Please set name of player who plays {0}.");
         messages.put("show.welcome.message", "Welcome in Tic-Tac-Toe game. Have fun. \n MAIN MENU: \n Choose option: ");
     }
 
@@ -36,10 +21,16 @@ public class TicTacToeText {
         return messages.get(key);
     }
 
+    public String getMessage(String key, String... params) {
+        String message = messages.get(key);
+        for (int i = 0; i < params.length; i++) {
+            message.replace("{" + i + "}", params[i]);
+        }
+        return message;
+    }
 
 
-
-//    poprzednia wersja ponizej.
+    //    poprzednia wersja ponizej.
     public void showActualGameBoard() {
         System.out.println("ACTUAL GAME BOARD");
     }
