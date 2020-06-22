@@ -28,18 +28,21 @@ public class CheckersGame implements Game{
 
         CheckersGameBoard checkersGameBoard = new CheckersGameBoard(playerOne, playerTwo);
         checkersGameBoard.print();
-        boolean isInputIncorrect = false;
-        do {
-            checkersGameText.showWhichPlayerMove(currentPlayer.getName());
-            checkersGameText.showCurrentPawnToMove();
-            checkersGameText.showInputRow(checkersGameBoard.getLength());
-            checkersGameText.showInputCol(checkersGameBoard.getLength());
-            checkersGameText.showNewPawnPosition();
-            checkersGameText.showInputRow(checkersGameBoard.getLength());
-            checkersGameText.showInputCol(checkersGameBoard.getLength());
+//        boolean isInputIncorrect = false;
+//        do {
+            System.out.println(checkersGameText.getMessage("show.witch.player.move",currentPlayer.getName()));
+            System.out.println(checkersGameText.getMessage("show.current.pawn.to.move"));
+            System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
+            System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.lastLetterOfCol('A',
+                    checkersGameBoard.getLength()))));
+            System.out.println(checkersGameText.getMessage("show.new.pawn.position"));
+            System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
+            System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.lastLetterOfCol('A',
+                    checkersGameBoard.getLength()))));
             System.out.println();
-        }while (isInputIncorrect);
+//        }while (isInputIncorrect);
     }
+
     private static Player preparePlayer(Scanner scanner, Validator validator,
                                         CheckersGameText checkersGameText, Color playerColor, String existingName) {
         List<Figure> playerSet = new ArrayList<>();
@@ -54,13 +57,13 @@ public class CheckersGame implements Game{
         String name;
         boolean shouldInputNameAgain = true;
         do {
-            checkersGameText.showInputName(playerColor);
+            System.out.println(checkersGameText.getMessage("show.input.name",playerColor.Description()));
             name = scanner.next();
             if(!validator.isNameDuplicated(existingName, name)){
                 shouldInputNameAgain = false;
             }
             else {
-                ValidatorWarning.getMessage("show.wrong.name.input");
+                System.out.println(ValidatorWarning.getMessage("show.wrong.name.input"));
             }
         } while (shouldInputNameAgain);
         return name;

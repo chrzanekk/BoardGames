@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TicTacToeText {
-    //     do sprawdzenia i obgadania z Pawłem jak rozwiązań poprawnie formatowanie stringa w kolekcji.
+
     private Map<String, String> messages = new HashMap<>();
 
 
@@ -15,6 +15,8 @@ public class TicTacToeText {
         messages.put("show.draw", "No one wins. We have a draw");
         messages.put("show.input.name", "Please set name of player who plays {0}.");
         messages.put("show.welcome.message", "Welcome in Tic-Tac-Toe game. Have fun. \n MAIN MENU: \n Choose option: ");
+        messages.put("show.row.input", "Choose row (from 1 to {0}):");
+        messages.put("show.col.input", "Choose col (from 1 to {0}):");
     }
 
     public String getMessage(String key) {
@@ -24,7 +26,7 @@ public class TicTacToeText {
     public String getMessage(String key, String... params) {
         String message = messages.get(key);
         for (int i = 0; i < params.length; i++) {
-            message.replace("{" + i + "}", params[i]);
+           message = message.replace("{" + i + "}", params[i]);
         }
         return message;
     }

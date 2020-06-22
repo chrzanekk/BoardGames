@@ -23,13 +23,11 @@ public class TicTacToeGame implements Game {
         playerX = preparePlayer(scanner, validator, ticTacToeText, TicTacToePawnType.CROSS, null);
         currentPlayer = playerX;
         playerO = preparePlayer(scanner, validator, ticTacToeText, TicTacToePawnType.CIRCLE, playerX.getName());
-        ticTacToeText.showWelcomeMessage();
+        System.out.println(ticTacToeText.getMessage("show.welcome.message"));
         ticTacToeMenuPrinter.print();
         boolean shouldPlayGame = true;
         do {
-
             int playerChoice = getPlayerMenuChoice(scanner, validator, ticTacToeMenuPrinter);
-
             switch (TicTacToeSizeOption.sizeOption(playerChoice)) {
                 case SIZE_3X3: {
                     TicTacToeGameBoard ticTacToeGameBoard = new TicTacToeGameBoard(playerX, playerO,
@@ -61,51 +59,33 @@ public class TicTacToeGame implements Game {
     private void runGame(TicTacToeGameBoard ticTacToeGameBoard) {
 
         do {
-            ticTacToeText.getMessage("show.actual.game.board");
-//            ticTacToeText.showActualGameBoard();
+            System.out.println(ticTacToeText.getMessage("show.actual.game.board"));
             ticTacToeGameBoard.print();
+            System.out.println(ticTacToeText.getMessage("show.witch.player.move", currentPlayer.getPlayerMark().name()));
+//            boolean isInputIncorrect = false;
+//            do {
+            System.out.println(ticTacToeText.getMessage("show.row.input", Integer.toString(ticTacToeGameBoard.getLength())));
+            int userRowChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
 
-            ticTacToeText.showWhichPlayerMove(currentPlayer.getPlayerMark().mark());
-            boolean isInputIncorrect = false;
-            do {
-                ticTacToeText.showRowInput(ticTacToeGameBoard.getLength());
-                int userRowChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
-//                try {
-//                    validator.validateCorrectRowColInput(userRowChoice, ticTacToeGameBoard.getLength());
-//                } catch (InvalidParameterValueException e) {
-//                    validatorWarning.showMessage(validatorWarning.getShowInvalidUserInput());
-//                    isInputIncorrect = true;
-//                }
-                ticTacToeText.showColInput(ticTacToeGameBoard.getLength());
-                int userColumnChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
-//                try {
-//                    validator.validateCorrectRowColInput(userColumnChoice,
-//                            ticTacToeGameBoard.getLength());
-//                } catch (InvalidParameterValueException e) {
-//                    validatorWarning.showMessage(validatorWarning.getShowInvalidUserInput());
-//                    isInputIncorrect = true;
-//                }
+            System.out.println(ticTacToeText.getMessage("show.col.input", Integer.toString(ticTacToeGameBoard.getLength())));
+            int userColumnChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
 
-                if (!TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
-                        ticTacToeGameBoard)) {
-                    ValidatorWarning.getMessage("show.not.empty.row.col");
-                    continue;
-                } else
-                    TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
-                            ticTacToeGameBoard);
-                if (TicTacToeGameLogic.checkWinner(ticTacToeGameBoard, playerX, playerO)) {
-                    ticTacToeText.getMessage("show.winner",currentPlayer.getName());
-//                    ticTacToeText.showWinner(currentPlayer.getPlayerMark().mark());
-//                    ticTacToeGameBoard.print();
 
-                }
-                if (TicTacToeGameLogic.checkIsFull(ticTacToeGameBoard)) {
-                    ticTacToeText.showDraw();
-                    ticTacToeGameBoard.print();
-
-                }
+            if (!TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
+                    ticTacToeGameBoard)) {
+                System.out.println(ValidatorWarning.getMessage("show.not.empty.row.col"));
+                continue;
+            } else
+                TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
+                        ticTacToeGameBoard);
+            if (TicTacToeGameLogic.checkWinner(ticTacToeGameBoard, playerX, playerO)) {
+                System.out.println(ticTacToeText.getMessage("show.winner", currentPlayer.getName()));
             }
-            while (isInputIncorrect);
+            if (TicTacToeGameLogic.checkIsFull(ticTacToeGameBoard)) {
+                System.out.println(ticTacToeText.getMessage("show.draw"));
+                ticTacToeGameBoard.print();
+            }
+//       while (isInputIncorrect);
             currentPlayer = TicTacToeGameLogic.swapPlayer(currentPlayer, playerX, playerO);
         } while (!TicTacToeGameLogic.isGameBoardFullOrIsaWinner(ticTacToeGameBoard, playerX, playerO));
         ticTacToeMenuPrinter.print();
@@ -118,13 +98,13 @@ public class TicTacToeGame implements Game {
         int playerMenuChoice;
         do {
             while (!scanner.hasNextInt()) {
-                ValidatorWarning.getMessage("show.invalid.user.input");
+                System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
                 ticTacToeMenuPrinter.print();
                 scanner.next();
             }
             playerMenuChoice = scanner.nextInt();
             if (validator.validateMainMenuOption(playerMenuChoice)) {
-                ValidatorWarning.getMessage("show.invalid.user.input");
+                System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
                 ticTacToeMenuPrinter.print();
             }
         } while (validator.validateMainMenuOption(playerMenuChoice));
@@ -137,12 +117,12 @@ public class TicTacToeGame implements Game {
         int playerRowColChoice;
         do {
             while (!scanner.hasNextInt()) {
-                ValidatorWarning.getMessage("show.invalid.user.input");
+                System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
                 scanner.next();
             }
             playerRowColChoice = scanner.nextInt();
             if (validator.validateRowColInput(playerRowColChoice, gameBoard)) {
-                ValidatorWarning.getMessage("show.invalid.user.input");
+                System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
 
             }
         } while (validator.validateRowColInput(playerRowColChoice, gameBoard));
@@ -164,13 +144,12 @@ public class TicTacToeGame implements Game {
         String name;
         boolean shouldInputNameAgain = true;
         do {
-//            ticTacToeText.showInputName(ticTacToePawnType);
-            ticTacToeText.getMessage("show.input.name");
+            System.out.println(ticTacToeText.getMessage("show.input.name", ticTacToePawnType.name()));
             name = scanner.next();
             if (!validator.isNameDuplicated(existingName, name)) {
                 shouldInputNameAgain = false;
             } else {
-                ValidatorWarning.getMessage("show.wrong.name.input");
+                System.out.println(ValidatorWarning.getMessage("show.wrong.name.input"));
             }
         } while (shouldInputNameAgain);
         return name;

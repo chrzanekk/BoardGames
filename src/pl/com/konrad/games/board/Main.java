@@ -17,7 +17,7 @@ public class Main {
 
         boolean shouldPlay = true;
         do {
-            checkersGameText.showWelcomeMessage();
+            System.out.println(checkersGameText.getMessage("show.welcome.message"));
             gameMenuPrinter.print();
             int playerMenuChoice = getPlayerChoice(scanner, validatorWarning, validator, gameMenuPrinter);
             switch (GameMenuOption.menuOption(playerMenuChoice)) {

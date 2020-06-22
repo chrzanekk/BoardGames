@@ -49,7 +49,7 @@ public class CheckersGameBoard implements GameBoard {
 
     @Override
     public void print() {
-        checkersGameText.showActualBoard();
+        checkersGameText.getMessage("show.actual.game.board");
         int verticalIndex = 1;
 
         for (int row = 0; row < gameBoard.length; row++) {
@@ -125,5 +125,10 @@ public class CheckersGameBoard implements GameBoard {
         return gameBoard.length;
     }
 
+
+    public char lastLetterOfCol(char firstChar, int gameBoardLength) {
+        int lastCharByInt = (int) firstChar + gameBoardLength - 1;
+        return (char) lastCharByInt;
+    }
 
 }
