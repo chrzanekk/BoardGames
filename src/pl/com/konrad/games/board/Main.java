@@ -7,19 +7,16 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        CheckersGameText checkersGameText = new CheckersGameText();
-
         GameMenu gameMenu = new GameMenu();
         GameMenuPrinter gameMenuPrinter = new GameMenuPrinter(gameMenu);
         Validator validator = new Validator();
-        ValidatorWarning validatorWarning = new ValidatorWarning();
         Game game = null;
 
         boolean shouldPlay = true;
         do {
-            System.out.println(checkersGameText.getMessage("show.welcome.message"));
+            System.out.println(GameText.getMessage("show.welcome.message"));
             gameMenuPrinter.print();
-            int playerMenuChoice = getPlayerChoice(scanner, validatorWarning, validator, gameMenuPrinter);
+            int playerMenuChoice = getPlayerChoice(scanner, validator, gameMenuPrinter);
             switch (GameMenuOption.menuOption(playerMenuChoice)) {
                 case CHECKERS: {
                     game = new CheckersGame();
@@ -39,14 +36,14 @@ public class Main {
                     shouldPlay = false;
                     break;
             }
-            if (game != null) {
+            if (game != null && shouldPlay) {
                 game.play();
             }
         } while (shouldPlay);
     }
 
     private static int getPlayerChoice(Scanner scanner,
-                                       ValidatorWarning validatorWarning, Validator validator,
+                                       Validator validator,
                                        GameMenuPrinter gameMenuPrinter) {
         int playerMenuChoice;
         do {
