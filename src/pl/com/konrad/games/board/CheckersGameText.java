@@ -8,12 +8,13 @@ public class CheckersGameText {
     private Map<String, String> messages = new HashMap<>();
 
     {
-        messages.put("show.welcome.message", "Welcome in Game Boards. Have fun. \n MAIN MENU: \n Choose option: ");
         messages.put("show.input.name", "Please set name of player who plays {0}.");
         messages.put("show.actual.game.board", "ACTUAL GAME BOARD");
-        messages.put("show.witch.player.move", "Player {0} move");
+        messages.put("show.witch.player.move", "Player\" {0} \"move");
         messages.put("show.current.pawn.to.move", "Choose current pawn to move: ");
         messages.put("show.new.pawn.position", "Choose new pawn position: ");
+        messages.put("show.not.empty.row.col", "There is already figure here. Try again.");
+        messages.put("show.empty.row.col", "There is no pawn here. Try again.");
         messages.put("show.input.row", "Input number of row (from 1 to {0} ): ");
         messages.put("show.input.col", "Input letter of col (from A to {0} ): ");
         messages.put("show.winner", "We have a winner! \n Player {0} wins.");

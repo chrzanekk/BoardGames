@@ -57,36 +57,36 @@ public class TicTacToeGame implements Game {
 
 
     private void runGame(TicTacToeGameBoard ticTacToeGameBoard) {
-
         do {
             System.out.println(ticTacToeText.getMessage("show.actual.game.board"));
             ticTacToeGameBoard.print();
             System.out.println(ticTacToeText.getMessage("show.witch.player.move", currentPlayer.getPlayerMark().name()));
-//            boolean isInputIncorrect = false;
-//            do {
-            System.out.println(ticTacToeText.getMessage("show.row.input", Integer.toString(ticTacToeGameBoard.getLength())));
-            int userRowChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
+            boolean isInputIncorrect = false;
+            do {
+                System.out.println(ticTacToeText.getMessage("show.row.input", Integer.toString(ticTacToeGameBoard.getLength())));
+                int userRowChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
 
-            System.out.println(ticTacToeText.getMessage("show.col.input", Integer.toString(ticTacToeGameBoard.getLength())));
-            int userColumnChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
+                System.out.println(ticTacToeText.getMessage("show.col.input", Integer.toString(ticTacToeGameBoard.getLength())));
+                int userColumnChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
 
 
-            if (!TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
-                    ticTacToeGameBoard)) {
-                System.out.println(ValidatorWarning.getMessage("show.not.empty.row.col"));
-                continue;
-            } else
-                TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
-                        ticTacToeGameBoard);
-            if (TicTacToeGameLogic.checkWinner(ticTacToeGameBoard, playerX, playerO)) {
-                System.out.println(ticTacToeText.getMessage("show.winner", currentPlayer.getName()));
-            }
-            if (TicTacToeGameLogic.checkIsFull(ticTacToeGameBoard)) {
-                System.out.println(ticTacToeText.getMessage("show.draw"));
-                ticTacToeGameBoard.print();
-            }
-//       while (isInputIncorrect);
+                if (!TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
+                        ticTacToeGameBoard)) {
+                    System.out.println(ValidatorWarning.getMessage("show.not.empty.row.col"));
+                    continue;
+                } else
+                    TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
+                            ticTacToeGameBoard);
+                if (TicTacToeGameLogic.checkWinner(ticTacToeGameBoard, playerX, playerO)) {
+                    System.out.println(ticTacToeText.getMessage("show.winner", currentPlayer.getName()));
+                }
+                if (TicTacToeGameLogic.checkIsFull(ticTacToeGameBoard)) {
+                    System.out.println(ticTacToeText.getMessage("show.draw"));
+                    ticTacToeGameBoard.print();
+                }
+            } while (isInputIncorrect);
             currentPlayer = TicTacToeGameLogic.swapPlayer(currentPlayer, playerX, playerO);
+
         } while (!TicTacToeGameLogic.isGameBoardFullOrIsaWinner(ticTacToeGameBoard, playerX, playerO));
         ticTacToeMenuPrinter.print();
     }
