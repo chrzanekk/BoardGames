@@ -4,11 +4,12 @@ to do:
 - log historii ruchow (ale ilość ruchów czy wspolrzedne)
 
  */
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CheckersGame implements Game{
+public class CheckersGame implements Game {
     private Scanner scanner = new Scanner(System.in);
 
     private Validator validator = new Validator();
@@ -22,30 +23,45 @@ public class CheckersGame implements Game{
         Player currentPlayer = playerOne;
         Player playerTwo = preparePlayer(scanner, validator, checkersGameText, Color.BLACK, playerOne.getName());
 
+
         CheckersGameBoard checkersGameBoard = new CheckersGameBoard(playerOne, playerTwo);
         checkersGameBoard.print();
         System.out.println(checkersGameText.getMessage("show.witch.player.move", currentPlayer.getName()));
-        boolean isInputIncorrect = false;
+        boolean isCurrentPawnPositionCorrect = true;
         do {
-            System.out.println(checkersGameText.getMessage("show.current.pawn.to.move"));
-
+            System.out.println(checkersGameText.getMessage("show.choose.current.pawn.to.move"));
             System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
             int userRowChoice = getPlayerRowColChoice(scanner, validator, checkersGameBoard);
+
             System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.lastLetterOfCol('A',
                     checkersGameBoard.getLength()))));
             int userColChoice = getPlayerRowColChoice(scanner, validator, checkersGameBoard);
-            if (CheckersPlayerLogic.isFigureExistByRowCol(playerOne,userRowChoice,userColChoice) || CheckersPlayerLogic.isFigureExistByRowCol(playerTwo,userRowChoice,userColChoice)) {
+
+            //check for empty place to move
+            if (CheckersPlayerLogic.isFigureExistByRowCol(playerOne, userRowChoice, userColChoice) || CheckersPlayerLogic.isFigureExistByRowCol(playerTwo, userRowChoice, userColChoice)) {
                 System.out.println(checkersGameText.getMessage("show.empty.row.col"));
-                isInputIncorrect = true;
+                isCurrentPawnPositionCorrect = false;
                 continue;
             }
 
+            //check for correct player pawn choose (do sprawdzenia)
+            if (CheckersPlayerLogic.isFigureBelongToPlayer(currentPlayer, playerOne, playerTwo)){
+                System.out.println(checkersGameText.getMessage("show.pawn.dosent.belong.to.current.player"));
+                isCurrentPawnPositionCorrect = false;
+            }
+            //check if player can move current pawn
+
+
+        } while (!isCurrentPawnPositionCorrect);
+
+        boolean isNewPawnPositionCorrect = false;
+        do {
             System.out.println(checkersGameText.getMessage("show.new.pawn.position"));
             System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
             System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.lastLetterOfCol('A',
                     checkersGameBoard.getLength()))));
             System.out.println();
-        }while (isInputIncorrect);
+        }while (!isNewPawnPositionCorrect);
     }
 
     private static Player preparePlayer(Scanner scanner, Validator validator,
@@ -57,17 +73,16 @@ public class CheckersGame implements Game{
     }
 
     private static String validateUserName(Scanner scanner, Validator validator,
-                                            CheckersGameText checkersGameText,
+                                           CheckersGameText checkersGameText,
                                            Color playerColor, String existingName) {
         String name;
         boolean shouldInputNameAgain = true;
         do {
-            System.out.println(checkersGameText.getMessage("show.input.name",playerColor.Description()));
+            System.out.println(checkersGameText.getMessage("show.input.name", playerColor.Description()));
             name = scanner.next();
-            if(!validator.isNameDuplicated(existingName, name)){
+            if (!validator.isNameDuplicated(existingName, name)) {
                 shouldInputNameAgain = false;
-            }
-            else {
+            } else {
                 System.out.println(ValidatorWarning.getMessage("show.wrong.name.input"));
             }
         } while (shouldInputNameAgain);

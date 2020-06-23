@@ -2,12 +2,12 @@ package pl.com.konrad.games.board;
 
 public final class Figure {
     private final CheckersPawnType type;
-    private final GameBoardMark mark;
+    private final CheckersGameBoardMark mark;
     private final Color color;
     private final int currentRow;
     private final int currentCol;
 
-    public Figure(CheckersPawnType type, GameBoardMark mark, Color color, int currentRow, int currentCol) {
+    public Figure(CheckersPawnType type, CheckersGameBoardMark mark, Color color, int currentRow, int currentCol) {
         this.type = type;
         this.mark = mark;
         this.color = color;
@@ -19,7 +19,7 @@ public final class Figure {
         return type;
     }
 
-    public GameBoardMark getMark() {
+    public CheckersGameBoardMark getMark() {
         return mark;
     }
 

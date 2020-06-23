@@ -2,8 +2,8 @@ package pl.com.konrad.games.board;
 
 public class ChessGameBoard implements GameBoard{
     private char[][] gameBoard;
-    private GameBoardMark blackKing = GameBoardMark.BLACK_KING;
-    private GameBoardMark whiteKing = GameBoardMark.WHITE_KING;
+    private CheckersGameBoardMark blackKing = CheckersGameBoardMark.BLACK_KING;
+    private CheckersGameBoardMark whiteKing = CheckersGameBoardMark.WHITE_KING;
 
     public ChessGameBoard() {
         GameBoardDimension size8X8 = GameBoardDimension.SIZE_8X8;

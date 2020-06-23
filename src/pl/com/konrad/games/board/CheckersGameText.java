@@ -11,7 +11,8 @@ public class CheckersGameText {
         messages.put("show.input.name", "Please set name of player who plays {0}.");
         messages.put("show.actual.game.board", "ACTUAL GAME BOARD");
         messages.put("show.witch.player.move", "Player\" {0} \"move");
-        messages.put("show.current.pawn.to.move", "Choose current pawn to move: ");
+        messages.put("show.choose.current.pawn.to.move", "Choose current pawn to move: ");
+        messages.put("show.pawn.dosent.belong.to.current.player", "This pawn doesn't belong to you. Try again.");
         messages.put("show.new.pawn.position", "Choose new pawn position: ");
         messages.put("show.not.empty.row.col", "There is already figure here. Try again.");
         messages.put("show.empty.row.col", "There is no pawn here. Try again.");

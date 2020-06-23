@@ -22,21 +22,24 @@ public class CheckersGameBoard implements GameBoard {
             for (int col = 0; col < gameBoard.length; col++) {
                 if (isaTopGameBoard(row, col)) {
                     addFigure(playerOne, CheckersPawnType.MEN,
-                            GameBoardMark.WHITE_MEN,
+                            CheckersGameBoardMark.WHITE_MEN,
                             Color.WHITE, row, col);
                 }
                 if (isaBottomGameBoard(row, col)) {
                     addFigure(playerTwo, CheckersPawnType.MEN,
-                            GameBoardMark.BLACK_MEN,
+                            CheckersGameBoardMark.BLACK_MEN,
                             Color.BLACK, row, col);
+                }
+                if (isaTopGameBoardForProhibited(row,col)) {
+//                    addFigure();
                 }
             }
         }
     }
 
-    private void addFigure(Player player, CheckersPawnType checkersPawnType, GameBoardMark gameBoardMark, Color color, int row,
+    private void addFigure(Player player, CheckersPawnType checkersPawnType, CheckersGameBoardMark checkersGameBoardMark, Color color, int row,
                            int col) {
-        player.addFigure(new Figure(checkersPawnType, gameBoardMark, color, row, col));
+        player.addFigure(new Figure(checkersPawnType, checkersGameBoardMark, color, row, col));
     }
 
     private boolean isaBottomGameBoard(int row, int col) {
@@ -45,6 +48,14 @@ public class CheckersGameBoard implements GameBoard {
 
     private boolean isaTopGameBoard(int row, int col) {
         return (isEvenRowOddCol(row, col) && isTopGameBoard(row)) || (isOddRowEvenCol(row, col) && isTopGameBoard(row));
+    }
+
+    private boolean isaBottomGameBoardForProhibited(int row, int col) {
+        return ( isOddRowEvenCol(row, col)&& isBottomGameBoardForProhibited(row)) || (isEvenRowOddCol(row, col) && isBottomGameBoardForProhibited(row));
+    }
+
+    private boolean isaTopGameBoardForProhibited(int row, int col) {
+        return (isOddRowEvenCol(row, col) && isTopGameBoardForProhibited(row)) || ( isEvenRowOddCol(row, col) && isTopGameBoardForProhibited(row));
     }
 
     @Override
@@ -109,6 +120,13 @@ public class CheckersGameBoard implements GameBoard {
         return row % 2 == 0 && col % 2 != 0;
     }
 
+    private boolean isBottomGameBoardForProhibited(int row) {
+        return row >= gameBoard.length / 2;
+    }
+
+    private boolean isTopGameBoardForProhibited(int row) {
+        return row <= gameBoard.length / 2 - 1;
+    }
 
     @Override
     public char[][] getGameBoard() {
