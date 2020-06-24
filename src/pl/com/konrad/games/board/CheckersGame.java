@@ -52,6 +52,7 @@ public class CheckersGame implements Game {
             //check if player can move current pawn
 
 
+
         } while (!isCurrentPawnPositionCorrect);
 
         boolean isNewPawnPositionCorrect = false;
