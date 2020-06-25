@@ -1,12 +1,15 @@
 package pl.com.konrad.games.board;
 
+import pl.com.konrad.games.board.checkers.CheckersGameBoardMark;
+import pl.com.konrad.games.board.checkers.CheckersPawnType;
+
 public final class Figure {
     private final CheckersPawnType type;
     private final CheckersGameBoardMark mark;
     private final Color color;
     private final int currentRow;
     private final int currentCol;
-
+// dodać Playera do jednej listy figur. Przebudować część gry.
     public Figure(CheckersPawnType type, CheckersGameBoardMark mark, Color color, int currentRow, int currentCol) {
         this.type = type;
         this.mark = mark;

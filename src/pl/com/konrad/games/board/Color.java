@@ -10,7 +10,7 @@ public enum Color {
         this.description = description;
     }
 
-     String Description() {
+     public String description() {
         return description;
     }
 }

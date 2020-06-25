@@ -1,6 +1,6 @@
-package pl.com.konrad.games.board;
+package pl.com.konrad.games.board.tictactoe;
 
-public enum TicTacToePawnType {
+enum TicTacToePawnType {
     CROSS ('X'),
     CIRCLE ('O');
 

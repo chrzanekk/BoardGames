@@ -1,8 +1,11 @@
-package pl.com.konrad.games.board;
+package pl.com.konrad.games.board.checkers;
 
-public class CheckersPlayerLogic {
+import pl.com.konrad.games.board.Figure;
+import pl.com.konrad.games.board.Player;
 
-    public static char getMarkByRowCol(Player player, int row, int col) {
+class CheckersPlayerLogic {
+
+    static char getMarkByRowCol(Player player, int row, int col) {
         char mark = 0;
         for (Figure figure : player.getFigures()) {
             if (figure.getCurrentRow() == row && figure.getCurrentCol() == col)
@@ -11,7 +14,7 @@ public class CheckersPlayerLogic {
         return mark;
     }
 
-    public static boolean isFigureExistByRowCol(Player player, int row, int col) {
+    static boolean isFigureExistByRowCol(Player player, int row, int col) {
         for (Figure figure : player.getFigures()) {
             if (figure.getCurrentRow() == row && figure.getCurrentCol() == col)
                 return true;
@@ -19,8 +22,8 @@ public class CheckersPlayerLogic {
         return false;
     }
 
-    public static boolean isFigureBelongToPlayer(Player currentPlayer, Player ownerOne, Player ownerTwo) {
-        if (currentPlayer.equals(ownerOne)) {//czy potrzebna jest petla, czy mozna uzyc tylko equals.
+    static boolean isFigureBelongToPlayer(Player currentPlayer, Player ownerOne, Player ownerTwo) {
+        if (currentPlayer.equals(ownerOne)) {//czy potrzebna jest petla, czy mozna uzyc tylko equals. DO ZMIANY!!!
             for (Figure ownerFigure : ownerOne.getFigures()) {
                 for (Figure currentPlayerFigure : currentPlayer.getFigures()) {
                     if (ownerFigure.getColor().equals(currentPlayerFigure.getColor()))
@@ -40,11 +43,13 @@ public class CheckersPlayerLogic {
         return false;
     }
 
-    public static boolean isPlayerCanMovePawn(Player playerOne, Player playerTwo, int row, int col) {
+    static boolean isPlayerCanMovePawn(Player playerOne, Player playerTwo, int row, int col) {
         return isPlayerCanMovePawnBottom(playerOne, playerTwo, row, col) || isPlayerCanMovePawnTop(playerOne, playerTwo, row, col);
     }
-
-    public static boolean isPlayerCanMovePawnBottom(Player playerOne, Player playerTwo, int row, int col) {
+//w trakcie opracowania logiki sprawdzania mozliwosci ruchu w danym kierunku (gora lub dol)
+//    potrzeba opisac sprawdzenie ruchu po skosie w lewo i w prawo oraz sprawdzenia czy pionek jest na skraju planszy
+//    (lewym lub prawym) lub na koncu (na dole lub gorze)
+    static boolean isPlayerCanMovePawnBottom(Player playerOne, Player playerTwo, int row, int col) {
         int rowToCheck = row+1;
         int colToCheckOne = col-1;
         int colToCheckTwo = col+1;
@@ -56,7 +61,7 @@ public class CheckersPlayerLogic {
 
     }
 
-    public static boolean isPlayerCanMovePawnTop(Player playerOne, Player playerTwo, int row, int col) {
+    static boolean isPlayerCanMovePawnTop(Player playerOne, Player playerTwo, int row, int col) {
 
         //
         //sprawdzanie ruchu po skosie - w odpowiednim kierunki (dla pionka) + zabezpieczenie przed wyjściem poza zakres
@@ -65,7 +70,7 @@ public class CheckersPlayerLogic {
         return true;
     }
 
-    public static int getIndexByRowCol(Player player, int row, int col) {
+    static int getIndexByRowCol(Player player, int row, int col) {
         int index = 0;
         for (int i = 0; i < player.getFigures().size(); i++) {
             if (player.getFigures().get(i).getCurrentRow() == row && player.getFigures().get(i).getCurrentCol() == col)

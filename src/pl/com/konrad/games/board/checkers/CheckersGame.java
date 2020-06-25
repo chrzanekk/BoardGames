@@ -1,9 +1,11 @@
-package pl.com.konrad.games.board;
+package pl.com.konrad.games.board.checkers;
 /*
 to do:
 - log historii ruchow (ale ilość ruchów czy wspolrzedne)
 
  */
+
+import pl.com.konrad.games.board.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public class CheckersGame implements Game {
             System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
             int userRowChoice = getPlayerRowColChoice(scanner, validator, checkersGameBoard);
 
-            System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.lastLetterOfCol('A',
+            System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
                     checkersGameBoard.getLength()))));
             int userColChoice = getPlayerRowColChoice(scanner, validator, checkersGameBoard);
 
@@ -59,10 +61,10 @@ public class CheckersGame implements Game {
         do {
             System.out.println(checkersGameText.getMessage("show.new.pawn.position"));
             System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
-            System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.lastLetterOfCol('A',
+            System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
                     checkersGameBoard.getLength()))));
             System.out.println();
-        }while (!isNewPawnPositionCorrect);
+        }while (isNewPawnPositionCorrect);
     }
 
     private static Player preparePlayer(Scanner scanner, Validator validator,
@@ -79,7 +81,7 @@ public class CheckersGame implements Game {
         String name;
         boolean shouldInputNameAgain = true;
         do {
-            System.out.println(checkersGameText.getMessage("show.input.name", playerColor.Description()));
+            System.out.println(checkersGameText.getMessage("show.input.name", playerColor.description()));
             name = scanner.next();
             if (!validator.isNameDuplicated(existingName, name)) {
                 shouldInputNameAgain = false;

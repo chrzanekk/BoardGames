@@ -1,5 +1,9 @@
 package pl.com.konrad.games.board;
 
+import pl.com.konrad.games.board.checkers.CheckersGame;
+import pl.com.konrad.games.board.chess.ChessGame;
+import pl.com.konrad.games.board.tictactoe.TicTacToeGame;
+
 import java.util.Scanner;
 
 public class Main {

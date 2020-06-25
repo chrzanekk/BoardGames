@@ -1,13 +1,15 @@
-package pl.com.konrad.games.board;
+package pl.com.konrad.games.board.checkers;
 
-public class CheckersGameBoard implements GameBoard {
+import pl.com.konrad.games.board.*;
+
+class CheckersGameBoard implements GameBoard {
     private char[][] gameBoard;
     private Player playerOne;
     private Player playerTwo;
     private CheckersGameText checkersGameText = new CheckersGameText();
 
 
-    public CheckersGameBoard(Player playerOne, Player playerTwo) {
+    CheckersGameBoard(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;
@@ -144,7 +146,7 @@ public class CheckersGameBoard implements GameBoard {
     }
 
 
-    public char lastLetterOfCol(char firstChar, int gameBoardLength) {
+    char generateLastLetterOfColumn(char firstChar, int gameBoardLength) {
         int lastCharByInt = (int) firstChar + gameBoardLength - 1;
         return (char) lastCharByInt;
     }

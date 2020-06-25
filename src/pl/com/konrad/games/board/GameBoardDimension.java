@@ -14,7 +14,7 @@ public enum GameBoardDimension {
         this.size = size;
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 

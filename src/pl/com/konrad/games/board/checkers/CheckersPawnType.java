@@ -1,7 +1,7 @@
-package pl.com.konrad.games.board;
+package pl.com.konrad.games.board.checkers;
 
 public enum CheckersPawnType {
-    MEN("men"),
+    MEN("MEN"),
     KING("KING"),
     PROHIBITED("PROHIBITED FIELD");
     private final String type;

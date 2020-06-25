@@ -1,14 +1,16 @@
-package pl.com.konrad.games.board;
+package pl.com.konrad.games.board.tictactoe;
 
-public class TicTacToeMenuPrinter {
+import pl.com.konrad.games.board.GameMenuItem;
+
+class TicTacToeMenuPrinter {
 
     private TicTacToeMenu ticTacToeMenu;
 
-    public TicTacToeMenuPrinter(TicTacToeMenu ticTacToeMenu) {
+    TicTacToeMenuPrinter(TicTacToeMenu ticTacToeMenu) {
         this.ticTacToeMenu = ticTacToeMenu;
     }
 
-    public void print() {
+    void print() {
         for (int i = 0; i < ticTacToeMenu.getItemCount(); i++) {
             GameMenuItem gameMenuItem = ticTacToeMenu.getMenuIndex(i);
             System.out.println(gameMenuItem.getIndex() + " " + gameMenuItem.getDescription());

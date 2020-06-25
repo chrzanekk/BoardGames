@@ -1,6 +1,8 @@
-package pl.com.konrad.games.board;
+package pl.com.konrad.games.board.tictactoe;
 
-public class TicTacToeMenu {
+import pl.com.konrad.games.board.GameMenuItem;
+
+class TicTacToeMenu {
     private GameMenuItem items[];
 
     TicTacToeMenu() {
@@ -11,11 +13,11 @@ public class TicTacToeMenu {
         items[3] = new GameMenuItem(TicTacToeSizeOption.EXIT.index(),TicTacToeSizeOption.EXIT.description());
     }
 
-    public GameMenuItem getMenuIndex(int index) {
+    GameMenuItem getMenuIndex(int index) {
         return items[index];
     }
 
-    public int getItemCount() {
+    int getItemCount() {
         return items.length;
     }
 }

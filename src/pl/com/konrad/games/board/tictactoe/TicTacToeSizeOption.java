@@ -1,6 +1,8 @@
-package pl.com.konrad.games.board;
+package pl.com.konrad.games.board.tictactoe;
 
-public enum TicTacToeSizeOption {
+import pl.com.konrad.games.board.GameBoardDimension;
+
+enum TicTacToeSizeOption {
     SIZE_OPTION_3X3(1,"3x3 board", GameBoardDimension.SIZE_3X3),
     SIZE_OPTION_4X4(2, "4x4 board", GameBoardDimension.SIZE_4X4),
     SIZE_OPTION_5X5(3, "5x5 board", GameBoardDimension.SIZE_5X5),
@@ -15,19 +17,19 @@ public enum TicTacToeSizeOption {
         this.size = size;
     }
 
-    public int index() {
+    int index() {
         return index;
     }
 
-    public String description() {
+    String description() {
         return description;
     }
 
-    public GameBoardDimension size() {
+    GameBoardDimension size() {
         return size;
     }
 
-    public static GameBoardDimension sizeOption(int playerChoice) {
+    static GameBoardDimension sizeOption(int playerChoice) {
         for (TicTacToeSizeOption sizeOption : TicTacToeSizeOption.values()) {
             if (sizeOption.index == playerChoice) {
                 return sizeOption.size;

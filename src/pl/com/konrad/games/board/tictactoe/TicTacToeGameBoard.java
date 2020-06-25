@@ -1,13 +1,16 @@
-package pl.com.konrad.games.board;
+package pl.com.konrad.games.board.tictactoe;
 
-public class TicTacToeGameBoard implements GameBoard {
+import pl.com.konrad.games.board.GameBoard;
+import pl.com.konrad.games.board.GameBoardDimension;
+
+class TicTacToeGameBoard implements GameBoard {
 
     private char gameBoard[][];
     private TicTacToePlayer playerOne;
     private TicTacToePlayer playerTwo;
     private GameBoardDimension gameBoardDimension;
 
-    public TicTacToeGameBoard(TicTacToePlayer playerOne, TicTacToePlayer playerTwo, GameBoardDimension gameBoardDimension) {
+    TicTacToeGameBoard(TicTacToePlayer playerOne, TicTacToePlayer playerTwo, GameBoardDimension gameBoardDimension) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         this.gameBoardDimension = gameBoardDimension;
@@ -16,14 +19,17 @@ public class TicTacToeGameBoard implements GameBoard {
         print();
     }
 
+    @Override
     public char[][] getGameBoard() {
         return gameBoard;
     }
 
+    @Override
     public char getPosition(int row, int col) {
         return gameBoard[row][col];
     }
 
+    @Override
     public int getLength() {
         return gameBoard.length;
     }

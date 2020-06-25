@@ -1,4 +1,4 @@
-package pl.com.konrad.games.board;
+package pl.com.konrad.games.board.checkers;
 
 /* w przypadku konsolowej aplikacji nazwy indentyfikują znaki gracza*/
 public enum CheckersGameBoardMark {
