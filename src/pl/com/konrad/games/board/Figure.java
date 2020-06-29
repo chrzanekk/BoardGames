@@ -3,27 +3,18 @@ package pl.com.konrad.games.board;
 import pl.com.konrad.games.board.checkers.CheckersGameBoardMark;
 import pl.com.konrad.games.board.checkers.CheckersPawnType;
 
-public final class Figure {
-    private final CheckersPawnType type;
-    private final CheckersGameBoardMark mark;
+public class Figure {
     private final Color color;
     private final int currentRow;
     private final int currentCol;
+    private final Player player;
 // dodać Playera do jednej listy figur. Przebudować część gry.
-    public Figure(CheckersPawnType type, CheckersGameBoardMark mark, Color color, int currentRow, int currentCol) {
-        this.type = type;
-        this.mark = mark;
+    public Figure(Color color, int currentRow, int currentCol,
+                  Player player) {
         this.color = color;
         this.currentRow = currentRow;
         this.currentCol = currentCol;
-    }
-
-    public CheckersPawnType getType() {
-        return type;
-    }
-
-    public CheckersGameBoardMark getMark() {
-        return mark;
+        this.player = player;
     }
 
     public Color getColor() {
@@ -38,7 +29,7 @@ public final class Figure {
         return currentCol;
     }
 
-
-
-
+    public Player getPlayer() {
+        return player;
+    }
 }

@@ -2,11 +2,15 @@ package pl.com.konrad.games.board.checkers;
 
 import pl.com.konrad.games.board.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class CheckersGameBoard implements GameBoard {
     private char[][] gameBoard;
     private Player playerOne;
     private Player playerTwo;
     private CheckersGameText checkersGameText = new CheckersGameText();
+    private List<CheckersFigure> figures = new ArrayList<>();
 
 
     CheckersGameBoard(Player playerOne, Player playerTwo) {
@@ -39,9 +43,10 @@ class CheckersGameBoard implements GameBoard {
         }
     }
 
-    private void addFigure(Player player, CheckersPawnType checkersPawnType, CheckersGameBoardMark checkersGameBoardMark, Color color, int row,
+    private void addFigure(Player player, CheckersPawnType checkersPawnType,
+                           CheckersGameBoardMark checkersGameBoardMark, Color color, int row,
                            int col) {
-        player.addFigure(new Figure(checkersPawnType, checkersGameBoardMark, color, row, col));
+        figures.add(new CheckersFigure(color,row, col, player, checkersPawnType, checkersGameBoardMark));
     }
 
     private boolean isaBottomGameBoard(int row, int col) {

@@ -132,11 +132,11 @@ public class TicTacToeGame implements Game {
     }
 
     private static TicTacToePlayer preparePlayer(Scanner scanner, Validator validator,
-                                                 TicTacToeText ticTacToeText, TicTacToePawnType ticTacToePawnType, String existingName) {
-        List<Figure> playerFigures = new ArrayList<>();
+                                                 TicTacToeText ticTacToeText, TicTacToePawnType ticTacToePawnType,
+                                                 String existingName) {
         String name = validateUserName(scanner, validator, ticTacToeText, ticTacToePawnType,
                 existingName);
-        return new TicTacToePlayer(name, playerFigures, ticTacToePawnType);
+        return new TicTacToePlayer(name, Color.WHITE, ticTacToePawnType);
     }
 
     private static String validateUserName(Scanner scanner, Validator validator,

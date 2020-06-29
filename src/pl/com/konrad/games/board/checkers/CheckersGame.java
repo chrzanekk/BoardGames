@@ -2,8 +2,13 @@ package pl.com.konrad.games.board.checkers;
 /*
 to do:
 - log historii ruchow (ale ilość ruchów czy wspolrzedne)
+- metoda move dla dwoch graczy/dwa kierunki?
+- metoda move dla damki?
+- metoda kick/ban/score? dla damki oddzielna?
+- metoda zmiany pionka w damke.
 
- */
+*/
+
 
 import pl.com.konrad.games.board.*;
 
@@ -69,10 +74,9 @@ public class CheckersGame implements Game {
 
     private static Player preparePlayer(Scanner scanner, Validator validator,
                                         CheckersGameText checkersGameText, Color playerColor, String existingName) {
-        List<Figure> playerSet = new ArrayList<>();
         String name = validateUserName(scanner, validator, checkersGameText, playerColor,
                 existingName);
-        return new Player(name, playerSet);
+        return new Player(name, playerColor);
     }
 
     private static String validateUserName(Scanner scanner, Validator validator,
