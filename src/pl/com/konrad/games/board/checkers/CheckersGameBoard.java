@@ -74,11 +74,11 @@ class CheckersGameBoard implements GameBoard {
             printHorizontalLine();
             System.out.print("|");
             for (int col = 0; col < gameBoard.length; col++) {
-                if (isFigureByRowCol(row, col, playerOne)) {
-                    System.out.print(" " + CheckersPlayerLogic.getMarkByRowCol(playerOne, row, col) +
+                if (isFigureByRowCol(row, col, figures)) {
+                    System.out.print(" " + CheckersPlayerLogic.getMarkByRowCol(figures, row, col) +
                             " |");
-                } else if (isFigureByRowCol(row, col, playerTwo)) {
-                    System.out.print(" " + CheckersPlayerLogic.getMarkByRowCol(playerTwo, row, col) + " |");
+                } else if (isFigureByRowCol(row, col, figures)) {
+                    System.out.print(" " + CheckersPlayerLogic.getMarkByRowCol(figures, row, col) + " |");
                 } else System.out.print("   |");
             }
             System.out.println(verticalIndex++ + " ");
@@ -88,8 +88,8 @@ class CheckersGameBoard implements GameBoard {
     }
 
 
-    private boolean isFigureByRowCol(int row, int col, Player player) {
-        return CheckersPlayerLogic.isFigureExistByRowCol(player, row, col);
+    private boolean isFigureByRowCol(int row, int col, List<CheckersFigure> figures) {
+        return CheckersPlayerLogic.isFigureExistByRowCol(figures, row, col);
     }
 
     private void printHorizontalLine() {

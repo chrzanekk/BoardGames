@@ -21,7 +21,7 @@ public class CheckersGame implements Game {
 
     private Validator validator = new Validator();
     private CheckersGameText checkersGameText = new CheckersGameText();
-    private CheckersGameLogic checkersGameLogic = new CheckersGameLogic();
+    private List<CheckersFigure> figures = new ArrayList<>();
 
 
     @Override
@@ -45,14 +45,14 @@ public class CheckersGame implements Game {
             int userColChoice = getPlayerRowColChoice(scanner, validator, checkersGameBoard);
 
             //check for empty place to move
-            if (CheckersPlayerLogic.isFigureExistByRowCol(playerOne, userRowChoice, userColChoice) || CheckersPlayerLogic.isFigureExistByRowCol(playerTwo, userRowChoice, userColChoice)) {
+            if (CheckersPlayerLogic.isFigureExistByRowCol(figures, userRowChoice, userColChoice)) {
                 System.out.println(checkersGameText.getMessage("show.empty.row.col"));
                 isCurrentPawnPositionCorrect = false;
                 continue;
             }
 
             //check for correct player pawn choose (do sprawdzenia)
-            if (CheckersPlayerLogic.isFigureBelongToPlayer(currentPlayer, playerOne, playerTwo)){
+            if (CheckersPlayerLogic.isFigureBelongToPlayer(figures,userRowChoice,userColChoice, currentPlayer.getName())){
                 System.out.println(checkersGameText.getMessage("show.pawn.dosent.belong.to.current.player"));
                 isCurrentPawnPositionCorrect = false;
             }
