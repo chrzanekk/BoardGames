@@ -1,7 +1,5 @@
 package pl.com.konrad.games.board;
 
-import pl.com.konrad.games.board.checkers.CheckersGameBoardMark;
-import pl.com.konrad.games.board.checkers.CheckersPawnType;
 
 public class Figure {
     private final Color color;

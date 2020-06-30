@@ -1,6 +1,6 @@
 package pl.com.konrad.games.board.checkers;
 
-public enum CheckersPawnType {
+enum CheckersPawnType {
     MEN("MEN"),
     KING("KING"),
     PROHIBITED("PROHIBITED FIELD");
