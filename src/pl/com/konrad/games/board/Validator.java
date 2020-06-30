@@ -10,7 +10,7 @@ to do:
 - walidacja bicia(zabezpieczyc przed "przeskakiwaniem" swoich pionkow)
 
  */
-public class Validator {
+public final class Validator {
 
     public static final int ZERO = 0;
 

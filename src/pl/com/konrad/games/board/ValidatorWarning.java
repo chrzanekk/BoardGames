@@ -3,7 +3,7 @@ package pl.com.konrad.games.board;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ValidatorWarning {
+public final class ValidatorWarning {
 
     private static Map<String, String> messages = new HashMap<>();
 

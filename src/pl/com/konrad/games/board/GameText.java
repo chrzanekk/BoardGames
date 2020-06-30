@@ -3,7 +3,7 @@ package pl.com.konrad.games.board;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameText {
+public final class GameText {
 
     private static Map<String, String> messages = new HashMap<>();
 
