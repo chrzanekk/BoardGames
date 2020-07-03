@@ -15,7 +15,7 @@ class TicTacToeText {
         messages.put("show.input.name", "Please set name of player who plays {0}.");
         messages.put("show.welcome.message", "Welcome in Tic-Tac-Toe game. Have fun. \n MAIN MENU: \n Choose option: ");
         messages.put("show.row.input", "Choose row (from 1 to {0}):");
-        messages.put("show.col.input", "Choose col (from 1 to {0}):");
+        messages.put("show.col.input", "Choose column (from 1 to {0}):");
     }
 
     String getMessage(String key) {
