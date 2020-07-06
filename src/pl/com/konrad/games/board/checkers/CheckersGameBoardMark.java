@@ -6,7 +6,7 @@ enum CheckersGameBoardMark {
     WHITE_MEN('\u25CF'),
     BLACK_KING('\u2460'),
     WHITE_KING('\u2776'),
-    PROHIBITED_FIELD('#');
+    PROHIBITED_FIELD('\u0FBE');
     private final char mark;
 
 
