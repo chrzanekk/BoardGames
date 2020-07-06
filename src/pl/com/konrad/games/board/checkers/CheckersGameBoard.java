@@ -2,7 +2,7 @@ package pl.com.konrad.games.board.checkers;
 
 import pl.com.konrad.games.board.*;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 class CheckersGameBoard implements GameBoard {
@@ -10,17 +10,19 @@ class CheckersGameBoard implements GameBoard {
     private Player playerOne;
     private Player playerTwo;
     private CheckersGameText checkersGameText = new CheckersGameText();
-    private List<CheckersFigure> figures = new ArrayList<>();
+    private List<CheckersFigure> figures;
 
 
-    CheckersGameBoard(Player playerOne, Player playerTwo) {
+    CheckersGameBoard(Player playerOne, Player playerTwo, List<CheckersFigure> figures) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
+        this.figures = figures;
         GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;
         gameBoard = new char[boardDimension.size()][boardDimension.size()];
         setup();
 
     }
+
 
     @Override
     public void setup() {
@@ -37,11 +39,8 @@ class CheckersGameBoard implements GameBoard {
                             Color.BLACK, row, col);
                 }
                 if (isProhibitedField(row, col)) {
-                    addFigure(null,CheckersPawnType.PROHIBITED,CheckersGameBoardMark.PROHIBITED_FIELD,null,row,col);
+                    addFigure(null, CheckersPawnType.PROHIBITED, CheckersGameBoardMark.PROHIBITED_FIELD, null, row, col);
                 }
-//                if (isaBottomGameBoardForProhibited(row,col)) {
-//                    addFigure(null,CheckersPawnType.PROHIBITED,CheckersGameBoardMark.PROHIBITED_FIELD,null,row,col);
-//                }
             }
         }
     }
@@ -60,8 +59,8 @@ class CheckersGameBoard implements GameBoard {
         return (isEvenRowOddCol(row, col) && isBottomGameBoard(row)) || (isOddRowEvenCol(row, col) && isBottomGameBoard(row));
     }
 
-    private boolean isProhibitedField(int row,int col) {
-        return (isEvenRowEvenCol(row,col) || isOddRowOddCol(row,col));
+    private boolean isProhibitedField(int row, int col) {
+        return (isEvenRowEvenCol(row, col) || isOddRowOddCol(row, col));
     }
 
 

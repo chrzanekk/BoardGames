@@ -26,38 +26,44 @@ public class CheckersGame implements Game {
 
     @Override
     public void play() {
+        CheckersGameLogic gameLogic = new CheckersGameLogic(figures);
         Player playerOne = preparePlayer(scanner, validator, checkersGameText, Color.WHITE, null);
         Player currentPlayer = playerOne;
         Player playerTwo = preparePlayer(scanner, validator, checkersGameText, Color.BLACK, playerOne.getName());
 
 
-        CheckersGameBoard checkersGameBoard = new CheckersGameBoard(playerOne, playerTwo);
+        CheckersGameBoard checkersGameBoard = new CheckersGameBoard(playerOne, playerTwo, figures);
         checkersGameBoard.print();
         System.out.println(checkersGameText.getMessage("show.witch.player.move", currentPlayer.getName()));
         boolean isCurrentPawnPositionCorrect = true;
         do {
+
             System.out.println(checkersGameText.getMessage("show.choose.current.pawn.to.move"));
             System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
-            int userRowChoice = getPlayerRowColChoice(scanner, validator, checkersGameBoard);
 
+            int userRowChoice = getPlayerRowColChoice(scanner, validator, checkersGameBoard);
             System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
                     checkersGameBoard.getLength()))));
             int userColChoice = getPlayerRowColChoice(scanner, validator, checkersGameBoard);
 
-            //check for empty place to move
-            if (CheckersPlayerLogic.isFigureExistByRowCol(figures, userRowChoice, userColChoice)) {
+            //check is pawn to move exist
+            if (gameLogic.isFigureExistByRowCol(userRowChoice, userColChoice)) {
                 System.out.println(checkersGameText.getMessage("show.empty.row.col"));
                 isCurrentPawnPositionCorrect = false;
                 continue;
             }
 
             //check for correct player pawn choose (do sprawdzenia)
-            if (CheckersPlayerLogic.isFigureBelongToPlayer(figures,userRowChoice,userColChoice, currentPlayer.getName())){
-                System.out.println(checkersGameText.getMessage("show.pawn.dosent.belong.to.current.player"));
+            if (gameLogic.isFigureBelongToPlayer(userRowChoice, userColChoice, currentPlayer.getName())) {
+                System.out.println(checkersGameText.getMessage("show.pawn.doesnt.belong.to.current.player"));
                 isCurrentPawnPositionCorrect = false;
             }
             //check if player can move current pawn
-
+            if (!gameLogic.isPlayerCanMovePawn(currentPlayer, playerOne, playerTwo, userRowChoice, userColChoice)) {
+                System.out.println(checkersGameText.getMessage("show.player.cant.move.pawn"));
+                isCurrentPawnPositionCorrect = false;
+            }
+            //check  if player can beat other pawn
 
 
         } while (!isCurrentPawnPositionCorrect);
@@ -69,7 +75,7 @@ public class CheckersGame implements Game {
             System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
                     checkersGameBoard.getLength()))));
             System.out.println();
-        }while (isNewPawnPositionCorrect);
+        } while (isNewPawnPositionCorrect);
     }
 
     private static Player preparePlayer(Scanner scanner, Validator validator,
