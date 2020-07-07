@@ -11,7 +11,7 @@ class TicTacToePlayer extends Player {
 
 
     TicTacToePlayer(String name, Color color, TicTacToePawnType playerMark) {
-        super(name, color);
+        super(name);
         this.playerMark = playerMark;
     }
 
