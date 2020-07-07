@@ -1,6 +1,6 @@
 package pl.com.konrad.games.board.checkers;
 
-import pl.com.konrad.games.board.Player;
+
 
 import java.util.List;
 
@@ -23,17 +23,5 @@ class CheckersPlayerLogic {
         return false;
     }
 
-    static boolean isFigureBelongToPlayer(List<CheckersFigure> figures, int row, int col,
-                                          String currentPlayerName) {
-        for (CheckersFigure figure : figures) {
-            if (currentPlayerName.equals(figure.getPlayer().getName()) && figure.getCurrentRow() == row && figure.getCurrentCol() == col)
-                return true;
-        }
-        return false;
-    }
-
-
-
-   
 
 }
