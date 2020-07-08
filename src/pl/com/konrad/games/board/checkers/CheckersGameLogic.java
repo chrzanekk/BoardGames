@@ -15,56 +15,57 @@ public class CheckersGameLogic {
     }
 
     // check is figure exist in position used both if user choose pawn and if user choose place to move
-    boolean isFigureExistByRowCol(int row, int col) {
+    boolean isFigureExistByRowCol(int userRow, int userCol) {
         for (CheckersFigure figure : figures) {
-            if (figure.getCurrentRow() == row && figure.getCurrentCol() == col && figure.getColor() != null)
+            if (figure.getCurrentRow() == userRow && figure.getCurrentCol() == userCol && figure.getColor() != null)
                 return true;
         }
         return false;
     }
 //do poprawy - kompletnie nie działa.
-    boolean isFigureBelongToPlayer(int row, int col,
+    boolean isFigureBelongToPlayer(int userRow, int userCol,
                                    String currentPlayerName) {
         for (CheckersFigure figure : figures) {
-            if (currentPlayerName.equals(figure.getPlayer().getName()) && figure.getCurrentRow() == row && figure.getCurrentCol() == col)
+            if (currentPlayerName.equals(figure.getPlayer().getName()) && figure.getCurrentRow() == userRow && figure.getCurrentCol() == userCol
+            )
                 return true;
         }
         return false;
     }
 
     //    przemyśleć czy metoda poniżej ma w ogóle sens.
-    boolean isPlayerCanMovePawn(Player currentPlayer, Player playerOne, Player playerTwo, int row, int col,
+    boolean isPlayerCanMovePawn(Player currentPlayer, Player playerOne, Player playerTwo, int userRow, int userCol,
                                 int gameBoardSize) {
-        return isPlayerCanMovePawnBottom(currentPlayer, playerOne, row, col, gameBoardSize) || isPlayerCanMovePawnTop(currentPlayer,
-                playerTwo, row, col, gameBoardSize);
+        return isPlayerCanMovePawnBottom(currentPlayer, playerOne, userRow, userCol, gameBoardSize) || isPlayerCanMovePawnTop(currentPlayer,
+                playerTwo, userRow, userCol, gameBoardSize);
     }
 
-    boolean isPlayerCanMovePawnBottom(Player currentPlayer, Player playerOne, int row, int col, int gameBoardSize) {
-        return currentPlayer.equals(playerOne) && checkForPlaceToMoveBottom(row, col, gameBoardSize);
+    boolean isPlayerCanMovePawnBottom(Player currentPlayer, Player playerOne, int userRow, int userCol, int gameBoardSize) {
+        return currentPlayer.equals(playerOne) && checkForPlaceToMoveBottom(userRow, userCol, gameBoardSize);
     }
 
-    boolean isPlayerCanMovePawnTop(Player currentPlayer, Player playerTwo, int row, int col, int gameBoardSize) {
-        return currentPlayer.equals(playerTwo) && checkForPlaceToMoveTop(row, col, gameBoardSize);
+    boolean isPlayerCanMovePawnTop(Player currentPlayer, Player playerTwo, int userRow, int userCol, int gameBoardSize) {
+        return currentPlayer.equals(playerTwo) && checkForPlaceToMoveTop(userRow, userCol, gameBoardSize);
     }
 //sprawdzić prawą stronę (dwie ostatnie kolumny się błędnie sprawdzaja)
     boolean checkForPlaceToMoveBottom(int userRow, int userCol, int gameBoardSize) {
-        if (userRow == gameBoardSize - 1)
+        if (userRow == gameBoardSize)
             return false;
         else if (isBottomLeftSideOfBoard(userRow, userCol, gameBoardSize)) {
-            return !CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow + 1, userCol + 2);
+            return !CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow + 1, userCol + 1);
         } else if (isBottomRightSideOfBoard(userRow, userCol, gameBoardSize)) {
-            return (!CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow + 1, userCol - 2));
+            return (!CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow + 1, userCol - 1));
         } else {
             return ((!CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow + 1, userCol - 1)) || !CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow + 1, userCol + 1));
         }
     }
 
     private boolean isBottomRightSideOfBoard(int userRow, int userCol, int gameBoardSize) {
-        return userRow < gameBoardSize - 1 && userCol == gameBoardSize - 1;
+        return userRow < gameBoardSize && userCol == gameBoardSize+1;
     }
 //sprawdzić czy poprawny warunek.
     private boolean isBottomLeftSideOfBoard(int userRow, int userCol, int gameBoardSize) {
-        return userRow < gameBoardSize - 1 && userCol == 0;
+        return userRow < gameBoardSize && userCol == 0;
     }
 
 
@@ -81,7 +82,7 @@ public class CheckersGameLogic {
     }
 
     private boolean isTopRightSideOfBoard(int userRow, int userCol, int gameBoardSize) {
-        return userRow > 0 && userCol == gameBoardSize - 1;
+        return userRow > 0 && userCol == gameBoardSize;
     }
 
     private boolean isTopLeftSideOfBoard(int userRow, int userCol) {
