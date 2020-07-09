@@ -58,11 +58,11 @@ public class CheckersGameLogic {
             return false;
         }
         else if (isBottomLeftSideOfBoard(userRow, userCol, gameBoardSize)) {
-            return !CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow + 1, userCol + 1);
+            return !isFigureExistByRowCol(userRow + 1, userCol + 1);
         } else if (isBottomRightSideOfBoard(userRow, userCol, gameBoardSize)) {
-            return (!CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow + 1, userCol - 1));
+            return (!isFigureExistByRowCol(userRow + 1, userCol - 1));
         } else {
-            return ((!CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow + 1, userCol - 1)) || !CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow + 1, userCol + 1));
+            return ((!isFigureExistByRowCol(userRow + 1, userCol - 1)) || !isFigureExistByRowCol(userRow + 1, userCol + 1));
         }
     }
 
@@ -79,11 +79,11 @@ public class CheckersGameLogic {
         if (userRow == 0)
             return false;
         else if (isTopLeftSideOfBoard(userRow, userCol)) {
-            return !CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow - 1, userCol + 2);
+            return !isFigureExistByRowCol( userRow - 1, userCol + 2);
         } else if (isTopRightSideOfBoard(userRow, userCol, gameBoardSize)) {
-            return (!CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow - 1, userCol - 2));
+            return (!isFigureExistByRowCol( userRow - 1, userCol - 2));
         } else {
-            return ((!CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow - 1, userCol - 1)) || !CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow - 1, userCol + 1));
+            return ((!isFigureExistByRowCol( userRow - 1, userCol - 1)) || !isFigureExistByRowCol(userRow - 1, userCol + 1));
         }
     }
 

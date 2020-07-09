@@ -14,14 +14,4 @@ class CheckersPlayerLogic {
         }
         return mark;
     }
-
-    static boolean isFigureExistByRowCol(List<CheckersFigure> figures, int row, int col) {
-        for (CheckersFigure figure : figures) {
-            if (figure.getCurrentRow() == row && figure.getCurrentCol() == col)
-                return true;
-        }
-        return false;
-    }
-
-
 }

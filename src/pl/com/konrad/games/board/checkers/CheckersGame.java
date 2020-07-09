@@ -20,7 +20,7 @@ public class CheckersGame implements Game {
     private Validator validator = new Validator();
     private CheckersGameText checkersGameText = new CheckersGameText();
     private List<CheckersFigure> figures = new ArrayList<>();
-    private TreeMap<Character,Integer> lettersAndDigits;
+    private TreeMap<Character, Integer> lettersAndDigits;
 
 
     @Override
@@ -42,16 +42,18 @@ public class CheckersGame implements Game {
             System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
 
             int userRowChoice = getPlayerRowChoice(scanner, validator, checkersGameBoard);
+            boolean isInputColCorrect = true;
+
             System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
                     checkersGameBoard.getLength()))));
-            int userColChoice = getPlayerColChoice(scanner, validator, checkersGameBoard);
-
+            int userColChoice = getPlayerColChoice(scanner, validator, checkersGameBoard, lettersAndDigits);
+            System.out.println(userRowChoice + " " + userColChoice);
             //check is pawn to move exist
-            if (!gameLogic.isFigureExistByRowCol(userRowChoice, userColChoice)) {
-                System.out.println(checkersGameText.getMessage("show.empty.row.col"));
-                isCurrentPawnPositionCorrect = false;
-
-            }
+//            if (!gameLogic.isFigureExistByRowCol(userRowChoice, userColChoice)) {
+//                System.out.println(checkersGameText.getMessage("show.empty.row.col"));
+//                isCurrentPawnPositionCorrect = false;
+//
+//            }
 
             //check for correct player pawn choose (do sprawdzenia)
 //            if (gameLogic.isFigureBelongToPlayer(userRowChoice, userColChoice, currentPlayer.getName())) {
@@ -115,49 +117,72 @@ public class CheckersGame implements Game {
             playerRowChoice = scanner.nextInt();
             if (validator.validateRowColInput(playerRowChoice, gameBoard)) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
-
             }
         } while (validator.validateRowColInput(playerRowChoice, gameBoard));
         return playerRowChoice - 1;
     }
 
-    private static int getPlayerColChoice(Scanner scanner, Validator validator, GameBoard gameBoard) {
-//zabezpieczenie przed wprowadzeniem inta lub dłuższego stringa niż jeden znak - wymyślić sposób.
+    private static int getPlayerColChoice(Scanner scanner, Validator validator, GameBoard gameBoard, TreeMap<Character, Integer> lettersAndDigits) {
         int playerColChoiceByInt;
+        String playerColChoiceByString;
         char playerColChoiceByChar;
         do {
-            while (!scanner.hasNext()) {
-                System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
-                scanner.next().charAt(0);
+            playerColChoiceByString = scanner.next().toUpperCase();
+            if (!checkStringLength(playerColChoiceByString)) {
+                System.out.println(ValidatorWarning.getMessage("show.string.to.long"));
             }
-            //sprawdzic dlugosc stringa ( 0 i 1+)
-            playerColChoiceByChar = scanner.next().toUpperCase().charAt(0);
-            TreeMap<Character,Integer> lettersAndDigits = lettersAndDigits(gameBoard);
+            if (!isStringHasDigit(playerColChoiceByString)){
+                System.out.println(ValidatorWarning.getMessage("show.digit.in.string"));
+            }
 
-            playerColChoiceByInt = convertLetterToDigit(lettersAndDigits,playerColChoiceByChar);
-        } while(validator.validateRowColInput(playerColChoiceByInt,gameBoard));
-        return playerColChoiceByInt-1;
+        }while (!checkStringLength(playerColChoiceByString) && !isStringHasDigit(playerColChoiceByString));
+        playerColChoiceByChar = playerColChoiceByString.charAt(0);
+        playerColChoiceByInt = convertLetterToDigit(lettersAndDigits,playerColChoiceByChar);
+        do {
+            if (validator.validateRowColInput(playerColChoiceByInt, gameBoard)) {
+                System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
+            }
+
+        } while (validator.validateRowColInput(playerColChoiceByInt, gameBoard));
+        return playerColChoiceByInt;
     }
 
-    private static TreeMap<Character, Integer> lettersAndDigits (GameBoard gameBoard) {
+    private static TreeMap<Character, Integer> lettersAndDigits(GameBoard gameBoard) {
         TreeMap<Character, Integer> lettersAndDigits = new TreeMap<>();
         Character firstChar = 'A';
         Integer fistDigit = 1;
-        for (int i = fistDigit; i<gameBoard.getLength(); i++ ) {
-            lettersAndDigits.put(firstChar,fistDigit);
+        for (int i = fistDigit; i < gameBoard.getLength(); i++) {
+            lettersAndDigits.put(firstChar, fistDigit);
             firstChar++;
             fistDigit++;
         }
         return lettersAndDigits;
     }
 
-    private static int convertLetterToDigit (TreeMap<Character,Integer> lettersAndDigits, Character userInput) {
+    private static int convertLetterToDigit(TreeMap<Character, Integer> lettersAndDigits, Character userInput) {
         int convertedValue = 1;
-        for (Map.Entry<Character,Integer> entry : lettersAndDigits.entrySet()) {
-            if(entry.getKey().equals(userInput)) {
+        for (Map.Entry<Character, Integer> entry : lettersAndDigits.entrySet()) {
+            if (entry.getKey().equals(userInput)) {
                 convertedValue = entry.getValue();
             }
         }
         return convertedValue;
+    }
+
+    private static boolean checkStringLength(String inputString) {
+        if (inputString.length() == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean isStringHasDigit(String inputString) {
+        for (int i = 0; i < inputString.length(); i++) {
+            if (Character.isDigit(inputString.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 }

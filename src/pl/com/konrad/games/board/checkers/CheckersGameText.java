@@ -21,6 +21,7 @@ class CheckersGameText {
         messages.put("show.winner", "We have a winner! \n Player {0} wins.");
         messages.put("show.draw", "No one wins. We have a draw");
         messages.put("show.player.cant.move.pawn", "You cannot move this pawn, choose another");
+
     }
 
     public String getMessage(String key) {

@@ -11,6 +11,7 @@ class CheckersGameBoard implements GameBoard {
     private Player playerTwo;
     private CheckersGameText checkersGameText = new CheckersGameText();
     private List<CheckersFigure> figures;
+    CheckersGameLogic gameLogic;
 
 
     CheckersGameBoard(Player playerOne, Player playerTwo, List<CheckersFigure> figures) {
@@ -18,6 +19,7 @@ class CheckersGameBoard implements GameBoard {
         this.playerTwo = playerTwo;
         this.figures = figures;
         GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;
+        gameLogic = new CheckersGameLogic(figures);
         gameBoard = new char[boardDimension.size()][boardDimension.size()];
         setup();
 
@@ -73,7 +75,7 @@ class CheckersGameBoard implements GameBoard {
             printHorizontalLine();
             System.out.print("|");
             for (int col = 0; col < gameBoard.length; col++) {
-                if (isFigureByRowCol(row, col, figures)) {
+                if (gameLogic.isFigureExistByRowCol(row, col)) {
                     System.out.print(" " + CheckersPlayerLogic.getMarkByRowCol(figures, row, col) +
                             " |");
                 } else System.out.print("   |");
@@ -84,10 +86,6 @@ class CheckersGameBoard implements GameBoard {
         printUnderRow();
     }
 
-
-    private boolean isFigureByRowCol(int row, int col, List<CheckersFigure> figures) {
-        return CheckersPlayerLogic.isFigureExistByRowCol(figures, row, col);
-    }
 
     private void printHorizontalLine() {
         char minus = '-';

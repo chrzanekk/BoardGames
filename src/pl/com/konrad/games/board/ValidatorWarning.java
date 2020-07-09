@@ -9,10 +9,12 @@ public final class ValidatorWarning {
 
     static {
         messages.put("show.not.empty.row.col", "There is already a mark here. Try again.");
-        messages.put("show.invalid.user.input", "Invalid choice. Try again.");
+        messages.put("show.invalid.user.input", "Invalid input. Try again.");
         messages.put("show.wrong.move", "You cannot move here. Try again.");
         messages.put("show.wrong.beat", "You cannot beat this pawn. Try again.");
         messages.put("show.wrong.name.input", "Name is already exists. Try different name.");
+        messages.put("show.string.to.long", "Put single letter only.");
+        messages.put("show.digit.in.string", "You cannot put digit here.");
     }
 
     public static String getMessage(String key) {
