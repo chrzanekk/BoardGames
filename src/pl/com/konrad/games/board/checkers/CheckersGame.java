@@ -20,6 +20,7 @@ public class CheckersGame implements Game {
     private Validator validator = new Validator();
     private CheckersGameText checkersGameText = new CheckersGameText();
     private List<CheckersFigure> figures = new ArrayList<>();
+    private TreeMap<Character,Integer> lettersAndDigits;
 
 
     @Override
@@ -31,6 +32,7 @@ public class CheckersGame implements Game {
 
 
         CheckersGameBoard checkersGameBoard = new CheckersGameBoard(playerOne, playerTwo, figures);
+        lettersAndDigits = lettersAndDigits(checkersGameBoard);
         checkersGameBoard.print();
         System.out.println(checkersGameText.getMessage("show.witch.player.move", currentPlayer.getName()));
         boolean isCurrentPawnPositionCorrect = true;
@@ -128,6 +130,7 @@ public class CheckersGame implements Game {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
                 scanner.next().charAt(0);
             }
+            //sprawdzic dlugosc stringa ( 0 i 1+)
             playerColChoiceByChar = scanner.next().toUpperCase().charAt(0);
             TreeMap<Character,Integer> lettersAndDigits = lettersAndDigits(gameBoard);
 

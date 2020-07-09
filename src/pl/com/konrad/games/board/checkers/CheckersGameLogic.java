@@ -16,11 +16,16 @@ public class CheckersGameLogic {
 
     // check is figure exist in position used both if user choose pawn and if user choose place to move
     boolean isFigureExistByRowCol(int userRow, int userCol) {
-        for (CheckersFigure figure : figures) {
-            if (figure.getCurrentRow() == userRow && figure.getCurrentCol() == userCol && figure.getColor() != null)
-                return true;
+        CheckersFigure figure = getFigureByRowCol(userRow,userCol);
+        if(figure==null) {
+            return false;
         }
-        return false;
+        else if (figure.getColor()!=null){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 //do poprawy - kompletnie nie działa.
     boolean isFigureBelongToPlayer(int userRow, int userCol,
@@ -49,8 +54,9 @@ public class CheckersGameLogic {
     }
 //sprawdzić prawą stronę (dwie ostatnie kolumny się błędnie sprawdzaja)
     boolean checkForPlaceToMoveBottom(int userRow, int userCol, int gameBoardSize) {
-        if (userRow == gameBoardSize)
+        if (userRow == gameBoardSize) {
             return false;
+        }
         else if (isBottomLeftSideOfBoard(userRow, userCol, gameBoardSize)) {
             return !CheckersPlayerLogic.isFigureExistByRowCol(figures, userRow + 1, userCol + 1);
         } else if (isBottomRightSideOfBoard(userRow, userCol, gameBoardSize)) {
@@ -102,19 +108,17 @@ public class CheckersGameLogic {
                             CheckersGameBoardMark.BLACK_KING));
                 }
             }
-
         }
     }
 
     CheckersFigure getFigureByRowCol(int row, int col) {
         for (CheckersFigure figure : figures) {
             if (figure.getCurrentRow() == row && figure.getCurrentCol() == col) {
-                return new CheckersFigure(figure.getColor(), row, col, figure.getPlayer(), figure.getType(), figure.getMark());
+                return figure;
             }
         }
         return null;
     }
-
 }
 
 
