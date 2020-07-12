@@ -17,7 +17,7 @@ class CheckersGameText {
         messages.put("show.not.empty.row.col", "There is already figure here. Try again.");
         messages.put("show.empty.row.col", "There is no pawn here. Try again.");
         messages.put("show.input.row", "Input number of row (from 1 to {0} ): ");
-        messages.put("show.input.col", "Input letter of col (from A to {0} ): ");
+        messages.put("show.input.col", "Input single letter of col (from A to {0} ): ");
         messages.put("show.winner", "We have a winner! \n Player {0} wins.");
         messages.put("show.draw", "No one wins. We have a draw");
         messages.put("show.player.cant.move.pawn", "You cannot move this pawn, choose another");

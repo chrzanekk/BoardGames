@@ -1,6 +1,9 @@
 package pl.com.konrad.games.board;
 
 
+import java.util.Map;
+import java.util.TreeMap;
+
 /*
 to do:
 - walidacja wyboru menu
@@ -26,4 +29,10 @@ public final class Validator {
         return userChoice < ZERO || userChoice > gameBoard.getLength();
     }
 
+    public boolean validateColInput(Character userChoice, TreeMap<Character, Integer> lettersAndDigits) {
+        if (lettersAndDigits.containsKey(userChoice)) {
+                return true;
+            }
+        return false;
+    }
 }
