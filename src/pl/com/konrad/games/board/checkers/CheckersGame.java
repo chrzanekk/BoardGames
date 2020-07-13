@@ -66,7 +66,7 @@ public class CheckersGame implements Game {
                 continue;
             }
 
-//            check if player can move current pawn
+//            check if player can move current pawn - working but need some tests.
             if (gameLogic.isPlayerCanMovePawn(currentPlayer, playerOne, playerTwo, userRowChoice, userColChoice,
                     checkersGameBoard.getLength())) {
                 System.out.println(checkersGameText.getMessage("show.player.cant.move.pawn"));
