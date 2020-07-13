@@ -18,7 +18,7 @@ public class CheckersGame implements Game {
     private Scanner scanner = new Scanner(System.in);
 
     private Validator validator = new Validator();
-    private CheckersGameText checkersGameText = new CheckersGameText();
+    private static CheckersGameText checkersGameText = new CheckersGameText();
     private List<CheckersFigure> figures = new ArrayList<>();
 
 
@@ -34,7 +34,7 @@ public class CheckersGame implements Game {
         TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(checkersGameBoard);
         checkersGameBoard.print();
         System.out.println(checkersGameText.getMessage("show.witch.player.move", currentPlayer.getName()));
-//        boolean isCurrentPawnPositionInputCorrect = true;
+        boolean isCurrentPawnPositionInputCorrect = true;
 //        do {
         System.out.println(checkersGameText.getMessage("show.choose.current.pawn.to.move"));
         System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
@@ -42,10 +42,10 @@ public class CheckersGame implements Game {
         int userRowChoice = getPlayerRowChoice(scanner, validator, checkersGameBoard);
         System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
                 checkersGameBoard.getLength()))));
-        char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
+        char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits, checkersGameBoard);
         int userColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
-        System.out.println(userRowChoice + " " + userColChoiceByChar + "/" + userColChoice);
-//            isCurrentPawnPositionInputCorrect = false;
+        System.out.println("row: " +userRowChoice + "; col(char): " + userColChoiceByChar + "/(int)" + userColChoice);
+            isCurrentPawnPositionInputCorrect = false;
         //check is pawn to move exist
 
         if (!gameLogic.isFigureExistByRowCol(userRowChoice, userColChoice)) {
@@ -121,31 +121,34 @@ public class CheckersGame implements Game {
         return playerRowChoice - 1;
     }
 
-    private static char getPlayerColChoice(Scanner scanner, Validator validator, TreeMap<Character, Integer> lettersAndDigits) {
+    private static char getPlayerColChoice(Scanner scanner, Validator validator, TreeMap<Character, Integer> lettersAndDigits, CheckersGameBoard checkersGameBoard) {
         String playerColChoiceByString;
-        Character playerColChoiceByChar;
-        do {
+        char playerColChoiceByChar;
+        boolean isColInputCorrect;
             do {
+                isColInputCorrect = true;
                 playerColChoiceByString = scanner.next().toUpperCase();
                 if (isStringIsLongerThanOne(playerColChoiceByString)) {
                     System.out.println(ValidatorWarning.getMessage("show.string.to.long"));
+                    isColInputCorrect = false;
                 }
                 if (isStringHasDigit(playerColChoiceByString)) {
                     System.out.println(ValidatorWarning.getMessage("show.digit.in.string"));
+                    isColInputCorrect = false;
                 }
-            } while (!isStringIsLongerThanOne(playerColChoiceByString)|| !isStringHasDigit(playerColChoiceByString));
-            playerColChoiceByChar = playerColChoiceByString.charAt(0);
-            if (validator.validateColInput(playerColChoiceByChar, lettersAndDigits)) {
-                System.out.println(ValidatorWarning.getMessage("show.invalid.col.user.input"));
-            }
-        } while (validator.validateColInput(playerColChoiceByChar, lettersAndDigits));
+                playerColChoiceByChar = playerColChoiceByString.charAt(0);
+                if (!validator.validateColInput(playerColChoiceByChar, lettersAndDigits)) {
+                    System.out.println(ValidatorWarning.getMessage("show.invalid.col.user.input"));
+                    isColInputCorrect = false;
+                }
+            } while (!isColInputCorrect);
         return playerColChoiceByChar;
     }
 
     private static TreeMap<Character, Integer> lettersAndDigits(GameBoard gameBoard) {
         TreeMap<Character, Integer> lettersAndDigits = new TreeMap<>();
         Character firstChar = 'A';
-        Integer fistDigit = 1;
+        Integer fistDigit = 0;
         for (int i = fistDigit; i <= gameBoard.getLength(); i++) {
             lettersAndDigits.put(firstChar, fistDigit);
             firstChar++;
@@ -159,10 +162,10 @@ public class CheckersGame implements Game {
     }
 
     private static boolean isStringIsLongerThanOne(String inputString) {
-        if (inputString.length() == 1) {
-            return false;
-        } else {
+        if (inputString.length() > 1) {
             return true;
+        } else {
+            return false;
         }
     }
 
