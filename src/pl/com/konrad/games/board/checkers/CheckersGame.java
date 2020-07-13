@@ -136,12 +136,12 @@ public class CheckersGame implements Game {
                     System.out.println(ValidatorWarning.getMessage("show.digit.in.string"));
                     isColInputCorrect = false;
                 }
-                playerColChoiceByChar = playerColChoiceByString.charAt(0);
-                if (!validator.validateColInput(playerColChoiceByChar, lettersAndDigits)) {
+                if (!validator.validateColInput(playerColChoiceByString.charAt(0), lettersAndDigits)) {
                     System.out.println(ValidatorWarning.getMessage("show.invalid.col.user.input"));
                     isColInputCorrect = false;
                 }
             } while (!isColInputCorrect);
+        playerColChoiceByChar = playerColChoiceByString.charAt(0);
         return playerColChoiceByChar;
     }
 

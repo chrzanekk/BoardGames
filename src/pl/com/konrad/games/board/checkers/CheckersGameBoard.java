@@ -76,7 +76,7 @@ class CheckersGameBoard implements GameBoard {
             System.out.print("|");
             for (int col = 0; col < gameBoard.length; col++) {
                 if (gameLogic.isFigureExistByRowCol(row, col)) {
-                    System.out.print(" " + CheckersPlayerLogic.getMarkByRowCol(figures, row, col) +
+                    System.out.print(" " + gameLogic.getFigureByRowCol(row, col).getMark().pawn() +
                             " |");
                 } else System.out.print("   |");
             }
