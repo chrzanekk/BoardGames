@@ -27,6 +27,19 @@ public class CheckersGameLogic {
             return false;
         }
     }
+
+    boolean isFigureIsProhibited (int userRow, int userCol) {
+        CheckersFigure figure = getFigureByRowCol(userRow,userCol);
+        if (figure==null) {
+            return false;
+        }
+        else if (figure.getColor()==null && figure.getMark()!=null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 //do poprawy - kompletnie nie działa.
     boolean isFigureBelongToPlayer(int userRow, int userCol,
                                    String currentPlayerName) {

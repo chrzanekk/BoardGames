@@ -75,7 +75,7 @@ class CheckersGameBoard implements GameBoard {
             printHorizontalLine();
             System.out.print("|");
             for (int col = 0; col < gameBoard.length; col++) {
-                if (gameLogic.isFigureExistByRowCol(row, col)) {
+                if (gameLogic.isFigureExistByRowCol(row, col) || gameLogic.isFigureIsProhibited(row,col)) {
                     System.out.print(" " + gameLogic.getFigureByRowCol(row, col).getMark().pawn() +
                             " |");
                 } else System.out.print("   |");

@@ -45,7 +45,8 @@ public class CheckersGame implements Game {
         char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits, checkersGameBoard);
         int userColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
         System.out.println("row: " +userRowChoice + "; col(char): " + userColChoiceByChar + "/(int)" + userColChoice);
-            isCurrentPawnPositionInputCorrect = false;
+        System.out.println(gameLogic.getFigureByRowCol(userRowChoice,userColChoice).getMark().pawn());
+
         //check is pawn to move exist
 
         if (!gameLogic.isFigureExistByRowCol(userRowChoice, userColChoice)) {
