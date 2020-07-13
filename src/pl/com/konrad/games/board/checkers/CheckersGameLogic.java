@@ -16,39 +16,38 @@ public class CheckersGameLogic {
 
     // check is figure exist in position used both if user choose pawn and if user choose place to move
     boolean isFigureExistByRowCol(int userRow, int userCol) {
-        CheckersFigure figure = getFigureByRowCol(userRow,userCol);
-        if(figure==null) {
+        CheckersFigure figure = getFigureByRowCol(userRow, userCol);
+        if (figure == null) {
             return false;
-        }
-        else if (figure.getColor()!=null){
+        } else if (figure.getColor() != null) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    boolean isFigureIsProhibited (int userRow, int userCol) {
-        CheckersFigure figure = getFigureByRowCol(userRow,userCol);
-        if (figure==null) {
+    boolean isFigureIsProhibited(int userRow, int userCol) {
+        CheckersFigure figure = getFigureByRowCol(userRow, userCol);
+        if (figure == null) {
             return false;
-        }
-        else if (figure.getColor()==null && figure.getMark()!=null) {
+        } else if (figure.getColor() == null && figure.getMark() != null) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
-//do poprawy - kompletnie nie działa.
+
+    //do poprawy - kompletnie nie działa.
     boolean isFigureBelongToPlayer(int userRow, int userCol,
-                                   String currentPlayerName) {
-        for (CheckersFigure figure : figures) {
-            if (currentPlayerName.equals(figure.getPlayer().getName()) && figure.getCurrentRow() == userRow && figure.getCurrentCol() == userCol
-            )
-                return true;
+                                   char currentPlayerPawn) {
+        CheckersFigure figure = getFigureByRowCol(userRow, userCol);
+
+        if (figure.getMark().pawn() == currentPlayerPawn){
+            return true;
         }
-        return false;
+        else{
+            return false;
+        }
     }
 
     //    przemyśleć czy metoda poniżej ma w ogóle sens.
@@ -65,12 +64,12 @@ public class CheckersGameLogic {
     boolean isPlayerCanMovePawnTop(Player currentPlayer, Player playerTwo, int userRow, int userCol, int gameBoardSize) {
         return currentPlayer.equals(playerTwo) && checkForPlaceToMoveTop(userRow, userCol, gameBoardSize);
     }
-//sprawdzić prawą stronę (dwie ostatnie kolumny się błędnie sprawdzaja)
+
+    //sprawdzić prawą stronę (dwie ostatnie kolumny się błędnie sprawdzaja)
     boolean checkForPlaceToMoveBottom(int userRow, int userCol, int gameBoardSize) {
         if (userRow == gameBoardSize) {
             return false;
-        }
-        else if (isBottomLeftSideOfBoard(userRow, userCol, gameBoardSize)) {
+        } else if (isBottomLeftSideOfBoard(userRow, userCol, gameBoardSize)) {
             return !isFigureExistByRowCol(userRow + 1, userCol + 1);
         } else if (isBottomRightSideOfBoard(userRow, userCol, gameBoardSize)) {
             return (!isFigureExistByRowCol(userRow + 1, userCol - 1));
@@ -80,9 +79,10 @@ public class CheckersGameLogic {
     }
 
     private boolean isBottomRightSideOfBoard(int userRow, int userCol, int gameBoardSize) {
-        return userRow < gameBoardSize && userCol == gameBoardSize+1;
+        return userRow < gameBoardSize && userCol == gameBoardSize + 1;
     }
-//sprawdzić czy poprawny warunek.
+
+    //sprawdzić czy poprawny warunek.
     private boolean isBottomLeftSideOfBoard(int userRow, int userCol, int gameBoardSize) {
         return userRow < gameBoardSize && userCol == 0;
     }
@@ -92,11 +92,11 @@ public class CheckersGameLogic {
         if (userRow == 0)
             return false;
         else if (isTopLeftSideOfBoard(userRow, userCol)) {
-            return !isFigureExistByRowCol( userRow - 1, userCol + 2);
+            return !isFigureExistByRowCol(userRow - 1, userCol + 2);
         } else if (isTopRightSideOfBoard(userRow, userCol, gameBoardSize)) {
-            return (!isFigureExistByRowCol( userRow - 1, userCol - 2));
+            return (!isFigureExistByRowCol(userRow - 1, userCol - 2));
         } else {
-            return ((!isFigureExistByRowCol( userRow - 1, userCol - 1)) || !isFigureExistByRowCol(userRow - 1, userCol + 1));
+            return ((!isFigureExistByRowCol(userRow - 1, userCol - 1)) || !isFigureExistByRowCol(userRow - 1, userCol + 1));
         }
     }
 
