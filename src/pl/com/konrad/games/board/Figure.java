@@ -6,7 +6,7 @@ public class Figure {
     private final int currentRow;
     private final int currentCol;
     private final Player player;
-// dodać Playera do jednej listy figur. Przebudować część gry.
+
     public Figure(Color color, int currentRow, int currentCol,
                   Player player) {
         this.color = color;

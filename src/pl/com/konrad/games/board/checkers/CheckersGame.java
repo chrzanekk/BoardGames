@@ -34,8 +34,9 @@ public class CheckersGame implements Game {
         TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(checkersGameBoard);
         checkersGameBoard.print();
         System.out.println(checkersGameText.getMessage("show.witch.player.move", currentPlayer.getName()));
-        boolean isCurrentPawnPositionInputCorrect = true;
+        boolean isCurrentPawnPositionInputCorrect;
         do {
+            isCurrentPawnPositionInputCorrect = true;
             System.out.println(checkersGameText.getMessage("show.choose.current.pawn.to.move"));
             System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
 
@@ -44,38 +45,46 @@ public class CheckersGame implements Game {
                     checkersGameBoard.getLength()))));
             char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits, checkersGameBoard);
             int userColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
-            System.out.println("row: " + userRowChoice + "; col(char): " + userColChoiceByChar + "/(int)" + userColChoice);
-            System.out.println(gameLogic.getFigureByRowCol(userRowChoice, userColChoice).getMark().pawn());
 
-            //check is pawn to move exist
+            System.out.println("***************************");
+            System.out.println("Checking what player choose");
+            System.out.println("row: " + userRowChoice + "; col: (char)" + userColChoiceByChar + "/(int)" + userColChoice);
+            System.out.println(gameLogic.getFigureByRowCol(userRowChoice, userColChoice).getMark().pawn());
+            System.out.println("***************************");
+
+            //check is pawn to move exist - working
             if (!gameLogic.isFigureExistByRowCol(userRowChoice, userColChoice)) {
                 System.out.println(checkersGameText.getMessage("show.empty.row.col"));
                 isCurrentPawnPositionInputCorrect = false;
+                continue;
             }
 
-//        check for correct player pawn choose (do sprawdzenia)
-            if (!gameLogic.isFigureBelongToPlayer(userRowChoice, userColChoice, )) {
-                System.out.println(checkersGameText.getMessage("show.pawn.doesnt.belong.to.current.player"));
+//        check for correct player pawn choose - working
+            if (!gameLogic.isFigureBelongToPlayer(userRowChoice, userColChoice, currentPlayer.getName())) {
+                System.out.println(checkersGameText.getMessage("show.pawn.does.not.belong.to.current.player"));
+                isCurrentPawnPositionInputCorrect = false;
+                continue;
+            }
+
+//            check if player can move current pawn
+            if (gameLogic.isPlayerCanMovePawn(currentPlayer, playerOne, playerTwo, userRowChoice, userColChoice,
+                    checkersGameBoard.getLength())) {
+                System.out.println(checkersGameText.getMessage("show.player.cant.move.pawn"));
                 isCurrentPawnPositionInputCorrect = false;
             }
-            //check if player can move current pawn
-//            if (!gameLogic.isPlayerCanMovePawn(currentPlayer, playerOne, playerTwo, userRowChoice, userColChoice,
-//                    checkersGameBoard.getLength())) {
-//                System.out.println(checkersGameText.getMessage("show.player.cant.move.pawn"));
-//                isCurrentPawnPositionInputCorrect = false;
-//            }
-            //check  if player can beat other pawn
+
+            //check  if player can beat other pawn - in developement
 
         } while (!isCurrentPawnPositionInputCorrect);
 
-            boolean isNewPawnPositionCorrect = false;
-            do {
-                System.out.println(checkersGameText.getMessage("show.new.pawn.position"));
-                System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
-                System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
-                        checkersGameBoard.getLength()))));
-                System.out.println();
-            } while (isNewPawnPositionCorrect);
+        boolean isNewPawnPositionCorrect = false;
+        do {
+            System.out.println(checkersGameText.getMessage("show.new.pawn.position"));
+            System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
+            System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
+                    checkersGameBoard.getLength()))));
+            System.out.println();
+        } while (isNewPawnPositionCorrect);
 
     }
 
@@ -124,22 +133,22 @@ public class CheckersGame implements Game {
         String playerColChoiceByString;
         char playerColChoiceByChar;
         boolean isColInputCorrect;
-            do {
-                isColInputCorrect = true;
-                playerColChoiceByString = scanner.next().toUpperCase();
-                if (isStringIsLongerThanOne(playerColChoiceByString)) {
-                    System.out.println(ValidatorWarning.getMessage("show.string.to.long"));
-                    isColInputCorrect = false;
-                }
-                if (isStringHasDigit(playerColChoiceByString)) {
-                    System.out.println(ValidatorWarning.getMessage("show.digit.in.string"));
-                    isColInputCorrect = false;
-                }
-                if (!validator.validateColInput(playerColChoiceByString.charAt(0), lettersAndDigits)) {
-                    System.out.println(ValidatorWarning.getMessage("show.invalid.col.user.input"));
-                    isColInputCorrect = false;
-                }
-            } while (!isColInputCorrect);
+        do {
+            isColInputCorrect = true;
+            playerColChoiceByString = scanner.next().toUpperCase();
+            if (isStringIsLongerThanOne(playerColChoiceByString)) {
+                System.out.println(ValidatorWarning.getMessage("show.string.to.long"));
+                isColInputCorrect = false;
+            }
+            if (isStringHasDigit(playerColChoiceByString)) {
+                System.out.println(ValidatorWarning.getMessage("show.digit.in.string"));
+                isColInputCorrect = false;
+            }
+            if (!validator.validateColInput(playerColChoiceByString.charAt(0), lettersAndDigits)) {
+                System.out.println(ValidatorWarning.getMessage("show.invalid.col.user.input"));
+                isColInputCorrect = false;
+            }
+        } while (!isColInputCorrect);
         playerColChoiceByChar = playerColChoiceByString.charAt(0);
         return playerColChoiceByChar;
     }
