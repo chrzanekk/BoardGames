@@ -74,12 +74,13 @@ public class CheckersGame implements Game {
                 isCurrentPawnPositionInputCorrect = false;
             }
 
-            //check if player can capture other pawn - in developement
+            //check if player can capture other pawn - in development
 
         } while (!isCurrentPawnPositionInputCorrect);
 
-        boolean isNewPawnPositionCorrect = false;
+        boolean isNewPawnPositionCorrect;
         do {
+            isNewPawnPositionCorrect = true;
             System.out.println(checkersGameText.getMessage("show.new.pawn.position"));
             System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
             int userNewRowChoice = getPlayerRowChoice(scanner, validator, checkersGameBoard);
@@ -89,17 +90,25 @@ public class CheckersGame implements Game {
             int userNewColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
             System.out.println();
 
-//            check if new position is avaliable
-            if (!gameLogic.isFigureExistByRowCol(userNewRowChoice, userNewColChoice)) {
-                System.out.println(checkersGameText.getMessage("show.empty.row.col"));
+//            check if new position is available
+            if (gameLogic.isFigureExistByRowCol(userNewRowChoice, userNewColChoice)) {
+                System.out.println(checkersGameText.getMessage("show.field.not.available"));
                 isNewPawnPositionCorrect = false;
                 continue;
+            }
+
+            if (gameLogic.isPlayerCanMovePawn(currentPlayer,playerOne,playerTwo,userNewRowChoice,userNewColChoice,
+                    checkersGameBoard.getLength())) {
+//                change pawn position method - in development.
+            }
+            else {
+
             }
 
 
 
 
-            //check if player can capture other pawn + check if next capture is possible - in developement
+            //check if player can capture other pawn + check if next capture is possible - in development
 
 
 
