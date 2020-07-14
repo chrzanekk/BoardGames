@@ -37,62 +37,50 @@ public class CheckersGameLogic {
         }
     }
 
-    //do poprawy - kompletnie nie działa/ problem z nullpointerem.
     boolean isFigureBelongToPlayer(int userRow, int userCol,
                                    String currentPlayerName) {
         CheckersFigure figure = getFigureByRowCol(userRow, userCol);
-//        CheckersPawnType currentPlayerPawn = getPlayerPawnByName(currentPlayerName);
-        if (figure==null) {
+        if (figure == null) {
             return false;
-        }
-        else if (figure.getPlayer()==null) {
+        } else if (figure.getPlayer() == null) {
             return false;
-        }
-        else if (figure.getPlayer().getName().equals(currentPlayerName)) {
+        } else if (figure.getPlayer().getName().equals(currentPlayerName)) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    //    przemyśleć czy metoda poniżej ma w ogóle sens.
     boolean isPlayerCanMovePawn(Player currentPlayer, Player playerOne, Player playerTwo, int userRow, int userCol,
                                 int gameBoardSize) {
         if (currentPlayer.equals(playerOne)) {
             return checkForPlaceToMoveBottom(userRow, userCol, gameBoardSize);
-        }
-        else {
+        } else {
             return checkForPlaceToMoveTop(userRow, userCol, gameBoardSize);
         }
-
-
-//        return isPlayerCanMovePawnBottom(currentPlayer, playerOne, userRow, userCol, gameBoardSize) || isPlayerCanMovePawnTop(currentPlayer,
-//                playerTwo, userRow, userCol, gameBoardSize);
     }
 
-//    check right side of board (last two columns are wrong checked)
+//    przemyslec zmodyfikowanie ponizszych podobnych metod w kilka potrzebnych z "modifkatorem sprawdzania".
+
     boolean checkForPlaceToMoveBottom(int userRow, int userCol, int gameBoardSize) {
         if (userRow == gameBoardSize) {
             return false;
-        } else if (isBottomLeftSideOfBoard(userRow, userCol, gameBoardSize)) {
+        } else if (isBottomLeftSideOfBoardForMove(userRow, userCol, gameBoardSize)) {
             return isFigureExistByRowCol(userRow + 1, userCol + 1);
-        } else if (isBottomRightSideOfBoard(userRow, userCol, gameBoardSize)) {
+        } else if (isBottomRightSideOfBoardForMove(userRow, userCol, gameBoardSize)) {
             return isFigureExistByRowCol(userRow + 1, userCol - 1);
         } else {
             return ((isFigureExistByRowCol(userRow + 1, userCol - 1)) || isFigureExistByRowCol(userRow + 1, userCol + 1));
         }
     }
 
-    private boolean isBottomRightSideOfBoard(int userRow, int userCol, int gameBoardSize) {
+    private boolean isBottomRightSideOfBoardForMove(int userRow, int userCol, int gameBoardSize) {
         return userRow < gameBoardSize && userCol == gameBoardSize;
     }
 
-    //check conditions
-    private boolean isBottomLeftSideOfBoard(int userRow, int userCol, int gameBoardSize) {
+    private boolean isBottomLeftSideOfBoardForMove(int userRow, int userCol, int gameBoardSize) {
         return userRow < gameBoardSize && userCol == 0;
     }
-
 
     boolean checkForPlaceToMoveTop(int userRow, int userCol, int gameBoardSize) {
         if (userRow == 0)
@@ -113,8 +101,37 @@ public class CheckersGameLogic {
     private boolean isTopLeftSideOfBoard(int userRow, int userCol) {
         return userRow > 0 && userCol == 0;
     }
+// przemyslec dodanie sprawdzenia czy bicie jest nad figura a nie nad pustym polem.
+    private boolean checkForPlaceToCapturePawnBottom(int userCurrentRow, int userCurrentCol, int gameBoardSize, String currentPlayerName) {
+        if (userCurrentRow + 1 == gameBoardSize) {
+            return false;
+        } else if (checkForBottomLeftSide(userCurrentRow, userCurrentCol, gameBoardSize)) {
+            return checkForCaptureLeftSide(userCurrentRow, userCurrentCol, currentPlayerName);
+        } else if (checkForBottomRightSide(userCurrentRow, userCurrentCol, gameBoardSize)) {
+            return checkForCaptureRightSide(userCurrentRow, userCurrentCol, currentPlayerName);
+        } else {
+            return !isFigureExistByRowCol(userCurrentRow + 2, userCurrentCol - 2) || isFigureExistByRowCol(userCurrentRow + 2, userCurrentCol - 2);
+        }
+    }
 
-//in developmnet - maybe not working at all.
+    private boolean checkForCaptureLeftSide(int userCurrentRow, int userCurrentCol, String currentPlayerName) {
+        return !isFigureExistByRowCol(userCurrentRow + 2, userCurrentRow + 2) && !isFigureBelongToPlayer(userCurrentRow+1,userCurrentCol+1,currentPlayerName);
+    }
+
+    private boolean checkForBottomLeftSide(int userCurrentRow, int userCurrentCol, int gameBoardSize) {
+        return userCurrentRow + 2 < gameBoardSize && userCurrentCol == 0;
+    }
+
+    private boolean checkForBottomRightSide(int userCurrentRow, int userCurrentCol, int gameBoardSize) {
+        return userCurrentRow + 2 < gameBoardSize && userCurrentCol == gameBoardSize;
+    }
+
+    private boolean checkForCaptureRightSide(int userCurrentRow, int userCurrentCol, String currentPlayerName) {
+        return !isFigureExistByRowCol(userCurrentRow + 2, userCurrentCol - 2) && !isFigureBelongToPlayer(userCurrentRow+1,userCurrentCol-1,currentPlayerName);
+    }
+
+
+    //in developmnet - maybe not working at all.
     void changeFigureType(int userRow, int userCol, int gameBoardLength, Player currentPlayer) {
         for (CheckersFigure figure : figures) {
             if (userRow == gameBoardLength && figure.getType() == CheckersPawnType.MEN && figure.getColor() == Color.WHITE) {
