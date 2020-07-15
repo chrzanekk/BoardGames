@@ -23,6 +23,17 @@ public class CheckersGameLogic {
         return null;
     }
 
+    void removeFigureByRowCol(int row, int col) {
+        CheckersFigure figure = getFigureByRowCol(row,col);
+        figures.remove(figure);
+    }
+
+    void addFigure(Player player, CheckersPawnType checkersPawnType,
+                   CheckersGameBoardMark checkersGameBoardMark, Color color, int row,
+                   int col) {
+        figures.add(new CheckersFigure(color, row, col, player, checkersPawnType, checkersGameBoardMark));
+    }
+
     // check is figure exist in position used both if user choose pawn and if user choose place to move - working
     boolean isFigureExistByRowCol(int userRow, int userCol) {
         CheckersFigure figure = getFigureByRowCol(userRow, userCol);
@@ -128,8 +139,9 @@ public class CheckersGameLogic {
 
 
 
-
+    //*******************************************
     //****bottom destination - for player one****
+    //*******************************************
     private boolean checkForPlaceToCapturePawnBottom(int userCurrentRow, int userCurrentCol, int gameBoardSize, String currentPlayerName) {
         if (userCurrentRow + 1 == gameBoardSize) {
             return false;
@@ -165,8 +177,9 @@ public class CheckersGameLogic {
         return !isFigureExistByRowCol(userCurrentRow + 2, userCurrentCol - 2) && !isFigureBelongToPlayer(userCurrentRow + 1, userCurrentCol - 1, currentPlayerName);
     }
 
-
-    //    ****top destination - for player two****
+    //****************************************
+    //****top destination - for player two****
+    //****************************************
     private boolean checkForPlaceToCapturePawnTop(int userCurrentRow, int userCurrentCol, int gameBoardSize,
                                                   String currentPlayerName) {
         if (userCurrentRow - 1 == 0) {
@@ -205,7 +218,7 @@ public class CheckersGameLogic {
     }
 
 
-    //in developmnet - maybe not working at all.
+    //in development - maybe not working at all.
     void changeFigureType(int userRow, int userCol, int gameBoardLength, Player currentPlayer) {
         for (CheckersFigure figure : figures) {
             if (userRow == gameBoardLength && figure.getType() == CheckersPawnType.MEN && figure.getColor() == Color.WHITE) {

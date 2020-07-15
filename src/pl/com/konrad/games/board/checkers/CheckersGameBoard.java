@@ -31,27 +31,22 @@ class CheckersGameBoard implements GameBoard {
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard.length; col++) {
                 if (isaTopGameBoard(row, col)) {
-                    addFigure(playerOne, CheckersPawnType.MEN,
+                    gameLogic.addFigure(playerOne, CheckersPawnType.MEN,
                             CheckersGameBoardMark.WHITE_MEN,
                             Color.WHITE, row, col);
                 }
                 if (isaBottomGameBoard(row, col)) {
-                    addFigure(playerTwo, CheckersPawnType.MEN,
+                    gameLogic.addFigure(playerTwo, CheckersPawnType.MEN,
                             CheckersGameBoardMark.BLACK_MEN,
                             Color.BLACK, row, col);
                 }
                 if (isProhibitedField(row, col)) {
-                    addFigure(null, CheckersPawnType.PROHIBITED, CheckersGameBoardMark.PROHIBITED_FIELD, null, row, col);
+                    gameLogic.addFigure(null, CheckersPawnType.PROHIBITED, CheckersGameBoardMark.PROHIBITED_FIELD, null, row, col);
                 }
             }
         }
     }
 
-    private void addFigure(Player player, CheckersPawnType checkersPawnType,
-                           CheckersGameBoardMark checkersGameBoardMark, Color color, int row,
-                           int col) {
-        figures.add(new CheckersFigure(color, row, col, player, checkersPawnType, checkersGameBoardMark));
-    }
 
     private boolean isaTopGameBoard(int row, int col) {
         return (isEvenRowOddCol(row, col) && isTopGameBoard(row)) || (isOddRowEvenCol(row, col) && isTopGameBoard(row));
