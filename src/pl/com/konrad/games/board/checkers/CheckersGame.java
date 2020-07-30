@@ -33,88 +33,100 @@ public class CheckersGame implements Game {
         CheckersGameBoard checkersGameBoard = new CheckersGameBoard(playerOne, playerTwo, figures);
         TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(checkersGameBoard);
         checkersGameBoard.print();
-        System.out.println(checkersGameText.getMessage("show.witch.player.move", currentPlayer.getName()));
-        boolean isCurrentPawnPositionInputCorrect;
+        int userCurrentRowChoice;
+        int userCurrentColChoice;
+        boolean isGameFinished;
         do {
-            isCurrentPawnPositionInputCorrect = true;
-            System.out.println(checkersGameText.getMessage("show.choose.current.pawn.to.move"));
-            System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
+            isGameFinished = false;
+            System.out.println(checkersGameText.getMessage("show.witch.player.move", currentPlayer.getName()));
+            boolean isCurrentPawnPositionInputCorrect;
+            do {
+                isCurrentPawnPositionInputCorrect = true;
+                System.out.println(checkersGameText.getMessage("show.choose.current.pawn.to.move"));
+                System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
 
-            int userCurrentRowChoice = getPlayerRowChoice(scanner, validator, checkersGameBoard);
-            System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
-                    checkersGameBoard.getLength()))));
-            char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits, checkersGameBoard);
-            int userCurrentColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
+                userCurrentRowChoice = getPlayerRowChoice(scanner, validator, checkersGameBoard);
+                System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
+                        checkersGameBoard.getLength()))));
+                char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits, checkersGameBoard);
+                userCurrentColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
 
-            System.out.println("***************************");
-            System.out.println("Checking what player choose");
-            System.out.println("row: " + userCurrentRowChoice + "; col: (char)" + userColChoiceByChar + "/(int)" + userCurrentColChoice);
-            System.out.println(gameLogic.getFigureByRowCol(userCurrentRowChoice, userCurrentColChoice).getMark().pawn());
-            System.out.println("***************************");
+                System.out.println("***************************");
+                System.out.println("Checking what player choose");
+                System.out.println("row: " + userCurrentRowChoice + "; col: (char)" + userColChoiceByChar + "/(int)" + userCurrentColChoice);
+                System.out.println(gameLogic.getFigureByRowCol(userCurrentRowChoice, userCurrentColChoice).getMark().pawn());
+                System.out.println("***************************");
 
-            //check is pawn to move exist - working
-            if (!gameLogic.isFigureExistByRowCol(userCurrentRowChoice, userCurrentColChoice)) {
-                System.out.println(checkersGameText.getMessage("show.empty.row.col"));
-                isCurrentPawnPositionInputCorrect = false;
-                continue;
-            }
+                //check is pawn to move exist - working
+                if (!gameLogic.isFigureExist(userCurrentRowChoice, userCurrentColChoice)) {
+                    System.out.println(checkersGameText.getMessage("show.empty.row.col"));
+                    isCurrentPawnPositionInputCorrect = false;
+                    continue;
+                }
 
 //        check for correct player pawn choose - working
-            if (!gameLogic.isFigureBelongToPlayer(userCurrentRowChoice, userCurrentColChoice, currentPlayer.getName())) {
-                System.out.println(checkersGameText.getMessage("show.pawn.does.not.belong.to.current.player"));
-                isCurrentPawnPositionInputCorrect = false;
-                continue;
-            }
+                if (!gameLogic.isFigureBelongToPlayer(userCurrentRowChoice, userCurrentColChoice, currentPlayer.getName())) {
+                    System.out.println(checkersGameText.getMessage("show.pawn.does.not.belong.to.current.player"));
+                    isCurrentPawnPositionInputCorrect = false;
+                    continue;
+                }
 
 //            check if player can move current pawn - working but need some tests.
 //            check if player can move and capture pawn - in development
-            if (gameLogic.isPlayerCanMovePawn(currentPlayer, playerOne, playerTwo, userCurrentRowChoice, userCurrentColChoice,
-                    checkersGameBoard.getLength())) {
-                System.out.println(checkersGameText.getMessage("show.player.cant.move.pawn"));
-                isCurrentPawnPositionInputCorrect = false;
-            }
+                if (gameLogic.isPlayerCanMovePawn(currentPlayer, playerOne, userCurrentRowChoice, userCurrentColChoice,
+                        checkersGameBoard.getLength())) {
+                    System.out.println(checkersGameText.getMessage("show.player.cant.move.pawn"));
+                    isCurrentPawnPositionInputCorrect = false;
+                }
 
-            //check if player can capture other pawn - in development
+                //check if player can capture other pawn - in development
 
-        } while (!isCurrentPawnPositionInputCorrect);
+            } while (!isCurrentPawnPositionInputCorrect);
 
-        boolean isNewPawnPositionCorrect;
-        do {
-            isNewPawnPositionCorrect = true;
-            System.out.println(checkersGameText.getMessage("show.new.pawn.position"));
-            System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
-            int userNewRowChoice = getPlayerRowChoice(scanner, validator, checkersGameBoard);
-            System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
-                    checkersGameBoard.getLength()))));
-            char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits, checkersGameBoard);
-            int userNewColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
-            System.out.println();
+            boolean isNewPawnPositionCorrect;
+            do {
+                isNewPawnPositionCorrect = true;
+                System.out.println(checkersGameText.getMessage("show.new.pawn.position"));
+                System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
+                int userNewRowChoice = getPlayerRowChoice(scanner, validator, checkersGameBoard);
+                System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
+                        checkersGameBoard.getLength()))));
+                char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits, checkersGameBoard);
+                int userNewColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
+                System.out.println();
 
 //            check if new position is available
-            if (gameLogic.isFigureExistByRowCol(userNewRowChoice, userNewColChoice)) {
-                System.out.println(checkersGameText.getMessage("show.field.not.available"));
-                isNewPawnPositionCorrect = false;
-                continue;
-            }
+                if (gameLogic.isFigureExist(userNewRowChoice, userNewColChoice)) {
+                    System.out.println(checkersGameText.getMessage("show.field.not.available"));
+                    isNewPawnPositionCorrect = false;
+                    continue;
+                }
 
-            if (gameLogic.isPlayerCanMovePawn(currentPlayer,playerOne,playerTwo,userNewRowChoice,userNewColChoice,
-                    checkersGameBoard.getLength())) {
-//                change pawn position method - in development.
-            }
-            else {
+                if (!gameLogic.isPlayerCanMovePawn(currentPlayer, playerOne, userNewRowChoice, userNewColChoice,
+                        checkersGameBoard.getLength())) {
+                    gameLogic.movePawn(currentPlayer, gameLogic.getFigureByRowCol(userCurrentRowChoice,
+                            userCurrentColChoice).getType(), gameLogic.getFigureByRowCol(userCurrentRowChoice,
+                            userCurrentColChoice).getMark(), gameLogic.getFigureByRowCol(userCurrentRowChoice,
+                            userCurrentColChoice).getColor(), userNewRowChoice, userNewColChoice, userCurrentRowChoice, userCurrentColChoice);
+                    checkersGameBoard.print();
+                    gameLogic.swapPlayer(currentPlayer, playerOne, playerTwo);
+                    continue;
 
-            }
+
+                } else {
+                    isNewPawnPositionCorrect = false;
+                }
+
+                checkersGameBoard.print();
 
 
-
-
-            //check if player can capture other pawn + check if next capture is possible - in development
-
+                //check if player can capture other pawn + check if next capture is possible - in development
 
 
 //
-        } while (isNewPawnPositionCorrect);
-
+            } while (!isNewPawnPositionCorrect);
+            isGameFinished =true;
+        }while(isGameFinished);
     }
 
     private static Player preparePlayer(Scanner scanner, Validator validator,

@@ -2,8 +2,6 @@ package pl.com.konrad.games.board.tictactoe;
 
 import pl.com.konrad.games.board.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class TicTacToeGame implements Game {
