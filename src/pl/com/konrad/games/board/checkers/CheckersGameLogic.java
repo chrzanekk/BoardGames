@@ -10,6 +10,7 @@ import java.util.List;
 public class CheckersGameLogic {
     private List<CheckersFigure> figures;
 
+
     public CheckersGameLogic(List<CheckersFigure> figures) {
         this.figures = figures;
     }
@@ -27,6 +28,7 @@ public class CheckersGameLogic {
         CheckersFigure figure = getFigureByRowCol(row,col);
         figures.remove(figure);
     }
+
 
     void addFigure(Player player, CheckersPawnType checkersPawnType,
                    CheckersGameBoardMark checkersGameBoardMark, Color color, int row,
@@ -170,26 +172,26 @@ public class CheckersGameLogic {
         } else if (checkForBottomRightEdge(userCurrentRow, userCurrentCol, gameBoardSize)) {
             return checkForCaptureBottomRightSide(userCurrentRow, userCurrentCol, currentPlayerName);
         } else {
-            return checkForCaptureBottomLeftRightSide(userCurrentRow, userCurrentCol);
+            return checkForCaptureBottomLeftRightSide(userCurrentRow, userCurrentCol, currentPlayerName);
         }
     }
 
     //    checking for capture pawn right or left diagonal
-    private boolean checkForCaptureBottomLeftRightSide(int userCurrentRow, int userCurrentCol) {
-        return !isFigureExist(userCurrentRow + 2, userCurrentCol + 2) ||
-                !isFigureExist(userCurrentRow + 2, userCurrentCol - 2);
+    private boolean checkForCaptureBottomLeftRightSide(int userCurrentRow, int userCurrentCol,
+                                                       String currentPlayerName) {
+        return checkForCaptureBottomLeftSide(userCurrentRow,userCurrentCol,currentPlayerName) ||
+                checkForCaptureBottomRightSide(userCurrentRow,userCurrentCol,currentPlayerName);
     }
 
     private boolean checkForBottomLeftEdge(int userCurrentRow, int userCurrentCol, int gameBoardSize) {
-        return userCurrentRow + 2 < gameBoardSize && userCurrentCol == 0;
+        return userCurrentRow + 2 <= gameBoardSize && userCurrentCol == 0;
     }
 
     private boolean checkForBottomRightEdge(int userCurrentRow, int userCurrentCol, int gameBoardSize) {
-        return userCurrentRow + 2 < gameBoardSize && userCurrentCol == gameBoardSize;
+        return userCurrentRow + 2 <= gameBoardSize && userCurrentCol == gameBoardSize;
     }
 
-    //    tu brakuje sprawdzania czy pionek przez który idzie bicie wogole istnieje - wiem jak to dodać, tylko nie wiem
-//    jak skrócić warunek
+
     private boolean checkForCaptureBottomLeftSide(int userCurrentRow, int userCurrentCol, String currentPlayerName) {
         return !isFigureExist(userCurrentRow + 2, userCurrentCol + 2) &&
                 !isFigureBelongToPlayer(userCurrentRow + 1, userCurrentCol + 1, currentPlayerName);

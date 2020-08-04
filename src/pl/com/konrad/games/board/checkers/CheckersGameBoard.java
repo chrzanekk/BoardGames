@@ -21,7 +21,7 @@ class CheckersGameBoard implements GameBoard {
         GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;
         gameLogic = new CheckersGameLogic(figures);
         gameBoard = new char[boardDimension.size()][boardDimension.size()];
-        setup();
+        ongoingGame();
 
     }
 
@@ -45,6 +45,29 @@ class CheckersGameBoard implements GameBoard {
                 }
             }
         }
+    }
+//tymczasowa metoda do testów mechaniki gry - skrócenie czasu na ruch pionków.
+    public void ongoingGame() {
+        for (int row = 0; row < gameBoard.length; row++) {
+            for (int col = 0; col < gameBoard.length; col++) {
+                 if (isProhibitedField(row, col)) {
+                    gameLogic.addFigure(null, CheckersPawnType.PROHIBITED, CheckersGameBoardMark.PROHIBITED_FIELD, null, row, col);
+                }
+            }
+        }
+//        add white pawns
+        gameLogic.addFigure(playerOne,CheckersPawnType.MEN, CheckersGameBoardMark.WHITE_MEN,Color.WHITE,1,4);
+        gameLogic.addFigure(playerOne,CheckersPawnType.MEN, CheckersGameBoardMark.WHITE_MEN,Color.WHITE,2,1);
+        gameLogic.addFigure(playerOne,CheckersPawnType.MEN, CheckersGameBoardMark.WHITE_MEN,Color.WHITE,2,5);
+        gameLogic.addFigure(playerOne,CheckersPawnType.MEN, CheckersGameBoardMark.WHITE_MEN,Color.WHITE,3,4);
+        gameLogic.addFigure(playerOne,CheckersPawnType.MEN, CheckersGameBoardMark.WHITE_MEN,Color.WHITE,4,3);
+        gameLogic.addFigure(playerOne,CheckersPawnType.MEN, CheckersGameBoardMark.WHITE_MEN,Color.WHITE,5,2);
+//        add black pawns
+        gameLogic.addFigure(playerTwo, CheckersPawnType.MEN, CheckersGameBoardMark.BLACK_MEN,Color.BLACK,3,2);
+        gameLogic.addFigure(playerTwo, CheckersPawnType.MEN, CheckersGameBoardMark.BLACK_MEN,Color.BLACK,3,6);
+        gameLogic.addFigure(playerTwo, CheckersPawnType.MEN, CheckersGameBoardMark.BLACK_MEN,Color.BLACK,4,5);
+        gameLogic.addFigure(playerTwo, CheckersPawnType.MEN, CheckersGameBoardMark.BLACK_MEN,Color.BLACK,5,4);
+        gameLogic.addFigure(playerTwo, CheckersPawnType.MEN, CheckersGameBoardMark.BLACK_MEN,Color.BLACK,6,5);
     }
 
 
