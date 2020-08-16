@@ -6,10 +6,7 @@ to do:
 - metoda move dla damki?
 - metoda kick/ban/score? dla damki oddzielna?
 - metoda zmiany pionka w damke.
-
 */
-
-
 import pl.com.konrad.games.board.*;
 
 import java.util.*;
@@ -21,14 +18,12 @@ public class CheckersGame implements Game {
     private static CheckersGameText checkersGameText = new CheckersGameText();
     private List<CheckersFigure> figures = new ArrayList<>();
 
-
     @Override
     public void play() {
         CheckersGameLogic gameLogic = new CheckersGameLogic(figures);
         Player playerOne = preparePlayer(scanner, validator, checkersGameText, Color.WHITE, null);
         Player currentPlayer = playerOne;
         Player playerTwo = preparePlayer(scanner, validator, checkersGameText, Color.BLACK, playerOne.getName());
-
 
         CheckersGameBoard checkersGameBoard = new CheckersGameBoard(playerOne, playerTwo, figures);
         TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(checkersGameBoard);
@@ -51,6 +46,7 @@ public class CheckersGame implements Game {
                 char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
                 userCurrentColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
 
+//                tymczasowa informacja o wyborze gracza
                 CheckersPlayerLogic.showPlayerInput(userCurrentRowChoice,userColChoiceByChar,userCurrentColChoice,gameLogic);
 
                 //check is pawn to move exist - working
@@ -72,7 +68,7 @@ public class CheckersGame implements Game {
 //            check if player can move current pawn - working but need some improvements.
 //            check if player can move and capture pawn - in development
 //                tu jest problem - sprawdzanie miejsca dla koordynatow (3,F) konczy sie informacja o braku
-//                mozliwosci ruchu mimo iz mozliwosc bicia istnieje.
+//                mozliwosci ruchu mimo iz mozliwosc bicia istnieje. - rozwiązany
                 if (!gameLogic.isPlayerCanMovePawn(currentPlayer, playerOne, userCurrentRowChoice, userCurrentColChoice,
                         checkersGameBoard.getLength()) || !gameLogic.isPlayerCanCapturePawn(currentPlayer, playerOne,
                         userCurrentRowChoice, userCurrentColChoice, checkersGameBoard.getLength())) {
@@ -80,6 +76,8 @@ public class CheckersGame implements Game {
                     System.out.println(checkersGameText.getMessage("show.choose.another"));
                     isCurrentPawnPositionInputCorrect = false;
                 }
+
+
 
                 //check if player can capture other pawn - in development
 

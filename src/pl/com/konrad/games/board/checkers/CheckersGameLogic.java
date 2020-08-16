@@ -43,6 +43,12 @@ public class CheckersGameLogic {
         removeFigureByRowCol(oldRow,oldCol);
     }
 
+    void capturePawn(Player currentPlayer, CheckersPawnType checkersPawnType,
+                     CheckersGameBoardMark checkersGameBoardMark, Color color, int newRow,
+                     int newCol, int oldRow, int oldCol) {
+
+    }
+
     Player swapPlayer(Player currentPlayer, Player playerOne, Player playerTwo) {
         if (currentPlayer.equals(playerOne)) {
             currentPlayer = playerTwo;
