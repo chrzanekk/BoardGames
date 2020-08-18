@@ -6,6 +6,4 @@ public interface GameBoard {
     int getLength();
     void setup();
     void print();
-    //metody abstrakcyjne
-    //metody nieabstrakcyjne (statyczne lub defaultowe)
 }

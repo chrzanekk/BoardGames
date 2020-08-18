@@ -4,7 +4,8 @@ public enum GameMenuOption {
     CHECKERS(1,"Checkers."),
     CHESS(2, "Chess."),
     TIC_TAC_TOE(3, "Tic Tac Toe."),
-    EXIT(4,"Exit.");
+    SHIPS (4, "Ships"),
+    EXIT(5,"Exit.");
     private final int value;
     private final String description;
 

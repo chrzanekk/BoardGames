@@ -134,7 +134,7 @@ public class TicTacToeGame implements Game {
                                                  String existingName) {
         String name = validateUserName(scanner, validator, ticTacToeText, ticTacToePawnType,
                 existingName);
-        return new TicTacToePlayer(name, Color.WHITE, ticTacToePawnType);
+        return new TicTacToePlayer(name, ticTacToePawnType);
     }
 
     private static String validateUserName(Scanner scanner, Validator validator,

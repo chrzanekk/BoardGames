@@ -2,6 +2,7 @@ package pl.com.konrad.games.board;
 
 import pl.com.konrad.games.board.checkers.CheckersGame;
 import pl.com.konrad.games.board.chess.ChessGame;
+import pl.com.konrad.games.board.ships.ShipsGame;
 import pl.com.konrad.games.board.tictactoe.TicTacToeGame;
 
 import java.util.Scanner;
@@ -33,6 +34,11 @@ public class Main {
 
                 case TIC_TAC_TOE: {
                     game = new TicTacToeGame();
+                    break;
+                }
+
+                case SHIPS: {
+                    game = new ShipsGame();
                     break;
                 }
 
