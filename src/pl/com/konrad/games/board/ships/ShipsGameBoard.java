@@ -2,6 +2,10 @@ package pl.com.konrad.games.board.ships;
 
 import pl.com.konrad.games.board.GameBoard;
 import pl.com.konrad.games.board.Player;
+
+import java.util.List;
+
+
 /* to do
 - 4 tablice (dwie do wyswietlania wynikow ruchow oraz dwie do podgladu swojego rozstawienia statkow(jesli bedzie potrzebne)
 - zastanowic sie jak przechowywac statki danego gracza - jako cale obiekty w liscie?
@@ -12,8 +16,9 @@ import pl.com.konrad.games.board.Player;
 
 public class ShipsGameBoard implements GameBoard {
     private char[][] gameBoard;
-    private Player playerOne;
-    private Player playerTwo;
+    private Player player;
+    private List<ShipsFigure> shipsFigureList;
+
 
 
 
