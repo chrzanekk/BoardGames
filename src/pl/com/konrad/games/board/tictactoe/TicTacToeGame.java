@@ -13,6 +13,7 @@ public class TicTacToeGame implements Game {
 
     private Validator validator = new Validator();
     private TicTacToeText ticTacToeText = new TicTacToeText();
+    private GameText gameText = new GameText();
 
     private TicTacToeMenu ticTacToeMenu = new TicTacToeMenu();
     private TicTacToeMenuPrinter ticTacToeMenuPrinter = new TicTacToeMenuPrinter(ticTacToeMenu);
@@ -20,9 +21,9 @@ public class TicTacToeGame implements Game {
 
     @Override
     public void play() {
-        playerX = preparePlayer(scanner, validator, ticTacToeText, TicTacToePawnType.CROSS, null);
+        playerX = preparePlayer(scanner, validator, TicTacToePawnType.CROSS, null);
         currentPlayer = playerX;
-        playerO = preparePlayer(scanner, validator, ticTacToeText, TicTacToePawnType.CIRCLE, playerX.getName());
+        playerO = preparePlayer(scanner, validator, TicTacToePawnType.CIRCLE, playerX.getName());
         System.out.println(ticTacToeText.getMessage("show.welcome.message"));
         ticTacToeMenuPrinter.print();
         boolean shouldPlayGame = true;
@@ -73,6 +74,7 @@ public class TicTacToeGame implements Game {
                 if (!TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
                         ticTacToeGameBoard)) {
                     System.out.println(ValidatorWarning.getMessage("show.not.empty.row.col"));
+                    System.out.println(ValidatorWarning.getMessage("show.try.again"));
                     continue;
                 } else
                     TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
@@ -99,12 +101,14 @@ public class TicTacToeGame implements Game {
         do {
             while (!scanner.hasNextInt()) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
                 ticTacToeMenuPrinter.print();
                 scanner.next();
             }
             playerMenuChoice = scanner.nextInt();
             if (validator.validateMainMenuOption(playerMenuChoice)) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
                 ticTacToeMenuPrinter.print();
             }
         } while (validator.validateMainMenuOption(playerMenuChoice));
@@ -118,11 +122,13 @@ public class TicTacToeGame implements Game {
         do {
             while (!scanner.hasNextInt()) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
                 scanner.next();
             }
             playerRowColChoice = scanner.nextInt();
             if (validator.validateRowColInput(playerRowColChoice, gameBoard)) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
 
             }
         } while (validator.validateRowColInput(playerRowColChoice, gameBoard));
@@ -130,28 +136,10 @@ public class TicTacToeGame implements Game {
     }
 
     private static TicTacToePlayer preparePlayer(Scanner scanner, Validator validator,
-                                                 TicTacToeText ticTacToeText, TicTacToePawnType ticTacToePawnType,
+                                                 TicTacToePawnType ticTacToePawnType,
                                                  String existingName) {
-        String name = validateUserName(scanner, validator, ticTacToeText, ticTacToePawnType,
+        String name = Validator.validateUserName(scanner, validator,ticTacToePawnType.name(),
                 existingName);
         return new TicTacToePlayer(name, ticTacToePawnType);
-    }
-
-    private static String validateUserName(Scanner scanner, Validator validator,
-                                           TicTacToeText ticTacToeText,
-                                           TicTacToePawnType ticTacToePawnType,
-                                           String existingName) {
-        String name;
-        boolean shouldInputNameAgain = true;
-        do {
-            System.out.println(ticTacToeText.getMessage("show.input.name", ticTacToePawnType.name()));
-            name = scanner.next();
-            if (!validator.isNameDuplicated(existingName, name)) {
-                shouldInputNameAgain = false;
-            } else {
-                System.out.println(ValidatorWarning.getMessage("show.wrong.name.input"));
-            }
-        } while (shouldInputNameAgain);
-        return name;
     }
 }

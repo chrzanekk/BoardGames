@@ -7,6 +7,7 @@ to do:
 - metoda kick/ban/score? dla damki oddzielna?
 - metoda zmiany pionka w damke.
 */
+
 import pl.com.konrad.games.board.*;
 
 import java.util.*;
@@ -21,9 +22,9 @@ public class CheckersGame implements Game {
     @Override
     public void play() {
         CheckersGameLogic gameLogic = new CheckersGameLogic(figures);
-        Player playerOne = preparePlayer(scanner, validator, checkersGameText, Color.WHITE, null);
+        Player playerOne = preparePlayer(scanner, validator, Color.WHITE, null);
         Player currentPlayer = playerOne;
-        Player playerTwo = preparePlayer(scanner, validator, checkersGameText, Color.BLACK, playerOne.getName());
+        Player playerTwo = preparePlayer(scanner, validator, Color.BLACK, playerOne.getName());
 
         CheckersGameBoard checkersGameBoard = new CheckersGameBoard(playerOne, playerTwo, figures);
         TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(checkersGameBoard);
@@ -47,7 +48,7 @@ public class CheckersGame implements Game {
                 userCurrentColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
 
 //                tymczasowa informacja o wyborze gracza
-                CheckersPlayerLogic.showPlayerInput(userCurrentRowChoice,userColChoiceByChar,userCurrentColChoice,gameLogic);
+                CheckersPlayerLogic.showPlayerInput(userCurrentRowChoice, userColChoiceByChar, userCurrentColChoice, gameLogic);
 
                 //check is pawn to move exist - working
                 if (!gameLogic.isFigureExist(userCurrentRowChoice, userCurrentColChoice)) {
@@ -76,7 +77,6 @@ public class CheckersGame implements Game {
                     System.out.println(checkersGameText.getMessage("show.choose.another"));
                     isCurrentPawnPositionInputCorrect = false;
                 }
-
 
 
                 //check if player can capture other pawn - in development
@@ -130,29 +130,10 @@ public class CheckersGame implements Game {
         } while (isGameFinished);
     }
 
-    private static Player preparePlayer(Scanner scanner, Validator validator,
-                                        CheckersGameText checkersGameText, Color playerColor, String existingName) {
-        String name = validateUserName(scanner, validator, checkersGameText, playerColor,
+    private static Player preparePlayer(Scanner scanner, Validator validator, Color playerColor, String existingName) {
+        String name = Validator.validateUserName(scanner, validator, playerColor.toString(),
                 existingName);
         return new Player(name);
-    }
-
-    private static String validateUserName(Scanner scanner, Validator validator,
-                                           CheckersGameText checkersGameText,
-                                           Color playerColor, String existingName) {
-        String name;
-        boolean shouldInputNameAgain = true;
-        do {
-            System.out.println(checkersGameText.getMessage("show.input.name", playerColor.description()));
-            name = scanner.next();
-            if (!validator.isNameDuplicated(existingName, name)) {
-                shouldInputNameAgain = false;
-            } else {
-                System.out.println(ValidatorWarning.getMessage("show.wrong.name.input"));
-                System.out.println(checkersGameText.getMessage("show.try.again"));
-            }
-        } while (shouldInputNameAgain);
-        return name;
     }
 
     private static int getPlayerRowChoice(Scanner scanner,
@@ -162,13 +143,13 @@ public class CheckersGame implements Game {
         do {
             while (!scanner.hasNextInt()) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.row.user.input"));
-                System.out.println(checkersGameText.getMessage("show.try.again"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
                 scanner.next();
             }
             playerRowChoice = scanner.nextInt();
             if (validator.validateRowColInput(playerRowChoice, gameBoard)) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.row.user.input"));
-                System.out.println(checkersGameText.getMessage("show.try.again"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
             }
         } while (validator.validateRowColInput(playerRowChoice, gameBoard));
         return playerRowChoice - 1;
@@ -183,17 +164,17 @@ public class CheckersGame implements Game {
             playerColChoiceByString = scanner.next().toUpperCase();
             if (isStringIsLongerThanOne(playerColChoiceByString)) {
                 System.out.println(ValidatorWarning.getMessage("show.string.to.long"));
-                System.out.println(checkersGameText.getMessage("show.try.again"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
                 isColInputCorrect = false;
             }
             if (isStringHasDigit(playerColChoiceByString)) {
                 System.out.println(ValidatorWarning.getMessage("show.digit.in.string"));
-                System.out.println(checkersGameText.getMessage("show.try.again"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
                 isColInputCorrect = false;
             }
             if (!validator.validateColInput(playerColChoiceByString.charAt(0), lettersAndDigits)) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.col.user.input"));
-                System.out.println(checkersGameText.getMessage("show.try.again"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
                 isColInputCorrect = false;
             }
         } while (!isColInputCorrect);
@@ -204,11 +185,11 @@ public class CheckersGame implements Game {
     private static TreeMap<Character, Integer> lettersAndDigits(GameBoard gameBoard) {
         TreeMap<Character, Integer> lettersAndDigits = new TreeMap<>();
         Character firstChar = 'A';
-        Integer fistDigit = 0;
-        for (int i = fistDigit; i <= gameBoard.getLength(); i++) {
-            lettersAndDigits.put(firstChar, fistDigit);
+        Integer firstDigit = 0;
+        for (int i = firstDigit; i <= gameBoard.getLength(); i++) {
+            lettersAndDigits.put(firstChar, firstDigit);
             firstChar++;
-            fistDigit++;
+            firstDigit++;
         }
         return lettersAndDigits;
     }

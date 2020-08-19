@@ -9,6 +9,12 @@ public class ShipsGame implements Game {
     Scanner scanner = new Scanner(System.in);
     Validator validator = new Validator();
 
+    private char[][] playerOneShips;
+    private char[][] playerTwoShips;
+
+    private char[][] playerOneShots;
+    private char[][] playerTwoShots;
+
 
 
 

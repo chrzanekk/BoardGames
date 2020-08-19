@@ -59,12 +59,14 @@ public class Main {
         do {
             while (!scanner.hasNextInt()) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
                 gameMenuPrinter.print();
                 scanner.next();
             }
             playerMenuChoice = scanner.nextInt();
             if (validator.validateMainMenuOption(playerMenuChoice)) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
                 gameMenuPrinter.print();
             }
         } while (validator.validateMainMenuOption(playerMenuChoice));

@@ -10,6 +10,7 @@ public final class GameText {
 
     static {
         messages.put("show.welcome.message", "Welcome in Game Boards. Have fun. \n MAIN MENU: \n Choose option: ");
+        messages.put("show.input.name", "Please set name of player who plays {0}.");
 
     }
 
