@@ -10,6 +10,7 @@ public class PlayerLogic {
         }
         return playerOne;
     }
+//    metoda getNextPlayer do przemyslenia.
 }
 
 

@@ -5,7 +5,7 @@ import pl.com.konrad.games.board.Figure;
 import pl.com.konrad.games.board.Player;
 
 import java.util.Map;
-
+//statek musi sie skladac z figur
 public class ShipsFigure extends Figure {
     private Map<Character, Integer[][]> ship;
 
@@ -16,4 +16,5 @@ public class ShipsFigure extends Figure {
     public Map<Character, Integer[][]> getShip() {
         return ship;
     }
+
 }

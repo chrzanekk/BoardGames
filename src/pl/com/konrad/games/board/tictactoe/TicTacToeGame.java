@@ -138,7 +138,7 @@ public class TicTacToeGame implements Game {
     private static TicTacToePlayer preparePlayer(Scanner scanner, Validator validator,
                                                  TicTacToePawnType ticTacToePawnType,
                                                  String existingName) {
-        String name = Validator.validateUserName(scanner, validator,ticTacToePawnType.name(),
+        String name = Validator.getUserName(scanner, validator,ticTacToePawnType.name(),
                 existingName);
         return new TicTacToePlayer(name, ticTacToePawnType);
     }

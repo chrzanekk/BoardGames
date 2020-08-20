@@ -6,7 +6,7 @@ import java.util.Map;
 public final class ValidatorWarning {
 
     private static Map<String, String> messages = new HashMap<>();
-
+//informacja o blednych danych z klawiry
     static {
         messages.put("show.not.empty.row.col", "There is already a mark here.");
         messages.put("show.invalid.user.input", "Invalid input.");

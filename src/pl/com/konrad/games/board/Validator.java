@@ -34,9 +34,9 @@ public final class Validator {
             }
         return false;
     }
-
-    public static String validateUserName(Scanner scanner, Validator validator,
-                                           String playerParameter, String existingName) {
+//to wyrzucić ->
+    public static String getUserName(Scanner scanner, Validator validator,
+                                     String playerParameter, String existingName) {
         String name;
         boolean shouldInputNameAgain = true;
         do {

@@ -31,16 +31,16 @@ public class ShipsGameBoard implements GameBoard {
 
     @Override
     public char[][] getGameBoard() {
-        return new char[0][];
+        return gameBoard;
     }
 
     @Override
     public char getPosition(int row, int col) {
-        return 0;
+        return gameBoard[row][col];
     }
 
     @Override
     public int getLength() {
-        return 0;
+        return gameBoard.length;
     }
 }

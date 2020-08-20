@@ -131,7 +131,7 @@ public class CheckersGame implements Game {
     }
 
     private static Player preparePlayer(Scanner scanner, Validator validator, Color playerColor, String existingName) {
-        String name = Validator.validateUserName(scanner, validator, playerColor.toString(),
+        String name = Validator.getUserName(scanner, validator, playerColor.toString(),
                 existingName);
         return new Player(name);
     }
