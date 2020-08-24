@@ -15,15 +15,17 @@ public class TicTacToeGame implements Game {
     private TicTacToeText ticTacToeText = new TicTacToeText();
     private GameText gameText = new GameText();
 
+
     private TicTacToeMenu ticTacToeMenu = new TicTacToeMenu();
     private TicTacToeMenuPrinter ticTacToeMenuPrinter = new TicTacToeMenuPrinter(ticTacToeMenu);
 
 
     @Override
     public void play() {
-        playerX = preparePlayer(scanner, validator, TicTacToePawnType.CROSS, null);
+        playerX = preparePlayer(getUserName(scanner,validator,TicTacToePawnType.CROSS.name(),null),TicTacToePawnType.CROSS);
         currentPlayer = playerX;
-        playerO = preparePlayer(scanner, validator, TicTacToePawnType.CIRCLE, playerX.getName());
+        playerO = preparePlayer(getUserName(scanner,validator,TicTacToePawnType.CIRCLE.name(),playerX.getName()),
+                TicTacToePawnType.CIRCLE);
         System.out.println(ticTacToeText.getMessage("show.welcome.message"));
         ticTacToeMenuPrinter.print();
         boolean shouldPlayGame = true;
@@ -55,6 +57,8 @@ public class TicTacToeGame implements Game {
             }
         } while (shouldPlayGame);
     }
+
+
 
 
     private void runGame(TicTacToeGameBoard ticTacToeGameBoard) {
@@ -135,11 +139,25 @@ public class TicTacToeGame implements Game {
         return playerRowColChoice - 1;
     }
 
-    private static TicTacToePlayer preparePlayer(Scanner scanner, Validator validator,
-                                                 TicTacToePawnType ticTacToePawnType,
-                                                 String existingName) {
-        String name = Validator.getUserName(scanner, validator,ticTacToePawnType.name(),
-                existingName);
+    private static TicTacToePlayer preparePlayer(String name, TicTacToePawnType ticTacToePawnType) {
         return new TicTacToePlayer(name, ticTacToePawnType);
+    }
+
+
+    public String getUserName(Scanner scanner, Validator validator,
+                              String playerDescription, String existingName) {
+        String name;
+        boolean shouldInputNameAgain = true;
+        do {
+            System.out.println(GameText.getMessage("show.input.name", playerDescription));
+            name = scanner.next();
+            if (!validator.isNameDuplicated(existingName, name)) {
+                shouldInputNameAgain = false;
+            } else {
+                System.out.println(ValidatorWarning.getMessage("show.wrong.name.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
+            }
+        } while (shouldInputNameAgain);
+        return name;
     }
 }

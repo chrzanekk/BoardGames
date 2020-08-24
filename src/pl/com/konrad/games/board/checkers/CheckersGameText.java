@@ -10,7 +10,6 @@ class CheckersGameText {
     {
         messages.put("show.try.again", "Try again.");
         messages.put("show.choose.another", "Choose another.");
-        messages.put("show.input.name", "Please set name of player who plays {0}.");
         messages.put("show.actual.game.board", "ACTUAL GAME BOARD");
         messages.put("show.witch.player.move", "Player \"{0}\" move");
         messages.put("show.choose.current.pawn.to.move", "Choose current pawn to move: ");

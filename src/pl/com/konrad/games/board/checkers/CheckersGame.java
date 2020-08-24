@@ -13,18 +13,18 @@ import pl.com.konrad.games.board.*;
 import java.util.*;
 
 public class CheckersGame implements Game {
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
-    private Validator validator = new Validator();
-    private static CheckersGameText checkersGameText = new CheckersGameText();
+    private final Validator validator = new Validator();
+    private static final CheckersGameText checkersGameText = new CheckersGameText();
     private List<CheckersFigure> figures = new ArrayList<>();
 
     @Override
     public void play() {
         CheckersGameLogic gameLogic = new CheckersGameLogic(figures);
-        Player playerOne = preparePlayer(scanner, validator, Color.WHITE, null);
+        Player playerOne = preparePlayer(getUserName(scanner, validator, Color.WHITE.name(), null));
         Player currentPlayer = playerOne;
-        Player playerTwo = preparePlayer(scanner, validator, Color.BLACK, playerOne.getName());
+        Player playerTwo = preparePlayer(getUserName(scanner, validator, Color.BLACK.name(), playerOne.getName()));
 
         CheckersGameBoard checkersGameBoard = new CheckersGameBoard(playerOne, playerTwo, figures);
         TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(checkersGameBoard);
@@ -130,10 +130,8 @@ public class CheckersGame implements Game {
         } while (isGameFinished);
     }
 
-    private static Player preparePlayer(Scanner scanner, Validator validator, Color playerColor, String existingName) {
-        String name = Validator.getUserName(scanner, validator, playerColor.toString(),
-                existingName);
-        return new Player(name);
+    private static Player preparePlayer(String playerName) {
+        return new Player(playerName);
     }
 
     private static int getPlayerRowChoice(Scanner scanner,
@@ -213,5 +211,22 @@ public class CheckersGame implements Game {
             }
         }
         return false;
+    }
+
+    public String getUserName(Scanner scanner, Validator validator,
+                              String playerDescription, String existingName) {
+        String name;
+        boolean shouldInputNameAgain = true;
+        do {
+            System.out.println(GameText.getMessage("show.input.name", playerDescription));
+            name = scanner.next();
+            if (!validator.isNameDuplicated(existingName, name)) {
+                shouldInputNameAgain = false;
+            } else {
+                System.out.println(ValidatorWarning.getMessage("show.wrong.name.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
+            }
+        } while (shouldInputNameAgain);
+        return name;
     }
 }
