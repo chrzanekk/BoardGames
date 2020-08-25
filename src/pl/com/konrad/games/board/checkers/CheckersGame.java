@@ -41,7 +41,7 @@ public class CheckersGame implements Game {
                 System.out.println(checkersGameText.getMessage("show.choose.current.pawn.to.move"));
                 System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
 
-                userCurrentRowChoice = getPlayerRowChoice(scanner, validator, checkersGameBoard);
+                userCurrentRowChoice = getPlayerRowChoice(scanner, validator, checkersGameBoard.getLength());
                 System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
                         checkersGameBoard.getLength()))));
                 char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
@@ -88,7 +88,7 @@ public class CheckersGame implements Game {
                 isNewPawnPositionCorrect = true;
                 System.out.println(checkersGameText.getMessage("show.new.pawn.position"));
                 System.out.println(checkersGameText.getMessage("show.input.row", Integer.toString(checkersGameBoard.getLength())));
-                int userNewRowChoice = getPlayerRowChoice(scanner, validator, checkersGameBoard);
+                int userNewRowChoice = getPlayerRowChoice(scanner, validator, checkersGameBoard.getLength());
                 System.out.println(checkersGameText.getMessage("show.input.col", Character.toString(checkersGameBoard.generateLastLetterOfColumn('A',
                         checkersGameBoard.getLength()))));
                 char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
@@ -136,7 +136,7 @@ public class CheckersGame implements Game {
 
     private static int getPlayerRowChoice(Scanner scanner,
                                           Validator validator,
-                                          GameBoard gameBoard) {
+                                          int gameBoardSize) {
         int playerRowChoice;
         do {
             while (!scanner.hasNextInt()) {
@@ -145,11 +145,11 @@ public class CheckersGame implements Game {
                 scanner.next();
             }
             playerRowChoice = scanner.nextInt();
-            if (validator.validateRowColInput(playerRowChoice, gameBoard)) {
+            if (validator.validateRowColInput(playerRowChoice, gameBoardSize)) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.row.user.input"));
                 System.out.println(ValidatorWarning.getMessage("show.try.again"));
             }
-        } while (validator.validateRowColInput(playerRowChoice, gameBoard));
+        } while (validator.validateRowColInput(playerRowChoice, gameBoardSize));
         return playerRowChoice - 1;
     }
 

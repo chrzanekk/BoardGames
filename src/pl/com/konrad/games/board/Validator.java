@@ -24,8 +24,8 @@ public final class Validator {
         return existingName != null && existingName.equals(newName);
     }
 
-    public boolean validateRowColInput(int userChoice, GameBoard gameBoard) {
-        return userChoice < ZERO || userChoice > gameBoard.getLength();
+    public boolean validateRowColInput(int userChoice, int gameBoardSize) {
+        return userChoice < ZERO || userChoice > gameBoardSize;
     }
 
     public boolean validateColInput(Character userChoice, TreeMap<Character, Integer> lettersAndDigits) {

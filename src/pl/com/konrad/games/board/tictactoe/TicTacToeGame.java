@@ -69,10 +69,10 @@ public class TicTacToeGame implements Game {
             boolean isInputIncorrect = false;
             do {
                 System.out.println(ticTacToeText.getMessage("show.row.input", Integer.toString(ticTacToeGameBoard.getLength())));
-                int userRowChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
+                int userRowChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard.getLength());
 
                 System.out.println(ticTacToeText.getMessage("show.col.input", Integer.toString(ticTacToeGameBoard.getLength())));
-                int userColumnChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard);
+                int userColumnChoice = getPlayerRowColChoice(scanner, validator, ticTacToeGameBoard.getLength());
 
 
                 if (!TicTacToeGameLogic.placeMark(userRowChoice, userColumnChoice, currentPlayer,
@@ -121,7 +121,7 @@ public class TicTacToeGame implements Game {
 
     private static int getPlayerRowColChoice(Scanner scanner,
                                              Validator validator,
-                                             GameBoard gameBoard) {
+                                             int gameBoardSize) {
         int playerRowColChoice;
         do {
             while (!scanner.hasNextInt()) {
@@ -130,12 +130,12 @@ public class TicTacToeGame implements Game {
                 scanner.next();
             }
             playerRowColChoice = scanner.nextInt();
-            if (validator.validateRowColInput(playerRowColChoice, gameBoard)) {
+            if (validator.validateRowColInput(playerRowColChoice, gameBoardSize)) {
                 System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
                 System.out.println(ValidatorWarning.getMessage("show.try.again"));
 
             }
-        } while (validator.validateRowColInput(playerRowColChoice, gameBoard));
+        } while (validator.validateRowColInput(playerRowColChoice, gameBoardSize));
         return playerRowColChoice - 1;
     }
 

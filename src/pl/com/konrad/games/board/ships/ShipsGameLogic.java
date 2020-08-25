@@ -19,7 +19,21 @@ public class ShipsGameLogic {
     }
 
     void addFigure (Player player, ShipGameBoardMark shipGameBoardMark, Color color, int row, int col) {
+//dopisac dodawanie figury, jeszcze nie wiem jak to bedzie wygladac
+    }
 
+//    schemat metod do sprawdzania rozstawienia statkow - zanim napisze musze rozwiazac problem parametru
+//    konstruktora klasy ShipsGameLogic.
+    boolean isMastHavePlace(int row, int col) {
+        return true;
+    }
+
+    boolean isMastAreSideWays(int row, int col) {
+        return true;
+    }
+
+    boolean isMastTouchByCorners(int row, int col) {
+        return true;
     }
 
 }

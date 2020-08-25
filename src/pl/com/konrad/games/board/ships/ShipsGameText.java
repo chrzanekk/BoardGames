@@ -11,5 +11,20 @@ public class ShipsGameText {
         messages.put("show.not.empty.row.col", "There is already ship here.");
         messages.put("show.input.row", "Input number of row (from 1 to {0} ): ");
         messages.put("show.input.col", "Input single letter of col (from A to {0} ): ");
+        messages.put("show.player.one", "Player one");
+        messages.put("show.player.two", "Player two");
+
+    }
+
+    public String getMessage(String key) {
+        return messages.get(key);
+    }
+
+    public String getMessage(String key, String... params) {
+        String message = messages.get(key);
+        for (int i = 0; i < params.length; i++) {
+            message = message.replace("{" + i + "}", params[i]);
+        }
+        return message;
     }
 }

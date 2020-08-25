@@ -12,36 +12,52 @@ public class ShipsGame implements Game {
     private final Validator validator = new Validator();
     private final ShipsGameText shipsGameText = new ShipsGameText();
 
-//    nie wiem czy w dobrym miejscu będzie ta tablica i lista - ale chyba tutaj w momencie przygotowania gracza.
-//    statek trzymasztowy stad tablica z trzema indeksami
     private ShipsFigure[] ship = new ShipsFigure[3];
-//    flota gracza - limit 3 statki dla planszy 10x10? w zaleznosci od tablicy na jakiej przyjdzie grac
+//    przemyslec jak rozwiazac problem dwoch list dla dwoch graczy i parametru dla ShipsGameLogic.
     private List<ShipsFigure[]> playerOneFleet = new ArrayList();
     private List<ShipsFigure[]> playerTwoFleet = new ArrayList();
 
+    private ShipsGameLogic shipsGameLogic = new ShipsGameLogic(playerOneFleet);
+
     public void play() {
-        Player playerOne = preparePlayer(getUserName(scanner, validator, "Player One", null));
-        Player currentPlayer = playerOne;
-        // tu setup statkow na planszy gracza nr 1
-
+        Player playerOne = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.one"), null));
         ShipsGameBoard playerOneGameBoard = new ShipsGameBoard(playerOne, playerOneFleet);
+        Player currentPlayer = playerOne;
+        // tu setup statkow na planszy gracza nr 1 (gracz podaje trzy wspolrzedne -> sprawdzenie czy "maszty" do
+        // siebie przylegaja bokami a nie rogami + sprawdzenie czy statki nie stykaja sie rogami lub bokami)
+        TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(playerOneGameBoard);
+        int shipMast = 1;
+        do {
+            boolean isInputCorrect;
+            do {
+                isInputCorrect = true;
+                int userRowChoice = getPlayerRowChoice(scanner, validator, playerOneGameBoard.getLength());
+                char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
+                int userColChoiceByInt = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
+//                przykladowy warunek metody bez logicznego ciala.
+                if (!shipsGameLogic.isMastAreSideWays(userRowChoice,userColChoiceByInt)) {
+                    isInputCorrect = false;
+                }
+            }
+            while(!isInputCorrect);
+            shipMast++;
+        }while(shipMast<ship.length);
 
 
 
-        Player playerTwo = preparePlayer(getUserName(scanner, validator, "Player Two", playerOne.getName()));
-// tu setup statkow na planszy gracza nr 2
+
+
+        Player playerTwo = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.two"), playerOne.getName()));
+// tu setup statkow na planszy gracza nr 2 (jak wyżej dla gracza 1 - jedna metoda to setupu statkow)
 
         ShipsGameBoard playerTwoGameBoard = new ShipsGameBoard(playerTwo, playerTwoFleet);
 
 
-        TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(playerOneGameBoard);
+
         playerOneGameBoard.print();
 
 
     }
-
-
-
 
 
     public String getUserName(Scanner scanner, Validator validator,
@@ -96,6 +112,52 @@ public class ShipsGame implements Game {
             }
         }
         return false;
+    }
+
+    private static int getPlayerRowChoice(Scanner scanner,
+                                          Validator validator,
+                                          int gameBoardSize) {
+        int playerRowChoice;
+        do {
+            while (!scanner.hasNextInt()) {
+                System.out.println(ValidatorWarning.getMessage("show.invalid.row.user.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
+                scanner.next();
+            }
+            playerRowChoice = scanner.nextInt();
+            if (validator.validateRowColInput(playerRowChoice, gameBoardSize)) {
+                System.out.println(ValidatorWarning.getMessage("show.invalid.row.user.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
+            }
+        } while (validator.validateRowColInput(playerRowChoice, gameBoardSize));
+        return playerRowChoice - 1;
+    }
+
+    private static char getPlayerColChoice(Scanner scanner, Validator validator, TreeMap<Character, Integer> lettersAndDigits) {
+        String playerColChoiceByString;
+        char playerColChoiceByChar;
+        boolean isColInputCorrect;
+        do {
+            isColInputCorrect = true;
+            playerColChoiceByString = scanner.next().toUpperCase();
+            if (isStringIsLongerThanOne(playerColChoiceByString)) {
+                System.out.println(ValidatorWarning.getMessage("show.string.to.long"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
+                isColInputCorrect = false;
+            }
+            if (isStringHasDigit(playerColChoiceByString)) {
+                System.out.println(ValidatorWarning.getMessage("show.digit.in.string"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
+                isColInputCorrect = false;
+            }
+            if (!validator.validateColInput(playerColChoiceByString.charAt(0), lettersAndDigits)) {
+                System.out.println(ValidatorWarning.getMessage("show.invalid.col.user.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
+                isColInputCorrect = false;
+            }
+        } while (!isColInputCorrect);
+        playerColChoiceByChar = playerColChoiceByString.charAt(0);
+        return playerColChoiceByChar;
     }
 
 }
