@@ -11,7 +11,7 @@ class CheckersGameBoard implements GameBoard {
     private Player playerTwo;
     private CheckersGameText checkersGameText = new CheckersGameText();
     private List<CheckersFigure> figures;
-    CheckersGameLogic gameLogic;
+    private CheckersGameLogic gameLogic;
 
 
     CheckersGameBoard(Player playerOne, Player playerTwo, List<CheckersFigure> figures) {

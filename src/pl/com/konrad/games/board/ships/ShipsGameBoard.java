@@ -1,7 +1,9 @@
 package pl.com.konrad.games.board.ships;
 
 import pl.com.konrad.games.board.GameBoard;
+import pl.com.konrad.games.board.GameBoardDimension;
 import pl.com.konrad.games.board.Player;
+
 
 import java.util.List;
 
@@ -17,17 +19,68 @@ import java.util.List;
 public class ShipsGameBoard implements GameBoard {
     private char[][] gameBoard;
     private Player player;
-    private List<ShipsFigure> shipsFigureList;
+    private ShipsGameText shipsGameText = new ShipsGameText();
+    private List<ShipsFigure[]> fleet;
+    private ShipsGameLogic shipsGameLogic;
 
-
-
-
-    @Override
-    public void setup(){
+    public ShipsGameBoard(Player player, List<ShipsFigure[]> fleet) {
+        this.player = player;
+        this.fleet = fleet;
+        GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;
+        shipsGameLogic = new ShipsGameLogic(fleet);
+        gameBoard = new char[boardDimension.size()][boardDimension.size()];
 
     }
 
-    public void print(){}
+    @Override
+    public void setup() {
+        for (int row = 0; row < gameBoard.length; row++) {
+            for (int col = 0; col < gameBoard.length; col++) {
+
+            }
+        }
+    }
+    @Override
+    public void print() {
+//        checkersGameText.getMessage("show.actual.game.board");
+        int verticalIndex = 1;
+
+        for (int row = 0; row < gameBoard.length; row++) {
+            printHorizontalLine();
+            System.out.print("|");
+            for (int col = 0; col < gameBoard.length; col++) {
+                if (fleet.size()==0) {
+                    System.out.print("   |");
+                }
+                else {
+                    System.out.println(fleet.get(0));
+                }
+            }
+            System.out.println(verticalIndex++ + " ");
+        }
+        printHorizontalLine();
+        printUnderRow();
+    }
+
+
+    private void printHorizontalLine() {
+        char minus = '-';
+        System.out.print(minus);
+        for (int i = 0; i < gameBoard.length; i++) {
+            for (int j = 0; j <= 3; j++)
+                System.out.print(minus);
+        }
+        System.out.println();
+    }
+
+    private void printUnderRow() {
+        char underRowChar = 'A';
+        for (int underRow = 0; underRow < gameBoard.length; underRow++) {
+            System.out.print("  " + underRowChar + " ");
+            underRowChar++;
+        }
+        System.out.println();
+    }
 
     @Override
     public char[][] getGameBoard() {
