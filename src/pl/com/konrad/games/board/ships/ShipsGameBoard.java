@@ -20,10 +20,10 @@ public class ShipsGameBoard implements GameBoard {
     private char[][] gameBoard;
     private Player player;
     private ShipsGameText shipsGameText = new ShipsGameText();
-    private List<ShipsFigure[]> fleet;
+    private List<Ship> fleet;
     private ShipsGameLogic shipsGameLogic;
 
-    public ShipsGameBoard(Player player, List<ShipsFigure[]> fleet) {
+    public ShipsGameBoard(Player player, List<Ship> fleet) {
         this.player = player;
         this.fleet = fleet;
         GameBoardDimension boardDimension = GameBoardDimension.SIZE_8X8;

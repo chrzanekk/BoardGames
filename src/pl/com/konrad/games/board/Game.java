@@ -20,5 +20,5 @@ public interface Game {
         } while (shouldInputNameAgain);
         return name;
     }
-//    metoda defaultowa getUserName przeniesona z Validatora
+
 }

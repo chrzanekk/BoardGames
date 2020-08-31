@@ -12,11 +12,13 @@ import java.util.List;
 - sprawdzanie czy trafiony-zatopiony czy tylko trafiony.
  */
 public class ShipsGameLogic {
-    private List<ShipsFigure[]> fleet;
+    private List<Ship> fleet;
 
-    public ShipsGameLogic(List<ShipsFigure[]> fleet) {
+    public ShipsGameLogic(List<Ship> fleet) {
         this.fleet = fleet;
     }
+
+
 
     void addFigure (Player player, ShipGameBoardMark shipGameBoardMark, Color color, int row, int col) {
 //dopisac dodawanie figury, jeszcze nie wiem jak to bedzie wygladac
