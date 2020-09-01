@@ -13,19 +13,38 @@ import java.util.List;
  */
 public class ShipsGameLogic {
     private List<Ship> fleet;
+    private List<Mast> ship;
 
     public ShipsGameLogic(List<Ship> fleet) {
         this.fleet = fleet;
     }
 
-
-
-    void addFigure (Player player, ShipGameBoardMark shipGameBoardMark, Color color, int row, int col) {
-//dopisac dodawanie figury, jeszcze nie wiem jak to bedzie wygladac
+    void createShip(int numberOfMasts) {
+        fleet.add(new Ship(numberOfMasts));
     }
 
-//    schemat metod do sprawdzania rozstawienia statkow - zanim napisze musze rozwiazac problem parametru
-//    konstruktora klasy ShipsGameLogic.
+    //    jak ograniczyc dodawanie ewentualnych kolejnych masztow do statku ponad ilosc podana? (listy sie automatycznie powiekszaja)
+    void addMast(Player player, ShipGameBoardMark shipGameBoardMark, Color color, int row, int col, int numberOfMasts) {
+        for (int i = 0; i < numberOfMasts; i++) {
+            ship.add(new Mast(color, row, col, player, shipGameBoardMark));
+        }
+    }
+
+
+    Mast getMastByRowCol(int row, int col) {
+        for(Ship ship : fleet){
+            for (Mast mast : ship.getShip()) {
+                if(row==mast.getCurrentRow() && col==mast.getCurrentCol()) {
+                    return mast;
+                }
+            }
+        }
+        return null;
+    }
+
+
+//    schemat metod do sprawdzania rozstawienia statkow.
+
     boolean isMastHavePlace(int row, int col) {
         return true;
     }
@@ -35,6 +54,34 @@ public class ShipsGameLogic {
     }
 
     boolean isMastTouchByCorners(int row, int col) {
+        return true;
+    }
+
+    boolean isLeftFieldClear(int row,int col){
+        return true;
+    }
+
+    boolean isRightSideClear(int row,int col){
+        return true;
+    }
+
+    boolean isBottomSideClear(int row, int col){
+        return true;
+    }
+
+    boolean isTopSideClear(int row, int col) {
+        return true;
+    }
+    boolean isTopLeftSideClear(int row, int col) {
+        return true;
+    }
+    boolean isTopRightSideClear(int row, int col) {
+        return true;
+    }
+    boolean isBottomLeftSideClear(int row, int col) {
+        return true;
+    }
+    boolean isBottomRightSideClear(int row, int col) {
         return true;
     }
 

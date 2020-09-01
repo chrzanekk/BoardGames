@@ -11,8 +11,7 @@ public class ShipsGame implements Game {
     private final Scanner scanner = new Scanner(System.in);
     private final Validator validator = new Validator();
     private final ShipsGameText shipsGameText = new ShipsGameText();
-
-//    private Ship ship = new Ship();
+    private static final int NUMBER_OF_SHIPS = 4;
 
     private List<Ship> playerOneFleet = new ArrayList();
     private List<Ship> playerTwoFleet = new ArrayList();
@@ -24,26 +23,29 @@ public class ShipsGame implements Game {
         Player playerOne = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.one"), null));
         ShipsGameBoard playerOneGameBoard = new ShipsGameBoard(playerOne, playerOneFleet);
         Player currentPlayer = playerOne;
+        playerOneGameBoard.print();
+
+
         // tu setup statkow na planszy gracza nr 1 (gracz podaje trzy wspolrzedne -> sprawdzenie czy "maszty" do
         // siebie przylegaja bokami a nie rogami + sprawdzenie czy statki nie stykaja sie rogami lub bokami)
-        TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(playerOneGameBoard);
+//        TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(playerOneGameBoard);
 //        zmienna shipMast bedzie ustawiana w zaleznosci jak wielki statek bedzie rozstawiany na planszy.
-        int shipMast = 1;
-        do {
-            boolean isInputCorrect;
-            do {
-                isInputCorrect = true;
-                int userRowChoice = getPlayerRowChoice(scanner, validator, playerOneGameBoard.getLength());
-                char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
-                int userColChoiceByInt = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
-//                przykladowy warunek metody bez logicznego ciala.
-                if (!playerOneShipsGameLogic.isMastAreSideWays(userRowChoice,userColChoiceByInt)) {
-                    isInputCorrect = false;
-                }
-            }
-            while(!isInputCorrect);
-            shipMast++;
-        }while(shipMast>0);
+//        int shipMast = 1;
+//        do {
+//            boolean isInputCorrect;
+//            do {
+//                isInputCorrect = true;
+//                int userRowChoice = getPlayerRowChoice(scanner, validator, playerOneGameBoard.getLength());
+//                char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
+//                int userColChoiceByInt = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
+////                przykladowy warunek metody bez logicznego ciala.
+//                if (!playerOneShipsGameLogic.isMastAreSideWays(userRowChoice,userColChoiceByInt)) {
+//                    isInputCorrect = false;
+//                }
+//            }
+//            while(!isInputCorrect);
+//            shipMast++;
+//        }while(shipMast>0);
 
 
 

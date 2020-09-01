@@ -36,24 +36,23 @@ public class ShipsGameBoard implements GameBoard {
     public void setup() {
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard.length; col++) {
-
+//nie bardzo wiem jak zorganizowac setup. kazdy gracz powinien miec podglad jak rozstawia statki i ich maszty.
+//                nie mam na to pomyslu.
             }
         }
     }
     @Override
     public void print() {
-//        checkersGameText.getMessage("show.actual.game.board");
         int verticalIndex = 1;
-
         for (int row = 0; row < gameBoard.length; row++) {
             printHorizontalLine();
             System.out.print("|");
             for (int col = 0; col < gameBoard.length; col++) {
-                if (fleet.size()==0) {
+                if (fleet.isEmpty()) {
                     System.out.print("   |");
                 }
                 else {
-                    System.out.println(fleet.get(0));
+//                    w jaki sposob pobrac z listy Flota konkretny statek i masz?
                 }
             }
             System.out.println(verticalIndex++ + " ");
