@@ -32,9 +32,9 @@ public class ShipsGameLogic {
 
 
     Mast getMastByRowCol(int row, int col) {
-        for(Ship ship : fleet){
+        for (Ship ship : fleet) {
             for (Mast mast : ship.getShip()) {
-                if(row==mast.getCurrentRow() && col==mast.getCurrentCol()) {
+                if (row == mast.getCurrentRow() && col == mast.getCurrentCol()) {
                     return mast;
                 }
             }
@@ -45,7 +45,11 @@ public class ShipsGameLogic {
 
 //    schemat metod do sprawdzania rozstawienia statkow.
 
-    boolean isMastHavePlace(int row, int col) {
+
+    boolean isMastExists(int row, int col) {
+        if ((getMastByRowCol(row, col) == null)) {
+            return false;
+        }
         return true;
     }
 
@@ -57,32 +61,61 @@ public class ShipsGameLogic {
         return true;
     }
 
-    boolean isLeftFieldClear(int row,int col){
-        return true;
+    boolean isLeftSideClear(int row, int col) {
+        if (isMastExists(row, col - 1)) {
+            return true;
+        }
+        return false;
     }
 
-    boolean isRightSideClear(int row,int col){
-        return true;
+    boolean isRightSideClear(int row, int col) {
+        if (isMastExists(row, col + 1)) {
+            return true;
+        }
+        return false;
     }
 
-    boolean isBottomSideClear(int row, int col){
-        return true;
+    boolean isBottomSideClear(int row, int col) {
+        if (isMastExists(row + 1, col)) {
+            return true;
+        }
+        return false;
     }
 
     boolean isTopSideClear(int row, int col) {
-        return true;
+        if (isMastExists(row - 1, col)) {
+            return true;
+        }
+        return false;
     }
+
     boolean isTopLeftSideClear(int row, int col) {
-        return true;
+        if (isMastExists(row - 1, col - 1)) {
+            return true;
+        }
+        return false;
+
     }
+
     boolean isTopRightSideClear(int row, int col) {
-        return true;
+        if (isMastExists(row - 1, col + 1)) {
+            return true;
+        }
+        return false;
     }
+
     boolean isBottomLeftSideClear(int row, int col) {
-        return true;
+        if (isMastExists(row + 1, col - 1)) {
+            return true;
+        }
+        return false;
     }
+
     boolean isBottomRightSideClear(int row, int col) {
-        return true;
+        if (isMastExists(row + 1, col + 1)) {
+            return true;
+        }
+        return false;
     }
 
 }
