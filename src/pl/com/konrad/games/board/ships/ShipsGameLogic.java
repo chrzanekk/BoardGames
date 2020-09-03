@@ -32,8 +32,6 @@ public class ShipsGameLogic {
     }
 
 
-//    schemat metod do sprawdzania rozstawienia statkow.
-//  przemyslec matryce wielkosci statkow, do konfigurowania (3x3 itp), plus metoda do wypelnienia przyleglych pol
 //  flagą "prohibited" w celu uniemozliwienia postawienia tam nowego statku.
 
     boolean isMastExists(int row, int col) {

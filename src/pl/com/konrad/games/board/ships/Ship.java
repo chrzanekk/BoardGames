@@ -1,8 +1,6 @@
 package pl.com.konrad.games.board.ships;
 
 
-import pl.com.konrad.games.board.Color;
-import pl.com.konrad.games.board.Player;
 
 import java.util.List;
 
