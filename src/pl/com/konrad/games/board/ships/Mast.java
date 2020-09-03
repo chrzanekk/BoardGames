@@ -16,5 +16,4 @@ public class Mast extends Figure {
     public ShipGameBoardMark getMast() {
         return mast;
     }
-
 }

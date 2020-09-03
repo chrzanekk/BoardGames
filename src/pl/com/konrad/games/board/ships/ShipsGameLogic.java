@@ -13,21 +13,10 @@ import java.util.List;
  */
 public class ShipsGameLogic {
     private List<Ship> fleet;
-    private List<Mast> ship;
+
 
     public ShipsGameLogic(List<Ship> fleet) {
         this.fleet = fleet;
-    }
-
-    void createShip(int numberOfMasts) {
-        fleet.add(new Ship(numberOfMasts));
-    }
-
-    //    jak ograniczyc dodawanie ewentualnych kolejnych masztow do statku ponad ilosc podana? (listy sie automatycznie powiekszaja)
-    void addMast(Player player, ShipGameBoardMark shipGameBoardMark, Color color, int row, int col, int numberOfMasts) {
-        for (int i = 0; i < numberOfMasts; i++) {
-            ship.add(new Mast(color, row, col, player, shipGameBoardMark));
-        }
     }
 
 
@@ -54,70 +43,17 @@ public class ShipsGameLogic {
         return true;
     }
 
-    boolean isMastAreSideWays(int row, int col) {
-//        rozpisać logikę
+    boolean isPlaceToPutMast(int row, int col){
+        for (int i=0; i<3;i++){
+            for (int j=0; j<3;j++) {
+                if ((i==row)&&(i==col)){
+                    continue;
+                }
+                if (getMastByRowCol(i,j)!=null){
+                    return false;
+                }
+            }
+        }
         return true;
-    }
-
-    boolean isMastTouchByCorners(int row, int col) {
-//        rozpisać logikę
-        return true;
-    }
-
-    boolean isLeftSideClear(int row, int col) {
-        if (isMastExists(row, col - 1)) {
-            return true;
-        }
-        return false;
-    }
-
-    boolean isRightSideClear(int row, int col) {
-        if (!isMastExists(row, col + 1)) {
-            return true;
-        }
-        return false;
-    }
-
-    boolean isBottomSideClear(int row, int col) {
-        if (!isMastExists(row + 1, col)) {
-            return true;
-        }
-        return false;
-    }
-
-    boolean isTopSideClear(int row, int col) {
-        if (!isMastExists(row - 1, col)) {
-            return true;
-        }
-        return false;
-    }
-
-    boolean isTopLeftSideClear(int row, int col) {
-        if (!isMastExists(row - 1, col - 1)) {
-            return true;
-        }
-        return false;
-
-    }
-
-    boolean isTopRightSideClear(int row, int col) {
-        if (!isMastExists(row - 1, col + 1)) {
-            return true;
-        }
-        return false;
-    }
-
-    boolean isBottomLeftSideClear(int row, int col) {
-        if (!isMastExists(row + 1, col - 1)) {
-            return true;
-        }
-        return false;
-    }
-
-    boolean isBottomRightSideClear(int row, int col) {
-        if (!isMastExists(row + 1, col + 1)) {
-            return true;
-        }
-        return false;
     }
 }
