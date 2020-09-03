@@ -1,23 +1,20 @@
 package pl.com.konrad.games.board.ships;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class Ship {
-    private int numberOfMasts;
-    private List<Mast> masts = new ArrayList<>();
+    private List<Mast> masts;
 
-    public Ship(int numberOfMasts) {
-        this.numberOfMasts = numberOfMasts;
+    public Ship(List<Mast> masts) {
+        this.masts = masts;
     }
-
-
 
     public int getNumberOfMasts() {
-        return numberOfMasts;
+        return masts.size();
     }
 
-    public List<Mast> getShip() {
+    public List<Mast> getMasts() {
         return masts;
     }
 }

@@ -33,7 +33,7 @@ public class ShipsGameLogic {
 
     Mast getMastByRowCol(int row, int col) {
         for (Ship ship : fleet) {
-            for (Mast mast : ship.getShip()) {
+            for (Mast mast : ship.getMasts()) {
                 if (row == mast.getCurrentRow() && col == mast.getCurrentCol()) {
                     return mast;
                 }
@@ -44,20 +44,23 @@ public class ShipsGameLogic {
 
 
 //    schemat metod do sprawdzania rozstawienia statkow.
-
+//  przemyslec matryce wielkosci statkow, do konfigurowania (3x3 itp), plus metoda do wypelnienia przyleglych pol
+//  flagą "prohibited" w celu uniemozliwienia postawienia tam nowego statku.
 
     boolean isMastExists(int row, int col) {
-        if ((getMastByRowCol(row, col) == null)) {
+        if (getMastByRowCol(row, col) == null) {
             return false;
         }
         return true;
     }
 
     boolean isMastAreSideWays(int row, int col) {
+//        rozpisać logikę
         return true;
     }
 
     boolean isMastTouchByCorners(int row, int col) {
+//        rozpisać logikę
         return true;
     }
 
@@ -69,28 +72,28 @@ public class ShipsGameLogic {
     }
 
     boolean isRightSideClear(int row, int col) {
-        if (isMastExists(row, col + 1)) {
+        if (!isMastExists(row, col + 1)) {
             return true;
         }
         return false;
     }
 
     boolean isBottomSideClear(int row, int col) {
-        if (isMastExists(row + 1, col)) {
+        if (!isMastExists(row + 1, col)) {
             return true;
         }
         return false;
     }
 
     boolean isTopSideClear(int row, int col) {
-        if (isMastExists(row - 1, col)) {
+        if (!isMastExists(row - 1, col)) {
             return true;
         }
         return false;
     }
 
     boolean isTopLeftSideClear(int row, int col) {
-        if (isMastExists(row - 1, col - 1)) {
+        if (!isMastExists(row - 1, col - 1)) {
             return true;
         }
         return false;
@@ -98,24 +101,23 @@ public class ShipsGameLogic {
     }
 
     boolean isTopRightSideClear(int row, int col) {
-        if (isMastExists(row - 1, col + 1)) {
+        if (!isMastExists(row - 1, col + 1)) {
             return true;
         }
         return false;
     }
 
     boolean isBottomLeftSideClear(int row, int col) {
-        if (isMastExists(row + 1, col - 1)) {
+        if (!isMastExists(row + 1, col - 1)) {
             return true;
         }
         return false;
     }
 
     boolean isBottomRightSideClear(int row, int col) {
-        if (isMastExists(row + 1, col + 1)) {
+        if (!isMastExists(row + 1, col + 1)) {
             return true;
         }
         return false;
     }
-
 }

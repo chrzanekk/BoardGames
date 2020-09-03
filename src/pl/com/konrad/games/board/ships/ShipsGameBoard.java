@@ -36,8 +36,7 @@ public class ShipsGameBoard implements GameBoard {
     public void setup() {
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard.length; col++) {
-//nie bardzo wiem jak zorganizowac setup. kazdy gracz powinien miec podglad jak rozstawia statki i ich maszty.
-//                nie mam na to pomyslu.
+//setup pustej planszy do notowania ruchow gracza
             }
         }
     }

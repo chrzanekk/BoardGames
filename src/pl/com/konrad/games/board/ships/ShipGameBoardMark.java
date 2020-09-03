@@ -1,5 +1,6 @@
 package pl.com.konrad.games.board.ships;
-
+//rozdzielić oznaczenie masztów i oznaczenie strzałów itp. i dodać wtedy inta z ilością masztów w celu ewentualnego
+// blokowania dodawania nowych masztów do statku?
 public enum ShipGameBoardMark {
     ONE_MAST('1'),
     TWO_MASTS('2'),
