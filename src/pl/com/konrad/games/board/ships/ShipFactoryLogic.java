@@ -1,6 +1,7 @@
 package pl.com.konrad.games.board.ships;
 
 import pl.com.konrad.games.board.Color;
+import pl.com.konrad.games.board.GameBoard;
 import pl.com.konrad.games.board.Player;
 
 import java.util.List;
@@ -12,19 +13,19 @@ public class ShipFactoryLogic implements ShipFactory {
     private Color color;
     private Player player;
     private ShipGameBoardMark shipGameBoardMark;
-    private int gameBoardSize;
+    private GameBoard gameBoard;
     private ShipsGameLogic shipsGameLogic;
     private List<Mast> masts;
 
     public ShipFactoryLogic(int row, int col, int shipSize, Color color, Player player,
-                            ShipGameBoardMark shipGameBoardMark, int gameBoardSize, ShipsGameLogic shipsGameLogic) {
+                            ShipGameBoardMark shipGameBoardMark, GameBoard gameBoard, ShipsGameLogic shipsGameLogic) {
         this.row = row;
         this.col = col;
         this.shipSize = shipSize;
         this.color = color;
         this.player = player;
         this.shipGameBoardMark = shipGameBoardMark;
-        this.gameBoardSize = gameBoardSize;
+        this.gameBoard = gameBoard;
         this.shipsGameLogic = shipsGameLogic;
     }
 
@@ -40,8 +41,9 @@ public class ShipFactoryLogic implements ShipFactory {
     @Override
     public Ship verticalShip() {
         for (int i = 0; i < shipSize; i++) {
-            if (gameBoardSize - col > shipSize && shipsGameLogic.isPlaceToPutMast(row, col)) {
+            if (gameBoard.getLength() - col > shipSize && shipsGameLogic.isPlaceToPutMast(row, col, gameBoard)) {
                 masts.add(new Mast(color, row, col, player, shipGameBoardMark));
+
                 col++;
             } else {
                 break;
