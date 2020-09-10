@@ -8,8 +8,9 @@ public enum ShipGameBoardMark {
     FOUR_MASTS('4'),
     FIVE_MASTS('5'),
     MISS('X'),
-    HIT_BUT_NOT_SUNK('O'),
-    HIT_AND_SUNK('S');
+    HIT_BUT_NOT_SUNK('H'),
+    HIT_AND_SUNK('S'),
+    NOT_CHECKED('U');
 
     private final char mark;
 

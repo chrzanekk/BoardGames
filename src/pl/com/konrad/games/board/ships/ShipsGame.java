@@ -15,15 +15,23 @@ public class ShipsGame implements Game {
 
     private List<Ship> playerOneFleet = new ArrayList();
     private List<Ship> playerTwoFleet = new ArrayList();
+    private List<Ship> playerOneFleetToHit = new ArrayList();
+    private List<Ship> playerTwoFleetToHit = new ArrayList();
 
     private ShipsGameLogic playerOneShipsGameLogic = new ShipsGameLogic(playerOneFleet);
     private ShipsGameLogic playerTwoShipsGameLogic = new ShipsGameLogic(playerTwoFleet);
+    private ShipsGameLogic playerOneShipsGameLogicToHit = new ShipsGameLogic(playerOneFleetToHit);
+    private ShipsGameLogic playerTwoShipsGameLogicToHit = new ShipsGameLogic(playerTwoFleetToHit);
 
     public void play() {
         Player playerOne = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.one"), null));
         ShipsGameBoard playerOneGameBoard = new ShipsGameBoard(playerOne, playerOneFleet);
+        ShipsGameBoard playerOneGameBoardToHit = new ShipsGameBoard(playerOne, playerOneFleetToHit);
+        playerOneGameBoardToHit.setup();
         Player currentPlayer = playerOne;
+        playerOneGameBoardToHit.print();
         playerOneGameBoard.print();
+
 
 
         // tu setup statkow na planszy gracza nr 1 (gracz podaje trzy wspolrzedne -> sprawdzenie czy "maszty" do
@@ -51,14 +59,14 @@ public class ShipsGame implements Game {
 
 
 
-        Player playerTwo = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.two"), playerOne.getName()));
+//        Player playerTwo = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.two"), playerOne.getName()));
 // tu setup statkow na planszy gracza nr 2 (jak wyżej dla gracza 1 - jedna metoda to setupu statkow)
 
-        ShipsGameBoard playerTwoGameBoard = new ShipsGameBoard(playerTwo, playerTwoFleet);
+//        ShipsGameBoard playerTwoGameBoard = new ShipsGameBoard(playerTwo, playerTwoFleet);
 
 
 
-        playerOneGameBoard.print();
+//        playerOneGameBoard.print();
 
 
     }

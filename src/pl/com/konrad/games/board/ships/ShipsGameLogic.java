@@ -1,6 +1,5 @@
 package pl.com.konrad.games.board.ships;
 
-import pl.com.konrad.games.board.Color;
 import pl.com.konrad.games.board.GameBoard;
 import pl.com.konrad.games.board.Player;
 
@@ -32,8 +31,9 @@ public class ShipsGameLogic {
         return null;
     }
 
-
-//  flagą "prohibited" w celu uniemozliwienia postawienia tam nowego statku.
+    Mast putMastInPlayerCheckBoard(int row, int col, Player player){
+        return new Mast(null, row, col, player, ShipGameBoardMark.NOT_CHECKED);
+    }
 
     boolean isMastExists(int row, int col) {
         if (getMastByRowCol(row, col) == null) {
@@ -61,6 +61,24 @@ public class ShipsGameLogic {
             return isPlaceBottomEdge(row, col);
         } else
             return isPlaceBottomRightCorner(row, col);
+    }
+
+    boolean checkPlaceForVerticalShip(int row, int col, int shipSize, GameBoard gameBoard) {
+        for (int i = row; i <= shipSize; i++) {
+            if (!isPlaceToPutMast(i, col, gameBoard)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    boolean checkPlaceForHorizontalShip(int row, int col, int shipSize, GameBoard gameBoard) {
+        for (int i = col; i <= shipSize; i++) {
+            if (!isPlaceToPutMast(row, i, gameBoard)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

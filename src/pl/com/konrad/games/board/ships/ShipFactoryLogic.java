@@ -43,7 +43,6 @@ public class ShipFactoryLogic implements ShipFactory {
         for (int i = 0; i < shipSize; i++) {
             if (gameBoard.getLength() - col > shipSize && shipsGameLogic.isPlaceToPutMast(row, col, gameBoard)) {
                 masts.add(new Mast(color, row, col, player, shipGameBoardMark));
-
                 col++;
             } else {
                 break;
