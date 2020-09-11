@@ -35,7 +35,7 @@ public class ShipsGame implements Game {
         playerOneGameBoardToHit.print();
         playerOneGameBoard.print();
         TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(playerOneGameBoard);
-        ShipFactoryLogic shipFactoryThreeMast = new ShipFactoryLogic(3,
+        ShipCreator shipFactoryThreeMast = new ShipCreator(3,
                 Color.WHITE,
                 playerOne,
                 ShipGameBoardMark.THREE_MASTS,
@@ -56,26 +56,13 @@ public class ShipsGame implements Game {
                 playerOneGameBoard.getLength()))));
         char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
         userCurrentColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
+        switch (ShipLayoutOption.)
+        if (layoutOption==1) {
+           playerOneFleet.add(shipFactoryThreeMast.horizontalShip(userCurrentRowChoice,userCurrentColChoice)); shipFactoryThreeMast.horizontalShip(userCurrentRowChoice,userCurrentColChoice);
+        }
 
 
 
-//        zmienna shipMast bedzie ustawiana w zaleznosci jak wielki statek bedzie rozstawiany na planszy.
-//        int shipMast = 1;
-//        do {
-//            boolean isInputCorrect;
-//            do {
-//                isInputCorrect = true;
-//                int userRowChoice = getPlayerRowChoice(scanner, validator, playerOneGameBoard.getLength());
-//                char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
-//                int userColChoiceByInt = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
-////                przykladowy warunek metody bez logicznego ciala.
-//                if (!playerOneShipsGameLogic.isMastAreSideWays(userRowChoice,userColChoiceByInt)) {
-//                    isInputCorrect = false;
-//                }
-//            }
-//            while(!isInputCorrect);
-//            shipMast++;
-//        }while(shipMast>0);
 
 
 

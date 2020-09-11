@@ -1,6 +1,5 @@
 package pl.com.konrad.games.board.ships;
 
-import pl.com.konrad.games.board.GameMenuItem;
 
 public class ShipLayoutMenu {
     private ShipLayoutMenuItem layouts[];

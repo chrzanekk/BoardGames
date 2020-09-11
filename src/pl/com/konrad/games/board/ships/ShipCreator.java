@@ -7,7 +7,7 @@ import pl.com.konrad.games.board.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShipFactoryLogic implements ShipFactory {
+public class ShipCreator implements ShipFactory {
     private final int shipSize;
     private Color color;
     private Player player;
@@ -16,8 +16,8 @@ public class ShipFactoryLogic implements ShipFactory {
     private ShipsGameLogic shipsGameLogic;
     private List<Mast> masts = new ArrayList<>();
 
-    public ShipFactoryLogic(int shipSize, Color color, Player player,
-                            ShipGameBoardMark shipGameBoardMark, GameBoard gameBoard, ShipsGameLogic shipsGameLogic) {
+    public ShipCreator(int shipSize, Color color, Player player,
+                       ShipGameBoardMark shipGameBoardMark, GameBoard gameBoard, ShipsGameLogic shipsGameLogic) {
         this.shipSize = shipSize;
         this.color = color;
         this.player = player;
