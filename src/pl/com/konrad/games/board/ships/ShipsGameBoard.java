@@ -74,6 +74,10 @@ public class ShipsGameBoard implements GameBoard {
         }
         System.out.println();
     }
+    char generateLastLetterOfColumn(char firstChar, int gameBoardLength) {
+        int lastCharByInt = (int) firstChar + gameBoardLength - 1;
+        return (char) lastCharByInt;
+    }
 
     @Override
     public char[][] getGameBoard() {

@@ -11,6 +11,9 @@ public class ShipsGame implements Game {
     private final Scanner scanner = new Scanner(System.in);
     private final Validator validator = new Validator();
     private final ShipsGameText shipsGameText = new ShipsGameText();
+    private ShipLayoutMenu shipLayoutMenu = new ShipLayoutMenu();
+    private ShipLayoutMenuPrinter layoutMenuPrinter = new ShipLayoutMenuPrinter(shipLayoutMenu);
+
     private static final int NUMBER_OF_SHIPS = 4;
 
     private List<Ship> playerOneFleet = new ArrayList();
@@ -31,12 +34,31 @@ public class ShipsGame implements Game {
         Player currentPlayer = playerOne;
         playerOneGameBoardToHit.print();
         playerOneGameBoard.print();
+        TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(playerOneGameBoard);
+        ShipFactoryLogic shipFactoryThreeMast = new ShipFactoryLogic(3,
+                Color.WHITE,
+                playerOne,
+                ShipGameBoardMark.THREE_MASTS,
+                playerOneGameBoard,
+                playerOneShipsGameLogic);
+
+        System.out.println(shipsGameText.getMessage("show.layout.option"));
+        layoutMenuPrinter.print();
+        int layoutOption = getPlayerChoice(scanner,validator,layoutMenuPrinter);
 
 
 
-        // tu setup statkow na planszy gracza nr 1 (gracz podaje trzy wspolrzedne -> sprawdzenie czy "maszty" do
-        // siebie przylegaja bokami a nie rogami + sprawdzenie czy statki nie stykaja sie rogami lub bokami)
-//        TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(playerOneGameBoard);
+        int userCurrentRowChoice;
+        int userCurrentColChoice;
+        System.out.println(shipsGameText.getMessage("show.input.row", Integer.toString(playerOneGameBoard.getLength())));
+        userCurrentRowChoice = getPlayerRowChoice(scanner, validator, playerOneGameBoard.getLength());
+        System.out.println(shipsGameText.getMessage("show.input.col", Character.toString(playerOneGameBoard.generateLastLetterOfColumn('A',
+                playerOneGameBoard.getLength()))));
+        char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
+        userCurrentColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
+
+
+
 //        zmienna shipMast bedzie ustawiana w zaleznosci jak wielki statek bedzie rozstawiany na planszy.
 //        int shipMast = 1;
 //        do {
@@ -127,6 +149,7 @@ public class ShipsGame implements Game {
         return playerRowChoice - 1;
     }
 //przemyśleć unifikacje podawania wspolrzednych z klawiatury (litery i cyfry)
+
     private static char getPlayerColChoice(Scanner scanner, Validator validator, TreeMap<Character, Integer> lettersAndDigits) {
         String playerColChoiceByString;
         char playerColChoiceByChar;
@@ -154,4 +177,24 @@ public class ShipsGame implements Game {
         return playerColChoiceByChar;
     }
 
+    private static int getPlayerChoice(Scanner scanner,
+                                       Validator validator,
+                                       ShipLayoutMenuPrinter shipLayoutMenuPrinter) {
+        int playerMenuChoice;
+        do {
+            while (!scanner.hasNextInt()) {
+                System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
+                shipLayoutMenuPrinter.print();
+                scanner.next();
+            }
+            playerMenuChoice = scanner.nextInt();
+            if (validator.validateMainMenuOption(playerMenuChoice)) {
+                System.out.println(ValidatorWarning.getMessage("show.invalid.user.input"));
+                System.out.println(ValidatorWarning.getMessage("show.try.again"));
+                shipLayoutMenuPrinter.print();
+            }
+        } while (validator.validateMainMenuOption(playerMenuChoice));
+        return playerMenuChoice;
+    }
 }
