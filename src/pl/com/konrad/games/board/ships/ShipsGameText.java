@@ -12,6 +12,8 @@ public class ShipsGameText {
         messages.put("show.setup.ship", "Set ship number \"{0}\" of \"{1}\".");
         messages.put("show.setup.mast", "Set mast number \"{0}\" of \"{1}\".");
         messages.put("show.layout.option", "Please,choose layout option for ship:");
+        messages.put("show.wrong.layout.option", "Wrong layout option");
+        messages.put("show,wrong.coordinates","You cannot put ship here.");
         messages.put("show.input.row", "Input number of row (from 1 to {0} ): ");
         messages.put("show.input.col", "Input single letter of col (from A to {0} ): ");
         messages.put("show.player.one", "Player one");

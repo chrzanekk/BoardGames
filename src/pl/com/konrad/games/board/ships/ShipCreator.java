@@ -26,11 +26,15 @@ public class ShipCreator implements ShipFactory {
         this.shipsGameLogic = shipsGameLogic;
     }
 
+    public int getShipSize() {
+        return shipSize;
+    }
+
     @Override
     public Ship horizontalShip(int row, int col) {
         for (int i = 0; i < shipSize; i++) {
             masts.add(new Mast(color, row, col, player, shipGameBoardMark));
-            row++;
+            col++;
         }
         return new Ship(masts);
     }
@@ -38,12 +42,8 @@ public class ShipCreator implements ShipFactory {
     @Override
     public Ship verticalShip(int row, int col) {
         for (int i = 0; i < shipSize; i++) {
-            if (gameBoard.getLength() - col > shipSize && shipsGameLogic.isPlaceToPutMast(row, col, gameBoard)) {
-                masts.add(new Mast(color, row, col, player, shipGameBoardMark));
-                col++;
-            } else {
-                break;
-            }
+            masts.add(new Mast(color, row, col, player, shipGameBoardMark));
+            row++;
         }
         return new Ship(masts);
     }

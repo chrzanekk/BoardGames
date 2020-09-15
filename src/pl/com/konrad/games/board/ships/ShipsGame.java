@@ -27,13 +27,13 @@ public class ShipsGame implements Game {
     private ShipsGameLogic playerTwoShipsGameLogicToHit = new ShipsGameLogic(playerTwoFleetToHit);
 
     public void play() {
+
         Player playerOne = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.one"), null));
         ShipsGameBoard playerOneGameBoard = new ShipsGameBoard(playerOne, playerOneFleet);
         ShipsGameBoard playerOneGameBoardToHit = new ShipsGameBoard(playerOne, playerOneFleetToHit);
         playerOneGameBoardToHit.setup();
         Player currentPlayer = playerOne;
         playerOneGameBoardToHit.print();
-        playerOneGameBoard.print();
         TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(playerOneGameBoard);
         ShipCreator shipFactoryThreeMast = new ShipCreator(3,
                 Color.WHITE,
@@ -41,41 +41,56 @@ public class ShipsGame implements Game {
                 ShipGameBoardMark.THREE_MASTS,
                 playerOneGameBoard,
                 playerOneShipsGameLogic);
+        int shipNumber = 0;
+        do {
+            playerOneGameBoard.print();
+            layoutMenuPrinter.print();
+            System.out.println(shipsGameText.getMessage("show.layout.option"));
+            int layoutOption = getPlayerChoice(scanner, validator, layoutMenuPrinter);
+            int userCurrentRowChoice;
+            int userCurrentColChoice;
+            System.out.println(shipsGameText.getMessage("show.input.row", Integer.toString(playerOneGameBoard.getLength())));
+            userCurrentRowChoice = getPlayerRowChoice(scanner, validator, playerOneGameBoard.getLength());
+            System.out.println(shipsGameText.getMessage("show.input.col", Character.toString(playerOneGameBoard.generateLastLetterOfColumn('A',
+                    playerOneGameBoard.getLength()))));
+            char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
+            userCurrentColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
 
-        System.out.println(shipsGameText.getMessage("show.layout.option"));
-        layoutMenuPrinter.print();
-        int layoutOption = getPlayerChoice(scanner,validator,layoutMenuPrinter);
+            if (layoutOption == ShipLayoutOption.HORIZONTAL.value()) {
+                if(!playerOneShipsGameLogic.isMastsCollideForHorizontal(userCurrentRowChoice,
+                        userCurrentColChoice,
+                        shipFactoryThreeMast.getShipSize(),
+                        playerOneGameBoard)) {
+                    playerOneFleet.add(shipFactoryThreeMast.horizontalShip(userCurrentRowChoice, userCurrentColChoice));
+                    shipNumber++;
+                }
+                else{
+                    shipsGameText.getMessage("show,wrong.coordinates");
+                    shipsGameText.getMessage("show.try.again");
+                    continue;
+                }
+            } else if (layoutOption == ShipLayoutOption.VERTICAL.value()) {
+                if(!playerOneShipsGameLogic.isMastsCollideForVertical(userCurrentRowChoice,
+                        userCurrentColChoice,
+                        shipFactoryThreeMast.getShipSize(),
+                        playerOneGameBoard)) {
+                    playerOneFleet.add(shipFactoryThreeMast.verticalShip(userCurrentRowChoice, userCurrentColChoice));
+                    shipNumber++;
+                }
+                else {
+                    shipsGameText.getMessage("show,wrong.coordinates");
+                    shipsGameText.getMessage("show.try.again");
+                    continue;
+                }
+            } else {
+                shipsGameText.getMessage("show.wrong.layout.option");
+                shipsGameText.getMessage("show.try.again");
+            }
+            playerOneGameBoard.print();
+
+        }while(shipNumber<NUMBER_OF_SHIPS);
 
 
-
-        int userCurrentRowChoice;
-        int userCurrentColChoice;
-        System.out.println(shipsGameText.getMessage("show.input.row", Integer.toString(playerOneGameBoard.getLength())));
-        userCurrentRowChoice = getPlayerRowChoice(scanner, validator, playerOneGameBoard.getLength());
-        System.out.println(shipsGameText.getMessage("show.input.col", Character.toString(playerOneGameBoard.generateLastLetterOfColumn('A',
-                playerOneGameBoard.getLength()))));
-        char userColChoiceByChar = getPlayerColChoice(scanner, validator, lettersAndDigits);
-        userCurrentColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
-        switch (ShipLayoutOption.)
-        if (layoutOption==1) {
-           playerOneFleet.add(shipFactoryThreeMast.horizontalShip(userCurrentRowChoice,userCurrentColChoice)); shipFactoryThreeMast.horizontalShip(userCurrentRowChoice,userCurrentColChoice);
-        }
-
-
-
-
-
-
-
-
-//        Player playerTwo = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.two"), playerOne.getName()));
-// tu setup statkow na planszy gracza nr 2 (jak wyżej dla gracza 1 - jedna metoda to setupu statkow)
-
-//        ShipsGameBoard playerTwoGameBoard = new ShipsGameBoard(playerTwo, playerTwoFleet);
-
-
-
-//        playerOneGameBoard.print();
 
 
     }

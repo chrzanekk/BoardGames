@@ -42,6 +42,20 @@ public class ShipsGameLogic {
         return true;
     }
 
+    boolean isMastsCollideForHorizontal(int row,int col,int shipSize, GameBoard gameBoard){
+        if(gameBoard.getLength() - col >= shipSize && isPlaceToPutMast(row, col, gameBoard)){
+            return false;
+        }
+        return true;
+    }
+
+    boolean isMastsCollideForVertical(int row,int col,int shipSize, GameBoard gameBoard){
+        if(gameBoard.getLength() - row >= shipSize && isPlaceToPutMast(row, col, gameBoard)){
+            return false;
+        }
+        return true;
+    }
+
     boolean isPlaceToPutMast(int row, int col, GameBoard gameBoard) {
         if (row == 0 && col == 0) {
             return isPlaceTopLeftCorner(row, col);

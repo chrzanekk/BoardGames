@@ -19,11 +19,12 @@ public enum ShipLayoutOption {
     String description() {return description;}
 
     public static ShipLayoutOption shipLayoutOption(int playerChoice) {
-//        for (ShipLayoutOption shipLayoutOption : ShipLayoutOption.values()) {
-//            if (shipLayoutOption.value == playerChoice) {
-//                return shipLayoutOption;
-//            }
-//        }
-//        return EXIT;
-//    }
+
+        for (ShipLayoutOption shipLayoutOption : ShipLayoutOption.values()) {
+            if (shipLayoutOption.value == playerChoice) {
+                return shipLayoutOption;
+            }
+        }
+        return null;
+    }
 }
