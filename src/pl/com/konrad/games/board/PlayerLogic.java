@@ -11,6 +11,11 @@ public class PlayerLogic {
         return playerOne;
     }
 //    metoda getNextPlayer do przemyslenia.
+
+    public static Player getNextPlayer(Player currentPlayer){
+        Player player = currentPlayer;
+        return player;
+    }
 }
 
 

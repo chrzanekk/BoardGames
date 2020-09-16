@@ -230,4 +230,29 @@ public class ShipsGameLogic {
         }
         return true;
     }
+
+    private  void clearConsole(){
+        for (int i =0; i<50; i++){
+            System.out.println(" ");
+        }
+    }
+
+//    projekt jednej metody do wszystkich 9 mozliwosci brzegow planszy.
+    private boolean isPlaceForMast(int row, int col,
+                                   int paramOne,
+                                   int paramTwo,
+                                   int paramThree,
+                                   int paramFour){
+        for (int i = row - paramOne; i <=row + paramTwo; i++ ){
+            for (int j = col - paramThree; j <= col + paramFour; j++){
+                if ((i == row) & (j == col)) {
+                    continue;
+                }
+                if (isMastExists(i, j)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

@@ -10,8 +10,7 @@ public class ShipsGameText {
         messages.put("show.witch.player.move", "Player \"{0}\" move");
         messages.put("show.not.empty.row.col", "There is already ship here.");
         messages.put("show.setup.ship", "Set ship number \"{0}\" of \"{1}\".");
-        messages.put("show.setup.mast", "Set mast number \"{0}\" of \"{1}\".");
-        messages.put("show.layout.option", "Please,choose layout option for ship:");
+        messages.put("show.layout.option", "Please,choose layout option:");
         messages.put("show.wrong.layout.option", "Wrong layout option");
         messages.put("show,wrong.coordinates","You cannot put ship here.");
         messages.put("show.input.row", "Input number of row (from 1 to {0} ): ");
