@@ -5,11 +5,13 @@ import pl.com.konrad.games.board.Player;
 
 import java.util.List;
 
-/* to do
-- sprawdzanie rozstawienia statkow (3masztowce: zasada stykajacego sie boku, niedozwolone stykanie sie rogami pola(po skosie)
-- sprawdzanie czy trafienie
-- sprawdzanie czy ktorys gracz wygral
-- sprawdzanie czy trafiony-zatopiony czy tylko trafiony.
+/**
+ * to do
+ * - sprawdzanie rozstawienia statkow (3masztowce: zasada stykajacego sie boku, niedozwolone stykanie sie rogami pola(po
+ * skosie) - done
+ * - sprawdzanie czy trafienie
+ * - sprawdzanie czy ktorys gracz wygral
+ * - sprawdzanie czy trafiony-zatopiony czy tylko trafiony.
  */
 public class ShipsGameLogic {
     private List<Ship> fleet;
@@ -31,7 +33,7 @@ public class ShipsGameLogic {
         return null;
     }
 
-    Mast putMastInPlayerCheckBoard(int row, int col, Player player){
+    Mast putMastInCheckBoard(int row, int col, Player player) {
         return new Mast(null, row, col, player, ShipGameBoardMark.NOT_CHECKED);
     }
 
@@ -42,15 +44,19 @@ public class ShipsGameLogic {
         return true;
     }
 
-    boolean isMastsCollideForHorizontal(int row,int col,int shipSize, GameBoard gameBoard){
-        if(gameBoard.getLength() - col >= shipSize && isPlaceToPutMast(row, col, gameBoard)){
+    /**
+     * METHODS TO CHECK SHIP DEPLOYMENT
+     */
+
+    boolean isMastsCollideForHorizontal(int row, int col, int shipSize, GameBoard gameBoard) {
+        if (gameBoard.getLength() - col >= shipSize && isPlaceToPutMast(row, col, gameBoard)) {
             return false;
         }
         return true;
     }
 
-    boolean isMastsCollideForVertical(int row,int col,int shipSize, GameBoard gameBoard){
-        if(gameBoard.getLength() - row >= shipSize && isPlaceToPutMast(row, col, gameBoard)){
+    boolean isMastsCollideForVertical(int row, int col, int shipSize, GameBoard gameBoard) {
+        if (gameBoard.getLength() - row >= shipSize && isPlaceToPutMast(row, col, gameBoard)) {
             return false;
         }
         return true;
@@ -93,6 +99,12 @@ public class ShipsGameLogic {
             }
         }
         return true;
+    }
+
+    void clearConsole() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println(" ");
+        }
     }
 
 
@@ -231,20 +243,15 @@ public class ShipsGameLogic {
         return true;
     }
 
-    private  void clearConsole(){
-        for (int i =0; i<50; i++){
-            System.out.println(" ");
-        }
-    }
 
-//    projekt jednej metody do wszystkich 9 mozliwosci brzegow planszy.
+    //    projekt jednej metody do wszystkich 9 mozliwosci brzegow planszy.
     private boolean isPlaceForMast(int row, int col,
                                    int paramOne,
                                    int paramTwo,
                                    int paramThree,
-                                   int paramFour){
-        for (int i = row - paramOne; i <=row + paramTwo; i++ ){
-            for (int j = col - paramThree; j <= col + paramFour; j++){
+                                   int paramFour) {
+        for (int i = row - paramOne; i <= row + paramTwo; i++) {
+            for (int j = col - paramThree; j <= col + paramFour; j++) {
                 if ((i == row) & (j == col)) {
                     continue;
                 }
@@ -255,4 +262,26 @@ public class ShipsGameLogic {
         }
         return true;
     }
+
+    /**
+     * METHODS TO CHECK SHIP HITS AND TO CHANGE STATUS ON PLAYER CHECK BOARD
+     */
+
+    boolean isPlayerWin() {
+        for (Ship ship : fleet) {
+            for (Mast mast : ship.getMasts()) {
+                if(!mast.equals(null)){
+                    return false;
+                }
+                break;
+            }
+        }
+        return true;
+    }
+
+
+//    check for hit and sink
+//    check for win
+//
+
 }

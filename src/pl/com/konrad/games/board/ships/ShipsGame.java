@@ -19,20 +19,20 @@ public class ShipsGame implements Game {
 
     private List<Ship> playerOneFleet = new ArrayList();
     private List<Ship> playerTwoFleet = new ArrayList();
-    private List<Ship> playerOneFleetToHit = new ArrayList();
-    private List<Ship> playerTwoFleetToHit = new ArrayList();
+    private List<Ship> playerOneFleetToCheck = new ArrayList();
+    private List<Ship> playerTwoFleetToCheck = new ArrayList();
 
     private ShipsGameLogic playerOneShipsGameLogic = new ShipsGameLogic(playerOneFleet);
     private ShipsGameLogic playerTwoShipsGameLogic = new ShipsGameLogic(playerTwoFleet);
-    private ShipsGameLogic playerOneShipsGameLogicToHit = new ShipsGameLogic(playerOneFleetToHit);
-    private ShipsGameLogic playerTwoShipsGameLogicToHit = new ShipsGameLogic(playerTwoFleetToHit);
+    private ShipsGameLogic playerOneShipsGameLogicToCheck = new ShipsGameLogic(playerOneFleetToCheck);
+    private ShipsGameLogic playerTwoShipsGameLogicToCheck = new ShipsGameLogic(playerTwoFleetToCheck);
 
     public void play() {
 
         Player playerOne = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.one"), null));
         ShipsGameBoard playerOneGameBoard = new ShipsGameBoard(playerOne, playerOneFleet);
-        ShipsGameBoard playerOneGameBoardToHit = new ShipsGameBoard(playerOne, playerOneFleetToHit);
-        playerOneGameBoardToHit.setup();
+        ShipsGameBoard playerOneCheckBoard = new ShipsGameBoard(playerOne, playerOneFleetToCheck);
+        playerOneCheckBoard.setup();
 
         TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(playerOneGameBoard.getLength());
         ShipCreator threeMastShipCreatorPlayerOne = new ShipCreator(THREE_MASTS_SHIP,
@@ -42,6 +42,7 @@ public class ShipsGame implements Game {
                 playerOneGameBoard,
                 playerOneShipsGameLogic);
 
+        playerOneGameBoard.print();
         shipsDeployment(playerOneGameBoard,
                 lettersAndDigits,
                 threeMastShipCreatorPlayerOne,
@@ -49,10 +50,12 @@ public class ShipsGame implements Game {
                 playerOneFleet,
                 NUMBER_OF_SHIPS);
 
-        Player playerTwo = preparePlayer(getUserName(scanner,validator,shipsGameText.getMessage("show.player.two"),playerOne.getName()));
+        playerOneShipsGameLogic.clearConsole();
+
+        Player playerTwo = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.two"), playerOne.getName()));
         ShipsGameBoard playerTwoGameBoard = new ShipsGameBoard(playerTwo, playerTwoFleet);
-        ShipsGameBoard playerTwoGameBoardToHit = new ShipsGameBoard(playerTwo, playerTwoFleetToHit);
-        playerTwoGameBoardToHit.setup();
+        ShipsGameBoard playerTwoCheckBoard = new ShipsGameBoard(playerTwo, playerTwoFleetToCheck);
+        playerTwoCheckBoard.setup();
 
         ShipCreator threeMastShipCreatorPlayerTwo = new ShipCreator(THREE_MASTS_SHIP,
                 Color.WHITE,
@@ -61,6 +64,7 @@ public class ShipsGame implements Game {
                 playerTwoGameBoard,
                 playerTwoShipsGameLogic);
 
+        playerTwoGameBoard.print();
         shipsDeployment(playerTwoGameBoard,
                 lettersAndDigits,
                 threeMastShipCreatorPlayerTwo,
@@ -68,7 +72,11 @@ public class ShipsGame implements Game {
                 playerTwoFleet,
                 NUMBER_OF_SHIPS);
 
+
+
     }
+
+
     private void shipsDeployment(ShipsGameBoard shipsGameBoard,
                                  TreeMap<Character, Integer> lettersAndDigits,
                                  ShipCreator shipCreator,
@@ -77,11 +85,11 @@ public class ShipsGame implements Game {
                                  int numberOfShips) {
         int shipNumber = 1;
         do {
-            shipsGameBoard.print();
-            System.out.println(shipsGameText.getMessage("show.setup.ship", Integer.toString(shipNumber),Integer.toString(NUMBER_OF_SHIPS)));
+
+            System.out.println(shipsGameText.getMessage("show.setup.ship", Integer.toString(shipNumber), Integer.toString(NUMBER_OF_SHIPS)));
             System.out.println(shipsGameText.getMessage("show.layout.option"));
             layoutMenuPrinter.print();
-            int layoutOption = getPlayerChoice(scanner, validator, layoutMenuPrinter);
+            int layoutOption = getLayoutOption(scanner, validator, layoutMenuPrinter);
             int userCurrentRowChoice;
             int userCurrentColChoice;
             System.out.println(shipsGameText.getMessage("show.input.row", Integer.toString(shipsGameBoard.getLength())));
@@ -92,26 +100,24 @@ public class ShipsGame implements Game {
             userCurrentColChoice = convertLetterToDigit(lettersAndDigits, userColChoiceByChar);
 
             if (layoutOption == ShipLayoutOption.HORIZONTAL.value()) {
-                if(shipsGameLogic.checkPlaceForHorizontalShip(userCurrentRowChoice,
+                if (shipsGameLogic.checkPlaceForHorizontalShip(userCurrentRowChoice,
                         userCurrentColChoice,
                         shipCreator.getShipSize(),
                         shipsGameBoard)) {
                     playerFleet.add(shipCreator.horizontalShip(userCurrentRowChoice, userCurrentColChoice));
                     shipNumber++;
-                }
-                else{
+                } else {
                     System.out.println(shipsGameText.getMessage("show,wrong.coordinates"));
                     System.out.println(shipsGameText.getMessage("show.try.again"));
                 }
             } else if (layoutOption == ShipLayoutOption.VERTICAL.value()) {
-                if(shipsGameLogic.checkPlaceForVerticalShip(userCurrentRowChoice,
+                if (shipsGameLogic.checkPlaceForVerticalShip(userCurrentRowChoice,
                         userCurrentColChoice,
                         shipCreator.getShipSize(),
                         shipsGameBoard)) {
                     playerFleet.add(shipCreator.verticalShip(userCurrentRowChoice, userCurrentColChoice));
                     shipNumber++;
-                }
-                else {
+                } else {
                     System.out.println(shipsGameText.getMessage("show,wrong.coordinates"));
                     System.out.println(shipsGameText.getMessage("show.try.again"));
                 }
@@ -121,7 +127,7 @@ public class ShipsGame implements Game {
             }
 
             shipsGameBoard.print();
-        }while(shipNumber<=numberOfShips);
+        } while (shipNumber <= numberOfShips);
     }
 
     private static Player preparePlayer(String playerName) {
@@ -208,7 +214,7 @@ public class ShipsGame implements Game {
         return playerColChoiceByChar;
     }
 
-    private static int getPlayerChoice(Scanner scanner,
+    private static int getLayoutOption(Scanner scanner,
                                        Validator validator,
                                        ShipLayoutMenuPrinter shipLayoutMenuPrinter) {
         int playerMenuChoice;
