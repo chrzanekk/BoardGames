@@ -33,8 +33,18 @@ public class ShipsGameLogic {
         return null;
     }
 
-    Mast putMastInCheckBoard(int row, int col, Player player) {
-        return new Mast(null, row, col, player, ShipGameBoardMark.NOT_CHECKED);
+    void removeMast(int row, int col) {
+        for (Ship ship : fleet) {
+            for (Mast mast : ship.getMasts()) {
+                if (row == mast.getCurrentRow() && col == mast.getCurrentCol()) {
+                    fleet.remove(mast);
+                }
+            }
+        }
+    }
+
+    Mast putNewMast(int row, int col, Player player, ShipGameBoardMark shipGameBoardMark) {
+        return new Mast(null, row, col, player, shipGameBoardMark);
     }
 
     boolean isMastExists(int row, int col) {
@@ -270,7 +280,7 @@ public class ShipsGameLogic {
     boolean isPlayerWin() {
         for (Ship ship : fleet) {
             for (Mast mast : ship.getMasts()) {
-                if(!mast.equals(null)){
+                if (mast.getMast().mark() != ShipGameBoardMark.HIT_AND_SUNK.mark()) {
                     return false;
                 }
                 break;
@@ -279,9 +289,61 @@ public class ShipsGameLogic {
         return true;
     }
 
+    void changeMastStatus(int row, int col, Player player, ShipGameBoardMark statusMark) {
+        if (checkForHit(row, col)) {
+            removeMast(row, col);
+            putNewMast(row, col, player, statusMark);
+        }
+    }
+
+    boolean checkForShipStatusChange(int shipSize) {
+        int sameMastStatusCount;
+        for (Ship ship : fleet) {
+            sameMastStatusCount = 0;
+            for (Mast mast : ship.getMasts()) {
+                if (mast.getMast() == ShipGameBoardMark.HIT_BUT_NOT_SUNK) {
+                    sameMastStatusCount++;
+                }
+            }
+            if (sameMastStatusCount == shipSize) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void shipStatusChangeToSink(Player player) {
+        int row, col;
+        for (Ship ship : fleet) {
+            if (checkForShipStatusChange(ship.getNumberOfMasts())) {
+                for (Mast mast : ship.getMasts()) {
+                    row = mast.getCurrentRow();
+                    col = mast.getCurrentCol();
+                    changeMastStatus(row, col, player, ShipGameBoardMark.HIT_AND_SUNK);
+//                    removeMast(mast.getCurrentRow(), mast.getCurrentCol());
+//                    putNewMast(row, col, player, ShipGameBoardMark.HIT_AND_SUNK);
+                }
+            }
+        }
+    }
+
+    boolean checkForHit(int row, int col) {
+        if (isMastExists(row, col)) {
+            return true;
+        }
+        return false;
+    }
+
+    boolean checkForHitAndSink(int row, int col, int shipSize) {
+        if (isMastExists(row,col) && checkForShipStatusChange(shipSize)){
+            return true;
+        }
+        return false;
+    }
+
 
 //    check for hit and sink
-//    check for win
+
 //
 
 }

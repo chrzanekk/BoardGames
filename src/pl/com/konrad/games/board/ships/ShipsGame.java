@@ -36,7 +36,7 @@ public class ShipsGame implements Game {
 
         TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(playerOneGameBoard.getLength());
         ShipCreator threeMastShipCreatorPlayerOne = new ShipCreator(THREE_MASTS_SHIP,
-                Color.WHITE,
+                null,
                 playerOne,
                 ShipGameBoardMark.THREE_MASTS,
                 playerOneGameBoard,
@@ -58,7 +58,7 @@ public class ShipsGame implements Game {
         playerTwoCheckBoard.setup();
 
         ShipCreator threeMastShipCreatorPlayerTwo = new ShipCreator(THREE_MASTS_SHIP,
-                Color.WHITE,
+                null,
                 playerTwo,
                 ShipGameBoardMark.THREE_MASTS,
                 playerTwoGameBoard,
