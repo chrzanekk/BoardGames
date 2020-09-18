@@ -26,6 +26,7 @@ public class ShipCreator implements ShipFactory {
         this.shipsGameLogic = shipsGameLogic;
     }
 
+//metoda poniższa do wydupcenia
     public int getShipSize() {
         return shipSize;
     }

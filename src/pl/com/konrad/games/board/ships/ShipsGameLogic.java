@@ -89,8 +89,9 @@ public class ShipsGameLogic {
             return isPlaceBottomLeftCorner(row, col);
         } else if (row == gameBoard.getLength() && col > 0 && col < gameBoard.getLength()) {
             return isPlaceBottomEdge(row, col);
-        } else
+        } else {
             return isPlaceBottomRightCorner(row, col);
+        }
     }
 
     boolean checkPlaceForVerticalShip(int row, int col, int shipSize, GameBoard gameBoard) {

@@ -33,6 +33,7 @@ public class ShipsGame implements Game {
         ShipsGameBoard playerOneGameBoard = new ShipsGameBoard(playerOne, playerOneFleet);
         ShipsGameBoard playerOneCheckBoard = new ShipsGameBoard(playerOne, playerOneFleetToCheck);
         playerOneCheckBoard.setup();
+        playerOneCheckBoard.print();
 
         TreeMap<Character, Integer> lettersAndDigits = lettersAndDigits(playerOneGameBoard.getLength());
         ShipCreator threeMastShipCreatorPlayerOne = new ShipCreator(THREE_MASTS_SHIP,
@@ -85,7 +86,6 @@ public class ShipsGame implements Game {
                                  int numberOfShips) {
         int shipNumber = 1;
         do {
-
             System.out.println(shipsGameText.getMessage("show.setup.ship", Integer.toString(shipNumber), Integer.toString(NUMBER_OF_SHIPS)));
             System.out.println(shipsGameText.getMessage("show.layout.option"));
             layoutMenuPrinter.print();

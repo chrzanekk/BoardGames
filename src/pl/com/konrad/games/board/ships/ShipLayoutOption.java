@@ -5,6 +5,7 @@ import pl.com.konrad.games.board.GameMenuOption;
 public enum ShipLayoutOption {
     HORIZONTAL(1,"Horizontal layout.\"_\""),
     VERTICAL(2, "Vertical layout.\"|\"");
+//    zmienić nazwe value
     private final int value;
     private final String description;
 
