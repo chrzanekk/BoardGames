@@ -28,8 +28,11 @@ public class ShipsGame implements Game {
     private ShipsGameLogic playerTwoShipsGameLogicToCheck = new ShipsGameLogic(playerTwoFleetToCheck);
 
     public void play() {
-
+/** ship deployment phase
+ * 4 pieces of 3-mast ships deploy each player at private shipboard.
+ */
         Player playerOne = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.one"), null));
+        Player currentPlayer = playerOne;
         ShipsGameBoard playerOneGameBoard = new ShipsGameBoard(playerOne, playerOneFleet);
         ShipsGameBoard playerOneCheckBoard = new ShipsGameBoard(playerOne, playerOneFleetToCheck);
         playerOneCheckBoard.setup();
@@ -72,7 +75,41 @@ public class ShipsGame implements Game {
                 playerTwoShipsGameLogic,
                 playerTwoFleet,
                 NUMBER_OF_SHIPS);
+/** main flow of the game
+ */
+        boolean isAWinner;
+        do {
+            isAWinner = false;
+            int currentRowInput;
+            int currentColInput;
+            char currentColInputByChar;
+            playerOneShipsGameLogic.clearConsole();
+            System.out.println(shipsGameText.getMessage("show.witch.player.move", currentPlayer.getName()));
+            System.out.println(shipsGameText.getMessage("show.input.row"));
+            currentRowInput = getPlayerRowChoice(scanner,validator,playerOneGameBoard.getLength());
+            System.out.println(shipsGameText.getMessage("show.input.col",
+                    Character.toString(playerOneGameBoard.generateLastLetterOfColumn('A',playerOneGameBoard.getLength()))));
+            currentColInputByChar = getPlayerColChoice(scanner,validator,
+                    lettersAndDigits);
+            currentColInput = convertLetterToDigit(lettersAndDigits,currentColInputByChar);
 
+            if(playerTwoShipsGameLogic.checkForHit(currentRowInput,currentColInput) &&
+                    (!playerTwoShipsGameLogic.checkForHitAndSink(currentRowInput,currentColInput,playerTwoShipsGameLogic.getShipByRowCol(currentRowInput,currentColInput).getNumberOfMasts()))){
+                System.out.println(shipsGameText.getMessage("show.player.hit.ship"));
+                playerOneShipsGameLogicToCheck.changeMastStatus(currentRowInput,currentColInput,playerOne,ShipGameBoardMark.HIT_BUT_NOT_SUNK);
+            }
+            else if(playerTwoShipsGameLogic.checkForHit(currentRowInput,currentColInput) && (playerTwoShipsGameLogic.checkForHitAndSink(currentRowInput,currentColInput,playerTwoShipsGameLogic.getShipByRowCol(currentRowInput,currentColInput).getNumberOfMasts()))) {
+                System.out.println(shipsGameText.getMessage("show.player.hit.ship"));
+                System.out.println(shipsGameText.getMessage("show.player.sunk.ship"));
+                playerOneShipsGameLogicToCheck.checkForHitAndSink(currentRowInput,currentColInput,
+                        playerTwoShipsGameLogic.getShipByRowCol(currentRowInput,currentColInput).getNumberOfMasts());
+            }
+
+
+
+
+        }
+        while (isAWinner);
 
 
     }
@@ -102,7 +139,7 @@ public class ShipsGame implements Game {
             if (layoutOption == ShipLayoutOption.HORIZONTAL.value()) {
                 if (shipsGameLogic.checkPlaceForHorizontalShip(userCurrentRowChoice,
                         userCurrentColChoice,
-                        shipCreator.getShipSize(),
+                        THREE_MASTS_SHIP,
                         shipsGameBoard)) {
                     playerFleet.add(shipCreator.horizontalShip(userCurrentRowChoice, userCurrentColChoice));
                     shipNumber++;
@@ -113,7 +150,7 @@ public class ShipsGame implements Game {
             } else if (layoutOption == ShipLayoutOption.VERTICAL.value()) {
                 if (shipsGameLogic.checkPlaceForVerticalShip(userCurrentRowChoice,
                         userCurrentColChoice,
-                        shipCreator.getShipSize(),
+                        THREE_MASTS_SHIP,
                         shipsGameBoard)) {
                     playerFleet.add(shipCreator.verticalShip(userCurrentRowChoice, userCurrentColChoice));
                     shipNumber++;

@@ -7,7 +7,7 @@ public class ShipsGameText {
     private Map<String, String> messages = new HashMap<>();
     {
         messages.put("show.try.again", "Try again.");
-        messages.put("show.witch.player.move", "Player \"{0}\" move");
+        messages.put("show.witch.player.move", "Now \"{0}\" move");
         messages.put("show.not.empty.row.col", "There is already ship here.");
         messages.put("show.setup.ship", "Set ship number \"{0}\" of \"{1}\".");
         messages.put("show.layout.option", "Please,choose layout option:");
@@ -17,6 +17,8 @@ public class ShipsGameText {
         messages.put("show.input.col", "Input single letter of col (from A to {0} ): ");
         messages.put("show.player.one", "Player one");
         messages.put("show.player.two", "Player two");
+        messages.put("show.player.hit.ship", "Player \"{0}\" hit ship.");
+        messages.put("show.player.sunk.ship", "and ship was sunk.");
 
     }
 

@@ -33,6 +33,17 @@ public class ShipsGameLogic {
         return null;
     }
 
+    Ship getShipByRowCol(int row, int col) {
+        for (Ship ship : fleet){
+            for (Mast mast : ship.getMasts()) {
+                if (row == mast.getCurrentRow() && col == mast.getCurrentCol()){
+                 return ship;
+                }
+            }
+        }
+        return null;
+    }
+
     void removeMast(int row, int col) {
         for (Ship ship : fleet) {
             for (Mast mast : ship.getMasts()) {
@@ -58,41 +69,61 @@ public class ShipsGameLogic {
      * METHODS TO CHECK SHIP DEPLOYMENT
      */
 
-    boolean isMastsCollideForHorizontal(int row, int col, int shipSize, GameBoard gameBoard) {
-        if (gameBoard.getLength() - col >= shipSize && isPlaceToPutMast(row, col, gameBoard)) {
-            return false;
-        }
-        return true;
-    }
-
-    boolean isMastsCollideForVertical(int row, int col, int shipSize, GameBoard gameBoard) {
-        if (gameBoard.getLength() - row >= shipSize && isPlaceToPutMast(row, col, gameBoard)) {
-            return false;
-        }
-        return true;
-    }
 
     boolean isPlaceToPutMast(int row, int col, GameBoard gameBoard) {
-        if (row == 0 && col == 0) {
+        if (isTopLeftCorner(row, col)) {
             return isPlaceTopLeftCorner(row, col);
-        } else if (row == 0 && col > 0 && col < gameBoard.getLength()) {
+        } else if (isTopMiddleEdge(row, col, gameBoard)) {
             return isPlaceTopEdge(row, col);
-        } else if (row == 0 && col == gameBoard.getLength()) {
+        } else if (isTopRightCorner(row, col, gameBoard)) {
             return isPlaceTopRightCorner(row, col);
-        } else if (row > 0 && row < gameBoard.getLength() && col == 0) {
+        } else if (isLeftMiddleEdge(row, col, gameBoard)) {
             return isPlaceLeftEdge(row, col);
-        } else if (row > 0 && row < gameBoard.getLength() && col > 0 && col < gameBoard.getLength()) {
+        } else if (isMiddleField(row, col, gameBoard)) {
             return isPlaceMiddle(row, col);
-        } else if (row > 0 && row < gameBoard.getLength() && col == gameBoard.getLength()) {
+        } else if (isRightMiddleEdge(row, col, gameBoard)) {
             return isPlaceRightEdge(row, col);
-        } else if (row == gameBoard.getLength() && col == 0) {
+        } else if (isBottomLeftCorner(row, col, gameBoard)) {
             return isPlaceBottomLeftCorner(row, col);
-        } else if (row == gameBoard.getLength() && col > 0 && col < gameBoard.getLength()) {
+        } else if (isBottomMiddleEdge(row, col, gameBoard)) {
             return isPlaceBottomEdge(row, col);
         } else {
             return isPlaceBottomRightCorner(row, col);
         }
     }
+
+    private boolean isBottomMiddleEdge(int row, int col, GameBoard gameBoard) {
+        return row == gameBoard.getLength() && col > 0 && col < gameBoard.getLength();
+    }
+
+    private boolean isBottomLeftCorner(int row, int col, GameBoard gameBoard) {
+        return row == gameBoard.getLength() && col == 0;
+    }
+
+    private boolean isRightMiddleEdge(int row, int col, GameBoard gameBoard) {
+        return row > 0 && row < gameBoard.getLength() && col == gameBoard.getLength();
+    }
+
+    private boolean isMiddleField(int row, int col, GameBoard gameBoard) {
+        return row > 0 && row < gameBoard.getLength() && col > 0 && col < gameBoard.getLength();
+    }
+
+    private boolean isLeftMiddleEdge(int row, int col, GameBoard gameBoard) {
+        return row > 0 && row < gameBoard.getLength() && col == 0;
+    }
+
+    private boolean isTopRightCorner(int row, int col, GameBoard gameBoard) {
+        return row == 0 && col == gameBoard.getLength();
+    }
+
+    private boolean isTopMiddleEdge(int row, int col, GameBoard gameBoard) {
+        return row == 0 && col > 0 && col < gameBoard.getLength();
+    }
+
+    private boolean isTopLeftCorner(int row, int col) {
+        return row == 0 && col == 0;
+    }
+
 
     boolean checkPlaceForVerticalShip(int row, int col, int shipSize, GameBoard gameBoard) {
         for (int i = row; i <= shipSize; i++) {
@@ -121,60 +152,40 @@ public class ShipsGameLogic {
 
     //    lewy gorny rog
     private boolean isPlaceTopLeftCorner(int row, int col) {
-        for (int i = 0; i <= row + 1; i++) {
-            for (int j = 0; j <= col + 1; j++) {
-                if ((i == row) && (j == col)) {
-                    continue;
-                }
-                if (isMastExists(i, j)) {
-                    return false;
-                }
-            }
+        if (isMastExists(row, col + 1)
+                || isMastExists(row + 1, col)
+                || isMastExists(row + 1, col + 1)) {
+            return false;
         }
         return true;
     }
 
     //    lewy dolny rog
     private boolean isPlaceBottomLeftCorner(int row, int col) {
-        for (int i = row - 1; i <= row; i++) {
-            for (int j = 0; j <= col + 1; j++) {
-                if ((i == row) && (j == col)) {
-                    continue;
-                }
-                if (isMastExists(i, j)) {
-                    return false;
-                }
-            }
+        if (isMastExists(row - 1, col)
+                || isMastExists(row - 1, col + 1)
+                || isMastExists(row, col + 1)) {
+            return false;
         }
         return true;
     }
 
     //    prawy gorny rog
     private boolean isPlaceTopRightCorner(int row, int col) {
-        for (int i = 0; i <= row + 1; i++) {
-            for (int j = col - 1; j <= col; j++) {
-                if ((i == row) && (j == col)) {
-                    continue;
-                }
-                if (isMastExists(i, j)) {
-                    return false;
-                }
-            }
+        if (isMastExists(row, col - 1)
+                || isMastExists(row + 1, col - 1)
+                || isMastExists(row + 1, col)) {
+            return false;
         }
         return true;
     }
 
     //    prawy dolny rog
     private boolean isPlaceBottomRightCorner(int row, int col) {
-        for (int i = row - 1; i <= row; i++) {
-            for (int j = col - 1; j <= col; j++) {
-                if ((i == row) && (j == col)) {
-                    continue;
-                }
-                if (isMastExists(i, j)) {
-                    return false;
-                }
-            }
+        if (isMastExists(row, col - 1)
+                || isMastExists(row - 1, col - 1)
+                || isMastExists(row - 1, col)) {
+            return false;
         }
         return true;
     }
@@ -182,102 +193,73 @@ public class ShipsGameLogic {
 //    prawy srodek
 
     private boolean isPlaceRightEdge(int row, int col) {
-        for (int i = row - 1; i <= row + 1; i++) {
-            for (int j = col - 1; j <= col; j++) {
-                if ((i == row) && (j == col)) {
-                    continue;
-                }
-                if (isMastExists(i, j)) {
-                    return false;
-                }
-            }
+        if (isMastExists(row - 1, col - 1)
+                || isMastExists(row - 1, col)
+                || isMastExists(row, col - 1)
+                || isMastExists(row + 1, col - 1)
+                || isMastExists(row + 1, col)) {
+            return false;
         }
         return true;
     }
 //    lewy srodek
 
     private boolean isPlaceLeftEdge(int row, int col) {
-        for (int i = row - 1; i <= row + 1; i++) {
-            for (int j = 0; j <= col + 1; j++) {
-                if ((i == row) && (j == col)) {
-                    continue;
-                }
-                if (isMastExists(i, j)) {
-                    return false;
-                }
-            }
+        if (isMastExists(row - 1, col)
+                || isMastExists(row - 1, col + 1)
+                || isMastExists(row, col + 1)
+                || isMastExists(row + 1, col)
+                || isMastExists(row + 1, col + 1)) {
+            return false;
         }
         return true;
     }
 
     //    gorny srodek
     private boolean isPlaceTopEdge(int row, int col) {
-        for (int i = 0; i <= row + 1; i++) {
-            for (int j = col - 1; j <= col + 1; j++) {
-                if ((i == row) && (j == col)) {
-                    continue;
-                }
-                if (isMastExists(i, j)) {
-                    return false;
-                }
-            }
+        if (isMastExists(row, col - 1)
+                || isMastExists(row, col + 1)
+                || isMastExists(row + 1, col - 1)
+                || isMastExists(row + 1, col)
+                || isMastExists(row + 1, col + 1)) {
+            return false;
         }
         return true;
     }
 
     //    dolny srodek
     private boolean isPlaceBottomEdge(int row, int col) {
-        for (int i = row - 1; i <= row; i++) {
-            for (int j = col - 1; j <= col + 1; j++) {
-                if ((i == row) && (j == col)) {
-                    continue;
-                }
-                if (isMastExists(i, j)) {
-                    return false;
-                }
-            }
+        if (isMastExists(row, col - 1)
+                || isMastExists(row - 1, col - 1)
+                || isMastExists(row - 1, col)
+                || isMastExists(row - 1, col + 1)
+                || isMastExists(row, col + 1)) {
+            return false;
         }
         return true;
     }
 
     private boolean isPlaceMiddle(int row, int col) {
-        for (int i = row - 1; i <= row + 1; i++) {
-            for (int j = col - 1; j <= col + 1; j++) {
-                if ((i == row) & (j == col)) {
-                    continue;
-                }
-                if (isMastExists(i, j)) {
-                    return false;
-                }
-            }
+        if (isMastExists(row - 1, col - 1)
+                || isMastExists(row - 1, col)
+                || isMastExists(row - 1, col + 1)
+                || isMastExists(row, col - 1)
+                || isMastExists(row, col + 1)
+                || isMastExists(row + 1, col - 1)
+                || isMastExists(row + 1, col)
+                || isMastExists(row + 1, col + 1)) {
+            return false;
         }
         return true;
     }
 
 
-    //    projekt jednej metody do wszystkich 9 mozliwosci brzegow planszy.
-    private boolean isPlaceForMast(int row, int col,
-                                   int paramOne,
-                                   int paramTwo,
-                                   int paramThree,
-                                   int paramFour) {
-        for (int i = row - paramOne; i <= row + paramTwo; i++) {
-            for (int j = col - paramThree; j <= col + paramFour; j++) {
-                if ((i == row) & (j == col)) {
-                    continue;
-                }
-                if (isMastExists(i, j)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
     /**
      * METHODS TO CHECK SHIP HITS AND TO CHANGE STATUS ON PLAYER CHECK BOARD
      */
 
+//    ta metoda do modyfikacji
     boolean isPlayerWin() {
         for (Ship ship : fleet) {
             for (Mast mast : ship.getMasts()) {
@@ -336,7 +318,7 @@ public class ShipsGameLogic {
     }
 
     boolean checkForHitAndSink(int row, int col, int shipSize) {
-        if (isMastExists(row,col) && checkForShipStatusChange(shipSize)){
+        if (isMastExists(row, col) && checkForShipStatusChange(shipSize)) {
             return true;
         }
         return false;
