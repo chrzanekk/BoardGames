@@ -14,7 +14,7 @@ public class ShipsGame implements Game {
     private ShipLayoutMenu shipLayoutMenu = new ShipLayoutMenu();
     private ShipLayoutMenuPrinter layoutMenuPrinter = new ShipLayoutMenuPrinter(shipLayoutMenu);
 
-    private static final int NUMBER_OF_SHIPS = 4;
+    private static final int NUMBER_OF_SHIPS = 1;
     private static final int THREE_MASTS_SHIP = 3;
 
     private List<Ship> playerOneFleet = new ArrayList();
@@ -54,7 +54,7 @@ public class ShipsGame implements Game {
                 playerOneFleet,
                 NUMBER_OF_SHIPS);
 
-        playerOneShipsGameLogic.clearConsole();
+//        playerOneShipsGameLogic.clearConsole();
 
         Player playerTwo = preparePlayer(getUserName(scanner, validator, shipsGameText.getMessage("show.player.two"), playerOne.getName()));
         ShipsGameBoard playerTwoGameBoard = new ShipsGameBoard(playerTwo, playerTwoFleet);
@@ -85,31 +85,37 @@ public class ShipsGame implements Game {
             char userColByChar;
             playerOneShipsGameLogic.clearConsole();
             System.out.println(shipsGameText.getMessage("show.witch.player.move", currentPlayer.getName()));
-            System.out.println(shipsGameText.getMessage("show.input.row"));
-            userRow = getPlayerRowChoice(scanner,validator,playerOneGameBoard.getLength());
+            System.out.println(shipsGameText.getMessage("show.input.row", Integer.toString(playerOneGameBoard.getLength())));
+            userRow = getPlayerRowChoice(scanner, validator, playerOneGameBoard.getLength());
             System.out.println(shipsGameText.getMessage("show.input.col",
-                    Character.toString(playerOneGameBoard.generateLastLetterOfColumn('A',playerOneGameBoard.getLength()))));
-            userColByChar = getPlayerColChoice(scanner,validator,
+                    Character.toString(playerOneGameBoard.generateLastLetterOfColumn('A', playerOneGameBoard.getLength()))));
+            userColByChar = getPlayerColChoice(scanner, validator,
                     lettersAndDigits);
-            userCol = convertLetterToDigit(lettersAndDigits,userColByChar);
+            userCol = convertLetterToDigit(lettersAndDigits, userColByChar);
 
-            if(playerTwoShipsGameLogic.checkForHit(userRow,userCol) &&
-                    (!playerTwoShipsGameLogic.checkForHitAndSink(userRow,userCol,playerTwoShipsGameLogic.getShipByRowCol(userRow,userCol).getNumberOfMasts()))){
+            if (playerTwoShipsGameLogic.checkForHit(userRow, userCol) &&
+                    (!playerTwoShipsGameLogic.checkForHitAndSink(userRow, userCol, playerTwoShipsGameLogic.getShipByRowCol(userRow, userCol).getNumberOfMasts()))) {
                 System.out.println(shipsGameText.getMessage("show.player.hit.ship"));
-                playerOneShipsGameLogicToCheck.changeMastStatus(userRow,userCol,playerOne,ShipGameBoardMark.HIT_BUT_NOT_SUNK);
-                playerTwoShipsGameLogic.changeMastStatus(userRow,userCol,playerTwo,ShipGameBoardMark.HIT_BUT_NOT_SUNK);
-            }
-            else if(playerTwoShipsGameLogic.checkForHit(userRow,userCol) && (playerTwoShipsGameLogic.checkForHitAndSink(userRow,userCol,playerTwoShipsGameLogic.getShipByRowCol(userRow,userCol).getNumberOfMasts()))) {
+                playerOneShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.HIT_BUT_NOT_SUNK);
+                playerTwoShipsGameLogic.changeMastStatus(userRow, userCol, playerTwo, ShipGameBoardMark.HIT_BUT_NOT_SUNK);
+            } else if (playerTwoShipsGameLogic.checkForHit(userRow, userCol) &&
+                    (playerTwoShipsGameLogic.checkForHitAndSink(userRow, userCol, playerTwoShipsGameLogic.getShipByRowCol(userRow, userCol).getNumberOfMasts()))) {
                 System.out.println(shipsGameText.getMessage("show.player.hit.ship"));
                 System.out.println(shipsGameText.getMessage("show.player.sunk.ship"));
-                playerOneShipsGameLogicToCheck.changeMastStatus(userRow,userCol,playerOne,ShipGameBoardMark.HIT_AND_SUNK);
-                playerTwoShipsGameLogic.changeMastStatus(userRow,userCol,playerTwo,ShipGameBoardMark.HIT_AND_SUNK);
-
+                playerOneShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.HIT_AND_SUNK);
+                playerTwoShipsGameLogic.changeMastStatus(userRow, userCol, playerTwo, ShipGameBoardMark.HIT_AND_SUNK);
+            }
+            else {
+                playerOneShipsGameLogicToCheck.changeMastStatus(userRow,userCol,playerOne,ShipGameBoardMark.MISS);
+                System.out.println(shipsGameText.getMessage("show.player.miss"));
             }
 
-
-
-
+            if(playerTwoShipsGameLogic.isPlayerLoose()){
+                System.out.println(shipsGameText.getMessage("show.player.win",playerOne.getName()));
+                isAWinner=true;
+            }
+            playerOneCheckBoard.print();
+            playerTwoGameBoard.print();
         }
         while (isAWinner);
 

@@ -19,6 +19,8 @@ public class ShipsGameText {
         messages.put("show.player.two", "Player two");
         messages.put("show.player.hit.ship", "Player \"{0}\" hit ship.");
         messages.put("show.player.sunk.ship", "and ship was sunk.");
+        messages.put("show.player.miss", "You miss.");
+        messages.put("show.player.win", "Congratulations!. Player \"{0}\" win!.");
 
     }
 

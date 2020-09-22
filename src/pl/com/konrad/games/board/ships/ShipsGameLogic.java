@@ -3,6 +3,7 @@ package pl.com.konrad.games.board.ships;
 import pl.com.konrad.games.board.GameBoard;
 import pl.com.konrad.games.board.Player;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -34,28 +35,25 @@ public class ShipsGameLogic {
     }
 
     Ship getShipByRowCol(int row, int col) {
-        for (Ship ship : fleet){
+        for (Ship ship : fleet) {
             for (Mast mast : ship.getMasts()) {
-                if (row == mast.getCurrentRow() && col == mast.getCurrentCol()){
-                 return ship;
+                if (row == mast.getCurrentRow() && col == mast.getCurrentCol()) {
+                    return ship;
                 }
             }
         }
         return null;
     }
 
-    void removeMast(int row, int col) {
-        for (Ship ship : fleet) {
-            for (Mast mast : ship.getMasts()) {
-                if (row == mast.getCurrentRow() && col == mast.getCurrentCol()) {
-                    fleet.remove(mast);
-                }
-            }
-        }
-    }
 
     Mast putNewMast(int row, int col, Player player, ShipGameBoardMark shipGameBoardMark) {
         return new Mast(null, row, col, player, shipGameBoardMark);
+    }
+
+    void removeMast(int row, int col) {
+        for (Ship ship : fleet) {
+            ship.getMasts().removeIf(mast -> row == mast.getCurrentRow() && col == mast.getCurrentCol());
+        }
     }
 
     boolean isMastExists(int row, int col) {
@@ -254,13 +252,12 @@ public class ShipsGameLogic {
     }
 
 
-
     /**
      * METHODS TO CHECK SHIP HITS AND TO CHANGE STATUS ON PLAYER CHECK BOARD
      */
 
 //    ta metoda do modyfikacji
-    boolean isPlayerWin() {
+    boolean isPlayerLoose() {
         for (Ship ship : fleet) {
             for (Mast mast : ship.getMasts()) {
                 if (mast.getMast().mark() != ShipGameBoardMark.HIT_AND_SUNK.mark()) {
@@ -274,8 +271,10 @@ public class ShipsGameLogic {
 
     void changeMastStatus(int row, int col, Player player, ShipGameBoardMark statusMark) {
         if (checkForHit(row, col)) {
+            int shipIndex = fleet.indexOf(getShipByRowCol(row, col));
             removeMast(row, col);
-            putNewMast(row, col, player, statusMark);
+            Ship ship = fleet.get(shipIndex);
+            ship.getMasts().add(putNewMast(row, col, player, statusMark));
         }
     }
 
