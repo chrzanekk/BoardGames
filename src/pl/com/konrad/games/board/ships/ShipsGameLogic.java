@@ -3,7 +3,6 @@ package pl.com.konrad.games.board.ships;
 import pl.com.konrad.games.board.GameBoard;
 import pl.com.konrad.games.board.Player;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -16,10 +15,12 @@ import java.util.List;
  */
 public class ShipsGameLogic {
     private List<Ship> fleet;
+    private int sumOfAllMasts;
 
 
     public ShipsGameLogic(List<Ship> fleet) {
         this.fleet = fleet;
+        sumOfAllMasts = sumOfAllMasts();
     }
 
 
@@ -62,6 +63,10 @@ public class ShipsGameLogic {
         }
         return true;
     }
+
+//    boolean isMastExists(){
+//
+//    }
 
     /**
      * METHODS TO CHECK SHIP DEPLOYMENT
@@ -256,17 +261,22 @@ public class ShipsGameLogic {
      * METHODS TO CHECK SHIP HITS AND TO CHANGE STATUS ON PLAYER CHECK BOARD
      */
 
-//    ta metoda do modyfikacji
+//    ta metoda do przetestowania
     boolean isPlayerLoose() {
+        int sumOfDestroyedMasts=0;
         for (Ship ship : fleet) {
             for (Mast mast : ship.getMasts()) {
-                if (mast.getMast().mark() != ShipGameBoardMark.HIT_AND_SUNK.mark()) {
-                    return false;
+                if (mast.getMast().mark() == ShipGameBoardMark.HIT_AND_SUNK.mark()) {
+                    sumOfDestroyedMasts++;
                 }
-                break;
             }
         }
-        return true;
+        if(sumOfAllMasts-sumOfDestroyedMasts==0) {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     void changeMastStatus(int row, int col, Player player, ShipGameBoardMark statusMark) {
@@ -323,9 +333,15 @@ public class ShipsGameLogic {
         return false;
     }
 
-
-//    check for hit and sink
-
-//
-
+    private int sumOfAllMasts(){
+        int sum=0;
+        for(Ship ship : fleet){
+            for(Mast mast : ship.getMasts()){
+                if(mast != null){
+                    sum++;
+                }
+            }
+        }
+        return sum;
+    }
 }
