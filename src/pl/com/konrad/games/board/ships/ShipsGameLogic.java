@@ -3,6 +3,7 @@ package pl.com.konrad.games.board.ships;
 import pl.com.konrad.games.board.GameBoard;
 import pl.com.konrad.games.board.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class ShipsGameLogic {
 
     public ShipsGameLogic(List<Ship> fleet) {
         this.fleet = fleet;
-        sumOfAllMasts = sumOfAllMasts();
+
     }
 
 
@@ -263,20 +264,14 @@ public class ShipsGameLogic {
 
 //    ta metoda do przetestowania
     boolean isPlayerLoose() {
-        int sumOfDestroyedMasts=0;
         for (Ship ship : fleet) {
             for (Mast mast : ship.getMasts()) {
-                if (mast.getMast().mark() == ShipGameBoardMark.HIT_AND_SUNK.mark()) {
-                    sumOfDestroyedMasts++;
+                if (mast.getMast().mark() != ShipGameBoardMark.HIT_AND_SUNK.mark()) {
+                    return false;
                 }
             }
         }
-        if(sumOfAllMasts-sumOfDestroyedMasts==0) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return true;
     }
 
     void changeMastStatus(int row, int col, Player player, ShipGameBoardMark statusMark) {
@@ -285,9 +280,14 @@ public class ShipsGameLogic {
             removeMast(row, col);
             Ship ship = fleet.get(shipIndex);
             ship.getMasts().add(putNewMast(row, col, player, statusMark));
+        } else {
+            List<Mast> missedMasts = new ArrayList<>();
+            missedMasts.add(putNewMast(row,col,player,statusMark));
+            fleet.add(new Ship(missedMasts));
         }
     }
 
+    //to do naprawy
     boolean checkForShipStatusChange(int shipSize) {
         int sameMastStatusCount;
         for (Ship ship : fleet) {
@@ -304,7 +304,8 @@ public class ShipsGameLogic {
         return false;
     }
 
-    void shipStatusChangeToSink(Player player) {
+    //to do naprawy
+    void changeShipStatusToSink(Player player) {
         int row, col;
         for (Ship ship : fleet) {
             if (checkForShipStatusChange(ship.getNumberOfMasts())) {
@@ -333,15 +334,4 @@ public class ShipsGameLogic {
         return false;
     }
 
-    private int sumOfAllMasts(){
-        int sum=0;
-        for(Ship ship : fleet){
-            for(Mast mast : ship.getMasts()){
-                if(mast != null){
-                    sum++;
-                }
-            }
-        }
-        return sum;
-    }
 }

@@ -23,6 +23,7 @@ public class ShipsGameBoard implements GameBoard {
         gameBoard = new char[boardDimension.size()][boardDimension.size()];
     }
 
+
     @Override
     public void setup() {
         for (int row = 0; row < gameBoard.length; row++) {
