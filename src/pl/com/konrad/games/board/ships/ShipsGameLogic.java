@@ -266,7 +266,7 @@ public class ShipsGameLogic {
     boolean isPlayerLoose() {
         for (Ship ship : fleet) {
             for (Mast mast : ship.getMasts()) {
-                if (mast.getMast().mark() != ShipGameBoardMark.HIT_AND_SUNK.mark()) {
+                if (!mast.getMast().equals(ShipGameBoardMark.HIT_AND_SUNK)) {
                     return false;
                 }
             }
@@ -282,7 +282,7 @@ public class ShipsGameLogic {
             ship.getMasts().add(putNewMast(row, col, player, statusMark));
         } else {
             List<Mast> missedMasts = new ArrayList<>();
-            missedMasts.add(putNewMast(row,col,player,statusMark));
+            missedMasts.add(putNewMast(row,col,player,ShipGameBoardMark.MISS));
             fleet.add(new Ship(missedMasts));
         }
     }
@@ -293,16 +293,18 @@ public class ShipsGameLogic {
         for (Ship ship : fleet) {
             sameMastStatusCount = 0;
             for (Mast mast : ship.getMasts()) {
-                if (mast.getMast() == ShipGameBoardMark.HIT_BUT_NOT_SUNK) {
+                if (mast.getMast().equals(ShipGameBoardMark.HIT_BUT_NOT_SUNK)) {
                     sameMastStatusCount++;
                 }
             }
-            if (sameMastStatusCount == shipSize) {
+            if (sameMastStatusCount == ship.getNumberOfMasts()) {
                 return true;
             }
         }
         return false;
     }
+
+
 
     //to do naprawy
     void changeShipStatusToSink(Player player) {
@@ -328,7 +330,7 @@ public class ShipsGameLogic {
     }
 
     boolean checkForHitAndSink(int row, int col, int shipSize) {
-        if (isMastExists(row, col) && checkForShipStatusChange(shipSize)) {
+        if (checkForHit(row,col) && checkForShipStatusChange(shipSize)) {
             return true;
         }
         return false;
