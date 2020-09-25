@@ -48,7 +48,7 @@ public class ShipsGameLogic {
     }
 
 
-    Mast putNewMast(int row, int col, Player player, ShipGameBoardMark shipGameBoardMark) {
+    Mast createNewMast(int row, int col, Player player, ShipGameBoardMark shipGameBoardMark) {
         return new Mast(null, row, col, player, shipGameBoardMark);
     }
 
@@ -144,6 +144,7 @@ public class ShipsGameLogic {
         return true;
     }
 
+    //do gameboard
     void clearConsole() {
         for (int i = 0; i < 50; i++) {
             System.out.println(" ");
@@ -270,16 +271,17 @@ public class ShipsGameLogic {
         }
         return true;
     }
-//to dziala poprawnie - zmienia statusy masztow z U na H z U na X i dodaje X u gracza na planszy ze statkami.
+
+    //to dziala poprawnie - zmienia statusy masztow z U na H z U na X i dodaje X u gracza na planszy ze statkami.
     void changeMastStatus(int row, int col, Player player, ShipGameBoardMark statusMark) {
         if (checkForHit(row, col)) {
             int shipIndex = fleet.indexOf(getShipByRowCol(row, col));
             removeMast(row, col);
             Ship ship = fleet.get(shipIndex);
-            ship.getMasts().add(putNewMast(row, col, player, statusMark));
+            ship.getMasts().add(createNewMast(row, col, player, statusMark));
         } else {
             List<Mast> missedMasts = new ArrayList<>();
-            missedMasts.add(putNewMast(row,col,player,ShipGameBoardMark.MISS));
+            missedMasts.add(createNewMast(row, col, player, ShipGameBoardMark.MISS));
             fleet.add(new Ship(missedMasts));
         }
     }
@@ -287,24 +289,23 @@ public class ShipsGameLogic {
     //to do naprawy - przemyslec sposob sprawdzenia wszystkich masztow czy sa takie same.
     boolean checkForShipStatusChange(int row, int col) {
         int sameMastStatusCount = 0;
-        Ship ship = getShipByRowCol(row,col);
-            for (Mast mast : ship.getMasts()) {
-                if (mast.getMast().equals(ShipGameBoardMark.HIT_BUT_NOT_SUNK)) {
-                    sameMastStatusCount++;
-                }
-                if (sameMastStatusCount == ship.getNumberOfMasts()) {
-                    return true;
-                }
+        Ship ship = getShipByRowCol(row, col);
+//        wekstrachowac do oddzielnej metody
+        for (Mast mast : ship.getMasts()) {
+            if (mast.getMast().equals(ShipGameBoardMark.HIT_BUT_NOT_SUNK)) {
+                sameMastStatusCount++;
             }
+            if (sameMastStatusCount == ship.getNumberOfMasts()) {
+                return true;
+            }
+        }
         return false;
     }
 
-
-
     //to do naprawy - nie dziala wogole
-    void changeShipStatusToSink(int row,int col, Player player) {
+    void changeShipStatusToSink(int row, int col, Player player) {
         for (Ship ship : fleet) {
-            if (checkForShipStatusChange(row,col)) {
+            if (checkForShipStatusChange(row, col)) {
                 for (Mast mast : ship.getMasts()) {
                     changeMastStatus(mast.getCurrentRow(), mast.getCurrentCol(), player, ShipGameBoardMark.HIT_AND_SUNK);
 //                    removeMast(mast.getCurrentRow(), mast.getCurrentCol());
@@ -322,7 +323,7 @@ public class ShipsGameLogic {
     }
 
     boolean checkForHitAndSunk(int row, int col) {
-        if (checkForHit(row,col) && checkForShipStatusChange(row,col)) {
+        if (checkForHit(row, col) && checkForShipStatusChange(row, col)) {
             return true;
         }
         return false;

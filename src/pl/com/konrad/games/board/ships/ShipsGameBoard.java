@@ -29,7 +29,7 @@ public class ShipsGameBoard implements GameBoard {
         for (int row = 0; row < gameBoard.length; row++) {
             for (int col = 0; col < gameBoard.length; col++) {
                 List<Mast> masts = new ArrayList();
-                masts.add(shipsGameLogic.putNewMast(row,col,player,ShipGameBoardMark.NOT_CHECKED));
+                masts.add(shipsGameLogic.createNewMast(row,col,player,ShipGameBoardMark.NOT_CHECKED));
                 fleet.add(new Ship(masts));
             }
         }

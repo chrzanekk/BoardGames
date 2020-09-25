@@ -16,7 +16,6 @@ public class ShipsGame implements Game {
 
     private static final int NUMBER_OF_SHIPS = 1;
     private static final int THREE_MASTS_SHIP = 3;
-    private static final int MISS_MARK = 1;
 
     private List<Ship> playerOneFleet = new ArrayList();
     private List<Ship> playerTwoFleet = new ArrayList();
@@ -97,6 +96,7 @@ public class ShipsGame implements Game {
             userCol = convertLetterToDigit(lettersAndDigits, getPlayerColChoice(scanner, validator,
                     lettersAndDigits));
 
+//do przemyślenia logika instrukcji warunkowej.
             if (currentPlayer.equals(playerOne)) {
 
                 if (isPlayerTwoHitAndNotSunk(userRow, userCol, playerTwoShipsGameLogic)) {
