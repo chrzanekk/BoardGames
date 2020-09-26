@@ -144,14 +144,6 @@ public class ShipsGameLogic {
         return true;
     }
 
-    //do gameboard
-    void clearConsole() {
-        for (int i = 0; i < 50; i++) {
-            System.out.println(" ");
-        }
-    }
-
-
     //    lewy gorny rog
     private boolean isPlaceTopLeftCorner(int row, int col) {
         if (isMastExists(row, col + 1)
@@ -286,11 +278,15 @@ public class ShipsGameLogic {
         }
     }
 
-    //to do naprawy - przemyslec sposob sprawdzenia wszystkich masztow czy sa takie same.
+
     boolean checkForShipStatusChange(int row, int col) {
-        int sameMastStatusCount = 0;
         Ship ship = getShipByRowCol(row, col);
-//        wekstrachowac do oddzielnej metody
+        return isNumberOfMastsEqualsShipSize(ship);
+    }
+
+    //    to działa dobrze
+    private boolean isNumberOfMastsEqualsShipSize(Ship ship) {
+        int sameMastStatusCount = 0;
         for (Mast mast : ship.getMasts()) {
             if (mast.getMast().equals(ShipGameBoardMark.HIT_BUT_NOT_SUNK)) {
                 sameMastStatusCount++;
@@ -303,14 +299,11 @@ public class ShipsGameLogic {
     }
 
     //to do naprawy - nie dziala wogole
-    void changeShipStatusToSink(int row, int col, Player player) {
-        for (Ship ship : fleet) {
-            if (checkForShipStatusChange(row, col)) {
-                for (Mast mast : ship.getMasts()) {
-                    changeMastStatus(mast.getCurrentRow(), mast.getCurrentCol(), player, ShipGameBoardMark.HIT_AND_SUNK);
-//                    removeMast(mast.getCurrentRow(), mast.getCurrentCol());
-//                    putNewMast(row, col, player, ShipGameBoardMark.HIT_AND_SUNK);
-                }
+    void changeShipStatusToSunk(int row, int col, Player player) {
+        Ship ship = getShipByRowCol(row, col);
+        if (checkForShipStatusChange(row, col)) {
+            for (Mast mast : ship.getMasts()) {
+                changeMastStatus(mast.getCurrentRow(), mast.getCurrentCol(), player, ShipGameBoardMark.HIT_AND_SUNK);
             }
         }
     }
@@ -323,7 +316,7 @@ public class ShipsGameLogic {
     }
 
     boolean checkForHitAndSunk(int row, int col) {
-        if (checkForHit(row, col) && checkForShipStatusChange(row, col)) {
+        if (checkForHit(row, col) && !checkForShipStatusChange(row, col)) {
             return true;
         }
         return false;
