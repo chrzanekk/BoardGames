@@ -301,9 +301,23 @@ public class ShipsGameLogic {
     //to do naprawy - nie dziala wogole
     void changeShipStatusToSunk(int row, int col, Player player) {
         Ship ship = getShipByRowCol(row, col);
-        if (checkForShipStatusChange(row, col)) {
-            for (Mast mast : ship.getMasts()) {
-                changeMastStatus(mast.getCurrentRow(), mast.getCurrentCol(), player, ShipGameBoardMark.HIT_AND_SUNK);
+        int shipSize = ship.getNumberOfMasts();
+        int innerRow = ship.getMasts().get(0).getCurrentRow();
+        int innerCol = ship.getMasts().get(0).getCurrentCol();
+        if(isMastExists(row,col)) {
+            if (checkForShipStatusChange(row, col) && checkIsShipHorizontal(row, col)) {
+                ship.getMasts().clear();
+                for (int i = 0; i < shipSize; i++) {
+                    ship.getMasts().add(createNewMast(innerRow, innerCol, player, ShipGameBoardMark.HIT_AND_SUNK));
+                    innerCol++;
+                }
+            }
+            if (checkForShipStatusChange(row, col) && !checkIsShipHorizontal(row, col)) {
+                ship.getMasts().clear();
+                for (int i = 0; i < shipSize; i++) {
+                    ship.getMasts().add(createNewMast(innerRow, innerCol, player, ShipGameBoardMark.HIT_AND_SUNK));
+                    innerRow++;
+                }
             }
         }
     }
@@ -320,6 +334,33 @@ public class ShipsGameLogic {
             return true;
         }
         return false;
+    }
+
+    boolean checkIsShipHorizontal(int row, int col) {
+        Ship ship = getShipByRowCol(row,col);
+        int firstRow = ship.getMasts().get(0).getCurrentRow();
+        int rowCounter = 0;
+        for (Mast mast : ship.getMasts()) {
+            if (mast.getCurrentRow()==firstRow) {
+                rowCounter++;
+            }
+        }
+        if (rowCounter==ship.getNumberOfMasts()) {
+            return true;
+        }
+        return false;
+    }
+
+//    metoda aktualizujaca checkboard gracza o zatopiony statek
+    void changeShipStatusToSinkOnCheckBoard(List<Ship> oppositeFleet, Player player) {
+        for (Ship ship : oppositeFleet) {
+            for (Mast mast : ship.getMasts()) {
+                if (mast.getMast().equals(ShipGameBoardMark.HIT_AND_SUNK)) {
+                    changeShipStatusToSunk(mast.getCurrentRow(),mast.getCurrentCol(),player);
+                }
+            }
+        }
+
     }
 
 }

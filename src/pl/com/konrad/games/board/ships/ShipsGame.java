@@ -96,50 +96,53 @@ public class ShipsGame implements Game {
                     lettersAndDigits));
 
             if (currentPlayer.equals(playerOne)) {
-                if (isPlayerTwoHitAndNotSunk(userRow, userCol, playerTwoShipsGameLogic)) {
+                if (playerTwoShipsGameLogic.checkForHit(userRow, userCol)) {
                     System.out.println(shipsGameText.getMessage("show.player.hit.ship", playerOne.getName()));
-
                     playerOneShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.HIT_BUT_NOT_SUNK);
                     playerTwoShipsGameLogic.changeMastStatus(userRow, userCol, playerTwo, ShipGameBoardMark.HIT_BUT_NOT_SUNK);
-                } else if (isPlayerTwoHitAndSunk(userRow, userCol, playerTwoShipsGameLogic)) {
-                    System.out.println(shipsGameText.getMessage("show.player.hit.ship", playerOne.getName()));
-                    System.out.println(shipsGameText.getMessage("show.player.sunk.ship"));
-
-//                    playerOneShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.HIT_AND_SUNK);
-                    playerOneShipsGameLogicToCheck.changeShipStatusToSunk(userRow, userCol, playerOne);
-//                    playerTwoShipsGameLogic.changeMastStatus(userRow, userCol, playerTwo, ShipGameBoardMark.HIT_AND_SUNK);
-                    playerTwoShipsGameLogic.changeShipStatusToSunk(userRow, userCol, playerTwo);
 
                 } else {
+                    System.out.println(shipsGameText.getMessage("show.player.miss"));
                     playerOneShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.MISS);
                     playerTwoShipsGameLogic.changeMastStatus(userRow, userCol, playerTwo, ShipGameBoardMark.MISS);
-                    System.out.println(shipsGameText.getMessage("show.player.miss"));
                 }
 
+                if (playerTwoShipsGameLogic.checkForShipStatusChange(userRow, userCol)) {
+                    playerTwoShipsGameLogic.changeShipStatusToSunk(userRow, userCol, playerTwo);
+                    playerOneShipsGameLogicToCheck.changeShipStatusToSinkOnCheckBoard(playerTwoFleet, playerOne);
+                    System.out.println(shipsGameText.getMessage("show.player.sunk.ship"));
+
+                    playerOneCheckBoard.print();
+                    playerTwoGameBoard.print();
+                }
                 if (playerTwoShipsGameLogic.isPlayerLoose()) {
                     System.out.println(shipsGameText.getMessage("show.player.win", playerOne.getName()));
                     isAWinner = true;
                 }
-            } else {
-                if (isPlayerOneHitAndNotSunk(userRow, userCol, playerOneShipsGameLogic)) {
-                    System.out.println(shipsGameText.getMessage("show.player.hit.ship", playerTwo.getName()));
 
-                    playerTwoShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerTwo, ShipGameBoardMark.HIT_BUT_NOT_SUNK);
+
+            } else {
+                if (playerOneShipsGameLogic.checkForHit(userRow, userCol)) {
+                    System.out.println(shipsGameText.getMessage("show.player.hit.ship", playerTwo.getName()));
+                    playerTwoShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerTwo,
+                            ShipGameBoardMark.HIT_BUT_NOT_SUNK);
                     playerOneShipsGameLogic.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.HIT_BUT_NOT_SUNK);
 
-                } else if (isPlayerOneHitAndSunk(userRow, userCol, playerOneShipsGameLogic)) {
-                    System.out.println(shipsGameText.getMessage("show.player.hit.ship", playerTwo.getName()));
-                    System.out.println(shipsGameText.getMessage("show.player.sunk.ship"));
-
-//                    playerTwoShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerTwo, ShipGameBoardMark.HIT_AND_SUNK);
-                    playerTwoShipsGameLogic.changeShipStatusToSunk(userRow, userCol, playerTwo);
-//                    playerOneShipsGameLogic.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.HIT_AND_SUNK);
-                    playerOneShipsGameLogic.changeShipStatusToSunk(userRow, userCol, playerOne);
                 } else {
-                    playerTwoShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.MISS);
+                    playerTwoShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerOne,
+                            ShipGameBoardMark.MISS);
                     playerOneShipsGameLogic.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.MISS);
                     System.out.println(shipsGameText.getMessage("show.player.miss"));
                 }
+                if (playerOneShipsGameLogic.checkForShipStatusChange(userRow, userCol)) {
+                    playerOneShipsGameLogic.changeShipStatusToSunk(userRow, userCol, playerTwo);
+                    playerTwoShipsGameLogicToCheck.changeShipStatusToSinkOnCheckBoard(playerOneFleet, playerTwo);
+                    System.out.println(shipsGameText.getMessage("show.player.sunk.ship"));
+                    playerTwoCheckBoard.print();
+                    playerOneGameBoard.print();
+
+                }
+
 
                 if (playerOneShipsGameLogic.isPlayerLoose()) {
                     System.out.println(shipsGameText.getMessage("show.player.win", playerTwo.getName()));
