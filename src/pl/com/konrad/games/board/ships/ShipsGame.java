@@ -14,7 +14,7 @@ public class ShipsGame implements Game {
     private ShipLayoutMenu shipLayoutMenu = new ShipLayoutMenu();
     private ShipLayoutMenuPrinter layoutMenuPrinter = new ShipLayoutMenuPrinter(shipLayoutMenu);
 
-    private static final int NUMBER_OF_SHIPS = 1;
+    private static final int NUMBER_OF_SHIPS = 2;
     private static final int THREE_MASTS_SHIP = 3;
 
     private List<Ship> playerOneFleet = new ArrayList();
@@ -79,10 +79,10 @@ public class ShipsGame implements Game {
 
         boolean isAWinner = false;
         do {
-            currentPlayer = swapPlayers(playerOne, currentPlayer, playerTwo);
+
             int userRow;
             int userCol;
-            playerOneGameBoard.clearConsole();
+//            playerOneGameBoard.clearConsole();
             showCurrentPlayerBoards(playerOne, currentPlayer, playerOneGameBoard, playerTwoGameBoard, playerOneCheckBoard,
                     playerTwoCheckBoard, shipsGameText);
             System.out.println(shipsGameText.getMessage("show.witch.player.move", currentPlayer.getName()));
@@ -106,19 +106,23 @@ public class ShipsGame implements Game {
                     playerOneShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.MISS);
                     playerTwoShipsGameLogic.changeMastStatus(userRow, userCol, playerTwo, ShipGameBoardMark.MISS);
                 }
-
-                if (playerTwoShipsGameLogic.checkForShipStatusChange(userRow, userCol)) {
+                if (playerTwoShipsGameLogic.checkShipForStatusChange(userRow, userCol)) {
                     playerTwoShipsGameLogic.changeShipStatusToSunk(userRow, userCol, playerTwo);
                     playerOneShipsGameLogicToCheck.changeShipStatusToSinkOnCheckBoard(playerTwoFleet, playerOne);
                     System.out.println(shipsGameText.getMessage("show.player.sunk.ship"));
 
+                    System.out.println(shipsGameText.getMessage("show.player.checkboard", currentPlayer.getName()));
                     playerOneCheckBoard.print();
+                    System.out.println(shipsGameText.getMessage("show.player.gameboard", playerTwo.getName()));
                     playerTwoGameBoard.print();
                 }
+
                 if (playerTwoShipsGameLogic.isPlayerLoose()) {
                     System.out.println(shipsGameText.getMessage("show.player.win", playerOne.getName()));
                     isAWinner = true;
                 }
+
+
 
 
             } else {
@@ -134,13 +138,13 @@ public class ShipsGame implements Game {
                     playerOneShipsGameLogic.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.MISS);
                     System.out.println(shipsGameText.getMessage("show.player.miss"));
                 }
-                if (playerOneShipsGameLogic.checkForShipStatusChange(userRow, userCol)) {
-                    playerOneShipsGameLogic.changeShipStatusToSunk(userRow, userCol, playerTwo);
+
+                if (playerOneShipsGameLogic.checkShipForStatusChange(userRow, userCol)) {
+                    playerOneShipsGameLogic.changeShipStatusToSunk(userRow, userCol, playerOne);
                     playerTwoShipsGameLogicToCheck.changeShipStatusToSinkOnCheckBoard(playerOneFleet, playerTwo);
                     System.out.println(shipsGameText.getMessage("show.player.sunk.ship"));
                     playerTwoCheckBoard.print();
                     playerOneGameBoard.print();
-
                 }
 
 
@@ -150,7 +154,7 @@ public class ShipsGame implements Game {
                 }
             }
 
-
+            currentPlayer = swapPlayers(playerOne, currentPlayer, playerTwo);
         }
         while (!isAWinner);
     }
@@ -164,25 +168,6 @@ public class ShipsGame implements Game {
         return currentPlayer;
     }
 
-    private boolean isPlayerOneHitAndSunk(int userRow, int userCol, ShipsGameLogic playerOneShipsGameLogic) {
-        return playerOneShipsGameLogic.isMastExists(userRow, userCol) &&
-                !playerOneShipsGameLogic.checkForHitAndSunk(userRow, userCol);
-    }
-
-    private boolean isPlayerOneHitAndNotSunk(int userRow, int userCol, ShipsGameLogic playerOneShipsGameLogic) {
-        return playerOneShipsGameLogic.checkForHit(userRow, userCol) &&
-                playerOneShipsGameLogic.checkForHitAndSunk(userRow, userCol);
-    }
-
-    private boolean isPlayerTwoHitAndSunk(int userRow, int userCol, ShipsGameLogic playerTwoShipsGameLogic) {
-        return playerTwoShipsGameLogic.isMastExists(userRow, userCol) &&
-                !playerTwoShipsGameLogic.checkForHitAndSunk(userRow, userCol);
-    }
-
-    private boolean isPlayerTwoHitAndNotSunk(int userRow, int userCol, ShipsGameLogic playerTwoShipsGameLogic) {
-        return playerTwoShipsGameLogic.checkForHit(userRow, userCol) &&
-                playerTwoShipsGameLogic.checkForHitAndSunk(userRow, userCol);
-    }
 
 
     private void shipsDeployment(ShipsGameBoard shipsGameBoard,
