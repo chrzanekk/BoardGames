@@ -253,7 +253,7 @@ public class ShipsGameLogic {
      * METHODS TO CHECK SHIP HITS AND TO CHANGE STATUS ON PLAYER CHECK BOARD
      */
 
-//    ta metoda do przetestowania
+
     boolean isPlayerLoose() {
         for (Ship ship : fleet) {
             for (Mast mast : ship.getMasts()) {
@@ -285,7 +285,6 @@ public class ShipsGameLogic {
         return isMastsMarkEqualsHitButNotSunk(ship);
     }
 
-    //    to do poprawy
     private boolean isMastsMarkEqualsHitButNotSunk(Ship ship) {
         int sameMastStatusCount = 0;
         for (Mast mast : ship.getMasts()) {
@@ -299,30 +298,13 @@ public class ShipsGameLogic {
         return false;
     }
 
-
     void changeShipStatusToSunk(int row, int col, Player player) {
-       Ship ship = getShipByRowCol(row, col);
-        ship.getMasts().replaceAll(mast -> createNewMast(mast.getCurrentRow(),mast.getCurrentCol(),player,ShipGameBoardMark.HIT_AND_SUNK));
+        Ship ship = getShipByRowCol(row, col);
+        ship.getMasts().replaceAll(mast -> createNewMast(mast.getCurrentRow(), mast.getCurrentCol(), player, ShipGameBoardMark.HIT_AND_SUNK));
     }
 
     boolean checkForHit(int row, int col) {
         if (isMastExists(row, col)) {
-            return true;
-        }
-        return false;
-    }
-
-    //to do poprawy
-    boolean checkIsShipHorizontal(int row, int col) {
-        Ship ship = getShipByRowCol(row, col);
-        int initialRow = ship.getMasts().get(0).getCurrentRow();
-        int colCounter = 0;
-        for (Mast mast : ship.getMasts()) {
-            if (isMastExists(initialRow,mast.getCurrentCol())) {
-                colCounter++;
-            }
-        }
-        if (colCounter == ship.getNumberOfMasts()) {
             return true;
         }
         return false;
@@ -337,7 +319,5 @@ public class ShipsGameLogic {
                 }
             }
         }
-
     }
-
 }
