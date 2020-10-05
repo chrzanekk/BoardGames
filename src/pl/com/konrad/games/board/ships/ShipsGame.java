@@ -15,7 +15,7 @@ public class ShipsGame implements Game {
     private ShipLayoutMenuPrinter layoutMenuPrinter = new ShipLayoutMenuPrinter(shipLayoutMenu);
 
     private static final int NUMBER_OF_SHIPS = 2;
-    private static final int THREE_MASTS_SHIP = 3;
+    private static final int THREE_MASTS_SHIP = 2;
 
     private List<Ship> playerOneFleet = new ArrayList();
     private List<Ship> playerTwoFleet = new ArrayList();
@@ -95,13 +95,21 @@ public class ShipsGame implements Game {
                     lettersAndDigits));
 
             if (currentPlayer.equals(playerOne)) {
-
-
                 if (playerTwoShipsGameLogic.checkForHit(userRow, userCol)) {
-                    System.out.println(shipsGameText.getMessage("show.player.hit.ship", playerOne.getName()));
                     playerOneShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.HIT_BUT_NOT_SUNK);
                     playerTwoShipsGameLogic.changeMastStatus(userRow, userCol, playerTwo, ShipGameBoardMark.HIT_BUT_NOT_SUNK);
+                    if (playerTwoShipsGameLogic.checkShipForStatusChange(userRow, userCol)) {
+                        playerTwoShipsGameLogic.changeShipStatusToSunk(userRow, userCol, playerTwo);
+                        playerOneShipsGameLogicToCheck.changeShipStatusToSinkOnCheckBoard(playerTwoFleet, playerOne);
+                        System.out.println(shipsGameText.getMessage("show.player.sunk.ship"));
+                        System.out.println(shipsGameText.getMessage("show.player.checkboard", currentPlayer.getName()));
+                        playerOneCheckBoard.print();
+                        System.out.println(shipsGameText.getMessage("show.player.gameboard", playerTwo.getName()));
+                        playerTwoGameBoard.print();
+                    } else {
+                        System.out.println(shipsGameText.getMessage("show.player.hit.ship", playerOne.getName()));
 
+                    }
                 } else {
                     System.out.println(shipsGameText.getMessage("show.player.miss"));
                     playerOneShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.MISS);
@@ -166,7 +174,6 @@ public class ShipsGame implements Game {
         }
         return currentPlayer;
     }
-
 
 
     private void shipsDeployment(ShipsGameBoard shipsGameBoard,

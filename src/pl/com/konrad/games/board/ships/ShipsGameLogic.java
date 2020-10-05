@@ -16,14 +16,10 @@ import java.util.List;
  */
 public class ShipsGameLogic {
     private List<Ship> fleet;
-    private int sumOfAllMasts;
-
 
     public ShipsGameLogic(List<Ship> fleet) {
         this.fleet = fleet;
-
     }
-
 
     Mast getMastByRowCol(int row, int col) {
         for (Ship ship : fleet) {
@@ -55,9 +51,9 @@ public class ShipsGameLogic {
     void removeMast(int row, int col) {
         for (Ship ship : fleet) {
             ship.getMasts().removeIf(mast -> row == mast.getCurrentRow() && col == mast.getCurrentCol());
-
         }
     }
+
 
     boolean isMastExists(int row, int col) {
         if (getMastByRowCol(row, col) == null) {
@@ -284,7 +280,9 @@ public class ShipsGameLogic {
         boolean isStatusToChange = false;
         if (isMastExists(row,col)) {
             Ship ship = getShipByRowCol(row, col);
-            isStatusToChange = isMastsMarkEqualsHitButNotSunk(ship);
+            if (isMastsMarkEqualsHitButNotSunk(ship)) {
+                isStatusToChange = true;
+            }
         }
         return isStatusToChange;
     }
@@ -304,7 +302,15 @@ public class ShipsGameLogic {
 
     void changeShipStatusToSunk(int row, int col, Player player) {
         Ship ship = getShipByRowCol(row, col);
+        fleet.remove(getShipByRowCol(row,col));
         ship.getMasts().replaceAll(mast -> createNewMast(mast.getCurrentRow(), mast.getCurrentCol(), player, ShipGameBoardMark.HIT_AND_SUNK));
+        fleet.add(ship);
+//        for (Ship ship : fleet) {
+//            if (checkShipForStatusChange(row,col)){
+//                ship.getMasts().replaceAll(mast -> createNewMast(mast.getCurrentRow(), mast.getCurrentCol(), player, ShipGameBoardMark.HIT_AND_SUNK));
+//            }
+//        }
+
     }
 
     boolean checkForHit(int row, int col) {
@@ -319,7 +325,7 @@ public class ShipsGameLogic {
         for (Ship ship : oppositeFleet) {
             for (Mast mast : ship.getMasts()) {
                 if (mast.getMast().equals(ShipGameBoardMark.HIT_AND_SUNK)) {
-                    changeShipStatusToSunk(mast.getCurrentRow(), mast.getCurrentCol(), player);
+                    changeMastStatus(mast.getCurrentRow(),mast.getCurrentCol(),player,ShipGameBoardMark.HIT_AND_SUNK);
                 }
             }
         }
