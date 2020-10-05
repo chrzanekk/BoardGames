@@ -93,7 +93,15 @@ public class ShipsGame implements Game {
                     Character.toString(playerOneGameBoard.generateLastLetterOfColumn('A', playerOneGameBoard.getLength()))));
             userCol = convertLetterToDigit(lettersAndDigits, getPlayerColChoice(scanner, validator,
                     lettersAndDigits));
-
+            System.out.println("---------------------------------");
+            System.out.println("Debugging number of masts.");
+            System.out.println("Number of masts 1: " + playerOneShipsGameLogic.numberOfMastsByRowCol(userRow, userCol));
+            System.out.println("Number of masts 2: " + playerOneShipsGameLogic.numberOfMasts(userRow, userCol));
+            System.out.println("Fleet size: " + playerOneFleet.size());
+            System.out.println("Number of ship masts from fleet: " + playerOneFleet.get(0).getNumberOfMasts());
+            System.out.println("Number of ship masts from fleet: " + playerOneFleet.get(0).getNumberMasts());
+            System.out.println("End of debugging number of masts.");
+            System.out.println("---------------------------------");
             if (currentPlayer.equals(playerOne)) {
                 if (playerTwoShipsGameLogic.checkForHit(userRow, userCol)) {
                     playerOneShipsGameLogicToCheck.changeMastStatus(userRow, userCol, playerOne, ShipGameBoardMark.HIT_BUT_NOT_SUNK);
@@ -108,7 +116,6 @@ public class ShipsGame implements Game {
                         playerTwoGameBoard.print();
                     } else {
                         System.out.println(shipsGameText.getMessage("show.player.hit.ship", playerOne.getName()));
-
                     }
                 } else {
                     System.out.println(shipsGameText.getMessage("show.player.miss"));
@@ -208,6 +215,7 @@ public class ShipsGame implements Game {
                     System.out.println(shipsGameText.getMessage("show,wrong.coordinates"));
                     System.out.println(shipsGameText.getMessage("show.try.again"));
                 }
+
             } else if (layoutOption == ShipLayoutOption.VERTICAL.value()) {
                 if (shipsGameLogic.checkPlaceForVerticalShip(userCurrentRowChoice,
                         userCurrentColChoice,
@@ -216,7 +224,7 @@ public class ShipsGame implements Game {
                     playerFleet.add(shipCreator.verticalShip(userCurrentRowChoice, userCurrentColChoice));
                     shipNumber++;
                 } else {
-                    System.out.println(shipsGameText.getMessage("show,wrong.coordinates"));
+                    System.out.println(shipsGameText.getMessage("show.wrong.coordinates"));
                     System.out.println(shipsGameText.getMessage("show.try.again"));
                 }
             } else {

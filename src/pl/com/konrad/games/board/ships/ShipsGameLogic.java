@@ -294,15 +294,25 @@ public class ShipsGameLogic {
                 sameMastStatusCount++;
             }
         }
+//        tu jest babol z liczeniem ilosci masztow w danym statku. nie mam pojecia o co chodzi.
         if (sameMastStatusCount == ship.getNumberOfMasts()) {
             return true;
         }
         return false;
     }
 
+    int numberOfMastsByRowCol(int row, int col) {
+        Ship ship = getShipByRowCol(row,col);
+        return  ship.getNumberOfMasts();
+    }
+
+    int numberOfMasts(int row, int col) {
+        return fleet.get(fleet.indexOf(getShipByRowCol(row,col))).getNumberOfMasts();
+    }
+
+//    to działa
     void changeShipStatusToSunk(int row, int col, Player player) {
-        Ship ship = getShipByRowCol(row, col);
-        fleet.remove(getShipByRowCol(row,col));
+        Ship ship = fleet.get(fleet.indexOf(getShipByRowCol(row,col)));
         ship.getMasts().replaceAll(mast -> createNewMast(mast.getCurrentRow(), mast.getCurrentCol(), player, ShipGameBoardMark.HIT_AND_SUNK));
         fleet.add(ship);
 //        for (Ship ship : fleet) {

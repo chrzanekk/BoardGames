@@ -15,6 +15,16 @@ public class Ship {
         return masts.size();
     }
 
+    public int getNumberMasts(){
+        int sumOfMasts = 0;
+        for (Mast mast : masts) {
+            if(masts.contains(mast)){
+                sumOfMasts++;
+            }
+        }
+        return sumOfMasts;
+    }
+
     public List<Mast> getMasts() {
         return masts;
     }
