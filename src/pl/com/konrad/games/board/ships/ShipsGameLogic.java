@@ -281,8 +281,12 @@ public class ShipsGameLogic {
 
 
     boolean checkShipForStatusChange(int row, int col) {
-        Ship ship = getShipByRowCol(row, col);
-        return isMastsMarkEqualsHitButNotSunk(ship);
+        boolean isStatusToChange = false;
+        if (isMastExists(row,col)) {
+            Ship ship = getShipByRowCol(row, col);
+            isStatusToChange = isMastsMarkEqualsHitButNotSunk(ship);
+        }
+        return isStatusToChange;
     }
 
     private boolean isMastsMarkEqualsHitButNotSunk(Ship ship) {
