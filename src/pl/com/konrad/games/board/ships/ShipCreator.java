@@ -14,7 +14,7 @@ public class ShipCreator implements ShipFactory {
     private ShipGameBoardMark shipGameBoardMark;
     private GameBoard gameBoard;
     private ShipsGameLogic shipsGameLogic;
-    private List<Mast> masts = new ArrayList<>();
+
 
     public ShipCreator(int shipSize, Color color, Player player,
                        ShipGameBoardMark shipGameBoardMark, GameBoard gameBoard, ShipsGameLogic shipsGameLogic) {
@@ -26,9 +26,10 @@ public class ShipCreator implements ShipFactory {
         this.shipsGameLogic = shipsGameLogic;
     }
 
-
+//zduplikowany kod (wyekstrachowac do jednej metody)
     @Override
     public Ship horizontalShip(int row, int col) {
+        List<Mast> masts = new ArrayList<>();
         for (int i = 0; i < shipSize; i++) {
             masts.add(new Mast(color, row, col, player, shipGameBoardMark));
             col++;
@@ -38,6 +39,7 @@ public class ShipCreator implements ShipFactory {
 
     @Override
     public Ship verticalShip(int row, int col) {
+        List<Mast> masts = new ArrayList<>();
         for (int i = 0; i < shipSize; i++) {
             masts.add(new Mast(color, row, col, player, shipGameBoardMark));
             row++;
