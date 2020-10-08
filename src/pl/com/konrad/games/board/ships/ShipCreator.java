@@ -26,7 +26,7 @@ public class ShipCreator implements ShipFactory {
         this.shipsGameLogic = shipsGameLogic;
     }
 
-//zduplikowany kod (wyekstrachowac do jednej metody)
+    //zduplikowany kod (wyekstrachowac do jednej metody)
     @Override
     public Ship horizontalShip(int row, int col) {
         List<Mast> masts = new ArrayList<>();
@@ -46,4 +46,14 @@ public class ShipCreator implements ShipFactory {
         }
         return new Ship(masts);
     }
+
+    private Ship deployShip(int firstParam, int secondParam) {
+        List<Mast> masts = new ArrayList<>();
+        for (int i = 0; i < shipSize; i++) {
+            masts.add(new Mast(color, firstParam, secondParam, player, shipGameBoardMark));
+            firstParam++;
+        }
+        return new Ship(masts);
+    }
+
 }
